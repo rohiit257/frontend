@@ -4,14 +4,17 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, MenuItem, HoveredLink } from '@/components/ui/navbar-menu';
-import { ThemeToggle } from './ThemeProvider';
+import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
 export default function HeroSection() {
   const [active, setActive] = useState<string | null>(null);
+  const { colorScheme } = useTheme();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  
+  const isLightBackground = colorScheme === 'blue' || colorScheme === 'green' || colorScheme === 'rose';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -54,22 +57,38 @@ export default function HeroSection() {
       {/* Animated geometric shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-20 right-20 w-64 h-64 border border-[var(--border)] rounded-full"
+          className={`absolute top-20 right-20 w-64 h-64 border rounded-full ${
+            isLightBackground 
+              ? (colorScheme === 'blue' ? 'border-[#0b2545]/20' : colorScheme === 'green' ? 'border-[#2d3526]/20' : 'border-[#4a3a3a]/20')
+              : 'border-[var(--border)]'
+          }`}
           animate={{ rotate: 360 }}
           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
         />
         <motion.div
-          className="absolute bottom-20 left-20 w-48 h-48 border border-[var(--border)] rotate-45"
+          className={`absolute bottom-20 left-20 w-48 h-48 border rotate-45 ${
+            isLightBackground 
+              ? (colorScheme === 'blue' ? 'border-[#0b2545]/20' : colorScheme === 'green' ? 'border-[#2d3526]/20' : 'border-[#4a3a3a]/20')
+              : 'border-[var(--border)]'
+          }`}
           animate={{ rotate: [45, 135, 45] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute top-1/3 left-1/4 w-4 h-4 bg-[var(--accent)] rounded-full opacity-40"
+          className={`absolute top-1/3 left-1/4 w-4 h-4 rounded-full opacity-40 ${
+            isLightBackground 
+              ? (colorScheme === 'blue' ? 'bg-[#0b2545]' : colorScheme === 'green' ? 'bg-[#2d3526]' : 'bg-[#4a3a3a]')
+              : 'bg-[var(--accent)]'
+          }`}
           animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
           transition={{ duration: 3, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-1/3 right-1/3 w-6 h-6 bg-[var(--accent)] rounded-full opacity-30"
+          className={`absolute bottom-1/3 right-1/3 w-6 h-6 rounded-full opacity-30 ${
+            isLightBackground 
+              ? (colorScheme === 'blue' ? 'bg-[#0b2545]' : colorScheme === 'green' ? 'bg-[#2d3526]' : 'bg-[#4a3a3a]')
+              : 'bg-[var(--accent)]'
+          }`}
           animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ duration: 4, repeat: Infinity, delay: 1 }}
         />
@@ -93,7 +112,12 @@ export default function HeroSection() {
                     src="/logo-light.e2baf542.png"
                     alt="Wings9 Logo"
                     fill
-                    className="object-contain"
+                    className="object-contain transition-all duration-300"
+                    style={{
+                      filter: colorScheme === 'dark-green' 
+                        ? 'brightness(0) invert(1)' // Light logo for dark background
+                        : 'brightness(0)' // Dark logo for light background
+                    }}
                     priority
                   />
                 </div>
@@ -148,19 +172,9 @@ export default function HeroSection() {
               </Menu>
             </motion.div>
 
-            {/* Theme Toggle - Right side (Desktop) */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="hidden md:flex flex-shrink-0"
-            >
-              <ThemeToggle />
-            </motion.div>
 
             {/* Mobile Menu - Scrollable */}
             <div className="md:hidden flex items-center gap-2 sm:gap-3 w-full justify-end">
-              <ThemeToggle />
               <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-1 justify-end">
                 <Menu setActive={setActive}>
                   <MenuItem setActive={setActive} active={active} item="Services">

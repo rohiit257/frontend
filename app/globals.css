@@ -3,56 +3,56 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Vibrant Color Palette - Navy, Cream, Steel Blue */
+/* Default: Green Color Scheme - Applied when no class is set */
 :root {
   /* Core colors */
-  --navy: #0b2545;
-  --cream: #eef4ed;
-  --steel: #8da9c4;
-  --navy-light: #134074;
-  --steel-light: #b4c5d4;
+  --navy: #eef4ed;
+  --cream: #2d3526;
+  --steel: #A3B087;
+  --navy-light: #f5f8f5;
+  --steel-light: #8a9670;
   
   /* Semantic colors */
-  --background: var(--navy);
-  --foreground: var(--cream);
-  --surface: #13315c;
-  --surface-hover: #1a4076;
-  --accent: var(--steel);
-  --accent-hover: var(--steel-light);
-  --muted: rgba(141, 169, 196, 0.6);
-  --border: rgba(141, 169, 196, 0.2);
-  --border-hover: rgba(141, 169, 196, 0.4);
+  --background: #f5f8f5; /* Cream/off-white */
+  --foreground: #2d3526; /* Dark green-gray */
+  --surface: #fafbfa; /* Soft cream */
+  --surface-hover: #f0f4f0;
+  --accent: #A3B087; /* Sage green */
+  --accent-hover: #8a9670; /* Darker sage */
+  --muted: rgba(163, 176, 135, 0.6);
+  --border: rgba(45, 53, 38, 0.15);
+  --border-hover: rgba(45, 53, 38, 0.3);
   
-  /* Logo filter for dark mode - invert to light */
-  --logo-filter: brightness(0) invert(1);
+  /* Logo filter - keep dark */
+  --logo-filter: brightness(0);
   
   /* Component colors */
-  --primary: 141 169 196;
-  --primary-foreground: 11 37 69;
-  --secondary: 19 49 92;
-  --secondary-foreground: 238 244 237;
-  --muted-foreground: 141 169 196;
-  --card: 19 49 92;
-  --card-foreground: 238 244 237;
-  --popover: 19 49 92;
-  --popover-foreground: 238 244 237;
+  --primary: 163 176 135;
+  --primary-foreground: 245 248 245;
+  --secondary: 238 244 237;
+  --secondary-foreground: 45 53 38;
+  --muted-foreground: 163 176 135;
+  --card: 250 251 250;
+  --card-foreground: 45 53 38;
+  --popover: 250 251 250;
+  --popover-foreground: 45 53 38;
   --destructive: 239 68 68;
-  --input: rgba(141, 169, 196, 0.2);
-  --ring: 141 169 196;
+  --input: rgba(45, 53, 38, 0.1);
+  --ring: 163 176 135;
   --radius: 0.75rem;
 }
 
-/* Light theme */
-:root.light {
+/* Blue Color Scheme (Default) - Cream/Off-white with Blue accent */
+:root.blue {
   --navy: #eef4ed;
   --cream: #0b2545;
   --steel: #134074;
-  --navy-light: #f8faf8;
+  --navy-light: #f5f8f5;
   --steel-light: #0d2d52;
   
-  --background: #f8faf8;
+  --background: #f5f8f5; /* Cream/off-white */
   --foreground: #0b2545;
-  --surface: #ffffff;
+  --surface: #fafbfa; /* Soft cream */
   --surface-hover: #f0f4f0;
   --accent: #134074;
   --accent-hover: #0d2d52;
@@ -60,7 +60,7 @@
   --border: rgba(11, 37, 69, 0.15);
   --border-hover: rgba(11, 37, 69, 0.3);
   
-  /* Logo filter for light mode - keep dark */
+  /* Logo filter - keep dark */
   --logo-filter: brightness(0);
   
   --primary: 19 64 116;
@@ -68,11 +68,110 @@
   --secondary: 238 244 237;
   --secondary-foreground: 11 37 69;
   --muted-foreground: 19 64 116;
-  --card: 255 255 255;
+  --card: 250 251 250;
   --card-foreground: 11 37 69;
-  --popover: 255 255 255;
+  --popover: 250 251 250;
   --popover-foreground: 11 37 69;
   --input: rgba(11, 37, 69, 0.1);
+}
+
+/* Green Color Scheme - Cream with Green accent (A3B087) */
+:root.green {
+  --navy: #eef4ed;
+  --cream: #2d3526;
+  --steel: #A3B087;
+  --navy-light: #f5f8f5;
+  --steel-light: #8a9670;
+  
+  --background: #f5f8f5; /* Cream/off-white */
+  --foreground: #2d3526; /* Dark green-gray */
+  --surface: #fafbfa; /* Soft cream */
+  --surface-hover: #f0f4f0;
+  --accent: #A3B087; /* Sage green */
+  --accent-hover: #8a9670; /* Darker sage */
+  --muted: rgba(163, 176, 135, 0.6);
+  --border: rgba(45, 53, 38, 0.15);
+  --border-hover: rgba(45, 53, 38, 0.3);
+  
+  /* Logo filter - keep dark */
+  --logo-filter: brightness(0);
+  
+  --primary: 163 176 135;
+  --primary-foreground: 245 248 245;
+  --secondary: 238 244 237;
+  --secondary-foreground: 45 53 38;
+  --muted-foreground: 163 176 135;
+  --card: 250 251 250;
+  --card-foreground: 45 53 38;
+  --popover: 250 251 250;
+  --popover-foreground: 45 53 38;
+  --input: rgba(45, 53, 38, 0.1);
+}
+
+/* Dark Green Color Scheme - Dark with Green accent (1B211A) */
+:root.dark-green {
+  --navy: #1B211A; /* Dark green-black */
+  --cream: #e8ede3; /* Light green-cream */
+  --steel: #A3B087; /* Sage green */
+  --navy-light: #252b22;
+  --steel-light: #8a9670;
+  
+  --background: #1B211A; /* Dark green-black */
+  --foreground: #e8ede3; /* Light green-cream */
+  --surface: #252b22; /* Slightly lighter dark green */
+  --surface-hover: #2d3526;
+  --accent: #A3B087; /* Sage green */
+  --accent-hover: #8a9670; /* Darker sage */
+  --muted: rgba(163, 176, 135, 0.6);
+  --border: rgba(163, 176, 135, 0.2);
+  --border-hover: rgba(163, 176, 135, 0.4);
+  
+  /* Logo filter - invert to light */
+  --logo-filter: brightness(0) invert(1);
+  
+  --primary: 163 176 135;
+  --primary-foreground: 27 33 26;
+  --secondary: 37 43 34;
+  --secondary-foreground: 232 237 227;
+  --muted-foreground: 163 176 135;
+  --card: 37 43 34;
+  --card-foreground: 232 237 227;
+  --popover: 37 43 34;
+  --popover-foreground: 232 237 227;
+  --input: rgba(163, 176, 135, 0.2);
+}
+
+/* Rose Color Scheme - White/Light with Rose accent (987070) */
+:root.rose {
+  --navy: #ffffff; /* Pure white */
+  --cream: #4a3a3a; /* Dark brown-gray */
+  --steel: #987070; /* Muted rose */
+  --navy-light: #fafafa;
+  --steel-light: #7a5a5a;
+  
+  --background: #ffffff; /* Pure white */
+  --foreground: #4a3a3a; /* Dark brown-gray */
+  --surface: #fafafa; /* Off-white */
+  --surface-hover: #f5f5f5;
+  --accent: #987070; /* Muted rose */
+  --accent-hover: #7a5a5a; /* Darker rose */
+  --muted: rgba(152, 112, 112, 0.6);
+  --border: rgba(74, 58, 58, 0.15);
+  --border-hover: rgba(74, 58, 58, 0.3);
+  
+  /* Logo filter - keep dark */
+  --logo-filter: brightness(0);
+  
+  --primary: 152 112 112;
+  --primary-foreground: 255 255 255;
+  --secondary: 250 250 250;
+  --secondary-foreground: 74 58 58;
+  --muted-foreground: 152 112 112;
+  --card: 255 255 255;
+  --card-foreground: 74 58 58;
+  --popover: 255 255 255;
+  --popover-foreground: 74 58 58;
+  --input: rgba(74, 58, 58, 0.1);
 }
 
 @theme inline {
@@ -116,6 +215,30 @@
   background-image: 
     url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238da9c4' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
+}
+
+/* Blue scheme - dark background pattern */
+:root.blue .hero-bg::before {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230b2545' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Green scheme - dark background pattern */
+:root.green .hero-bg::before {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232d3526' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Dark green scheme - light background pattern */
+:root.dark-green .hero-bg::before {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23A3B087' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Rose scheme - dark background pattern */
+:root.rose .hero-bg::before {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a3a3a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Section backgrounds */

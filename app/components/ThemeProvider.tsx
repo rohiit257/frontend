@@ -2,13 +2,14 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import { Palette } from 'lucide-react';
 
-type Theme = 'dark' | 'light';
+type ColorScheme = 'blue' | 'green' | 'dark-green' | 'rose';
 
 interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
+  colorScheme: ColorScheme;
+  setColorScheme: (scheme: ColorScheme) => void;
+  cycleColorScheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -22,70 +23,90 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [colorScheme, setColorSchemeState] = useState<ColorScheme>('green');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('light', savedTheme === 'light');
+    const savedScheme = localStorage.getItem('colorScheme') as ColorScheme;
+    if (savedScheme && ['blue', 'green', 'dark-green', 'rose'].includes(savedScheme)) {
+      setColorSchemeState(savedScheme);
+      document.documentElement.className = savedScheme;
     } else {
-      // Set default theme class
-      document.documentElement.classList.toggle('light', false);
+      // Set default color scheme to green
+      document.documentElement.className = 'green';
     }
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('light', newTheme === 'light');
+  const setColorScheme = (scheme: ColorScheme) => {
+    setColorSchemeState(scheme);
+    localStorage.setItem('colorScheme', scheme);
+    document.documentElement.className = scheme;
+  };
+
+  const cycleColorScheme = () => {
+    const schemes: ColorScheme[] = ['blue', 'green', 'dark-green', 'rose'];
+    const currentIndex = schemes.indexOf(colorScheme);
+    const nextIndex = (currentIndex + 1) % schemes.length;
+    const nextScheme = schemes[nextIndex];
+    setColorScheme(nextScheme);
   };
 
   // Always provide the context, even during SSR/hydration
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ colorScheme, setColorScheme, cycleColorScheme }}>
       {children}
     </ThemeContext.Provider>
   );
 }
 
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
+  const { colorScheme, cycleColorScheme } = useTheme();
+
+  const getColorIndicator = () => {
+    switch (colorScheme) {
+      case 'blue':
+        return 'bg-[#134074]';
+      case 'green':
+        return 'bg-[#A3B087]';
+      case 'dark-green':
+        return 'bg-[#1B211A]';
+      case 'rose':
+        return 'bg-[#987070]';
+      default:
+        return 'bg-[#134074]';
+    }
+  };
 
   return (
     <motion.button
-      onClick={toggleTheme}
-      className="relative w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] transition-all overflow-hidden"
+      onClick={cycleColorScheme}
+      className="relative w-10 h-10 rounded-full bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center hover:border-[var(--accent)] transition-all overflow-hidden group"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      aria-label="Toggle theme"
+      aria-label="Change color scheme"
+      title={`Current: ${colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : 'Dark Green'}. Click to cycle.`}
     >
       <AnimatePresence mode="wait">
-        {theme === 'dark' ? (
-          <motion.div
-            key="moon"
-            initial={{ y: 20, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: -20, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Moon className="w-4 h-4 text-[var(--accent)]" />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="sun"
-            initial={{ y: 20, opacity: 0, rotate: -90 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: -20, opacity: 0, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Sun className="w-4 h-4 text-[var(--accent)]" />
-          </motion.div>
-        )}
+        <motion.div
+          key={colorScheme}
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          exit={{ scale: 0, rotate: 180 }}
+          transition={{ duration: 0.3 }}
+          className="relative w-6 h-6"
+        >
+          {/* Color indicator circle */}
+          <div className={`absolute inset-0 rounded-full ${getColorIndicator()} transition-colors duration-300`} />
+          {/* Palette icon overlay */}
+          <Palette className="absolute inset-0 w-4 h-4 m-auto text-white/80" />
+        </motion.div>
       </AnimatePresence>
+      
+      {/* Tooltip showing current scheme */}
+      <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-xs text-[var(--foreground)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+        {colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : colorScheme === 'dark-green' ? 'Dark Green' : 'Rose'}
+      </div>
     </motion.button>
   );
 }

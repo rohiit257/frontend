@@ -23,7 +23,7 @@ const QUICK_ACTIONS = [
 
 export default function AlwaysVisibleAvatar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<Mode>('avatar');
+  const [mode, setMode] = useState<Mode>('chat');
   const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [currentResponse, setCurrentResponse] = useState<string>('');
@@ -192,6 +192,10 @@ export default function AlwaysVisibleAvatar() {
       setTimeout(() => {
         generateVideoAvatar(greeting);
       }, 1000);
+    }
+    // Reset greeting when switching modes
+    if (mode === 'chat' && hasGreeted) {
+      setHasGreeted(false);
     }
   }, [hasGreeted, generateVideoAvatar, mode, isOpen]);
 
