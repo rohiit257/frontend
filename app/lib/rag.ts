@@ -62,7 +62,9 @@ async function generateEmbedding(text: string, useCache: boolean = true): Promis
       // Limit cache size to prevent memory issues
       if (queryEmbeddingsCache.size > 100) {
         const firstKey = queryEmbeddingsCache.keys().next().value;
-        queryEmbeddingsCache.delete(firstKey);
+        if (firstKey) {
+          queryEmbeddingsCache.delete(firstKey);
+        }
       }
     }
     

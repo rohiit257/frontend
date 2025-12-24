@@ -4,7 +4,6 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Volume2, VolumeX } from 'lucide-react';
 import Image from 'next/image';
-import * as sdk from '@d-id/client-sdk';
 
 interface DIDAgentManagerProps {
   agentId?: string;
@@ -32,9 +31,13 @@ export default function DIDAgentManager({
 
   // Initialize agent manager
   const initializeAgent = useCallback(async () => {
-    if (!agentId || !clientKey || agentManagerRef.current) return;
+    if (!agentId || !clientKey || agentManagerRef.current || typeof window === 'undefined') return;
 
     try {
+      // Dynamically import D-ID SDK only on client side
+      const sdk = await import('@d-id/client-sdk');
+      const { ChatMode } = await import('@d-id/client-sdk');
+
       // Define auth
       const auth = { type: 'key' as const, clientKey };
 
@@ -99,6 +102,7 @@ export default function DIDAgentManager({
         auth,
         callbacks,
         streamOptions,
+        mode: ChatMode.Functional, // Required by SDK - use Functional mode for full features
       });
 
       agentManagerRef.current = agentManager;

@@ -98,18 +98,17 @@ export default function AlwaysVisibleAvatar() {
     //    NEXT_PUBLIC_DID_AGENT_ID=agt_xxxxx
     //    NEXT_PUBLIC_DID_CLIENT_KEY=xxxxx
     
-    if (typeof window !== 'undefined') {
-      const envAgentId = process.env.NEXT_PUBLIC_DID_AGENT_ID;
-      const envClientKey = process.env.NEXT_PUBLIC_DID_CLIENT_KEY;
-      
-      if (envAgentId && envClientKey) {
-        setAgentId(envAgentId);
-        setClientKey(envClientKey);
-        setUseRealtimeAgent(true);
-      } else {
-        console.warn('D-ID Agent credentials not found. Real-time agent will be disabled. Set NEXT_PUBLIC_DID_AGENT_ID and NEXT_PUBLIC_DID_CLIENT_KEY in .env.local');
-        setUseRealtimeAgent(false);
-      }
+    // NEXT_PUBLIC_ variables are available at build time in client components
+    const envAgentId = process.env.NEXT_PUBLIC_DID_AGENT_ID;
+    const envClientKey = process.env.NEXT_PUBLIC_DID_CLIENT_KEY;
+    
+    if (envAgentId && envClientKey) {
+      setAgentId(envAgentId);
+      setClientKey(envClientKey);
+      setUseRealtimeAgent(true);
+    } else {
+      console.warn('D-ID Agent credentials not found. Real-time agent will be disabled. Set NEXT_PUBLIC_DID_AGENT_ID and NEXT_PUBLIC_DID_CLIENT_KEY in environment variables.');
+      setUseRealtimeAgent(false);
     }
   }, []);
 
