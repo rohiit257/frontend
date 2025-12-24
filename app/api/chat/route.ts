@@ -230,7 +230,7 @@ export async function POST(request: NextRequest) {
     const contextSection = context ? `\n\nCONTEXT ABOUT WINGS9:\n${context}\n` : '';
     const fullPrompt = `${SYSTEM_PROMPT}${contextSection}\n\nUser Question: ${message}\n\nProvide a helpful, intelligent response that understands the user's goals and needs.`;
 
-    let assistantMessage: string;
+    let assistantMessage: string = OUT_OF_SCOPE_RESPONSE;
 
     try {
       if (history.length > 0) {
@@ -260,6 +260,7 @@ export async function POST(request: NextRequest) {
       if (modelError.message?.includes('not found') || modelError.message?.includes('404')) {
         console.warn('Primary model not available, trying alternatives...');
         const alternativeModels = ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-pro-latest'];
+        let modelFound = false;
         
         for (const modelName of alternativeModels) {
           try {
@@ -284,6 +285,7 @@ export async function POST(request: NextRequest) {
               assistantMessage = result.response.text() || OUT_OF_SCOPE_RESPONSE;
             }
             console.log(`Successfully used model: ${modelName}`);
+            modelFound = true;
             break;
           } catch (altError) {
             console.warn(`Model ${modelName} also failed, trying next...`);
@@ -292,13 +294,17 @@ export async function POST(request: NextRequest) {
         }
         
         // If all models fail, use fallback response
-        if (!assistantMessage || assistantMessage === OUT_OF_SCOPE_RESPONSE) {
+        if (!modelFound) {
           assistantMessage = context 
             ? `Based on the information available: ${context.substring(0, 200)}... I'd be happy to help you with more details. Would you like to schedule a consultation?`
             : OUT_OF_SCOPE_RESPONSE;
         }
       } else {
-        throw modelError;
+        // For other errors, use fallback response
+        assistantMessage = context 
+          ? `Based on the information available: ${context.substring(0, 200)}... I'd be happy to help you with more details. Would you like to schedule a consultation?`
+          : OUT_OF_SCOPE_RESPONSE;
+        console.error('Model error (non-404):', modelError);
       }
     }
 
