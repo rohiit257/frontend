@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, X, MessageSquare, Video, Bot, User, Building2, Phone } from 'lucide-react';
+import { Send, X, MessageSquare, Video, Bot, User, Building2, Phone, Mic } from 'lucide-react';
 import LiveAvatar from './LiveAvatar';
 import DIDAgentManager from './DIDAgentManager';
 import VoiceInput from './VoiceInput';
+import ElevenLabsVoiceAgent from './ElevenLabsVoiceAgent';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -13,7 +14,7 @@ interface Message {
   timestamp: Date;
 }
 
-type Mode = 'chat' | 'avatar';
+type Mode = 'chat' | 'avatar' | 'voice';
 
 const QUICK_ACTIONS = [
   { text: 'Who is Prakash?', icon: User },
@@ -53,34 +54,34 @@ export default function AlwaysVisibleAvatar() {
   const speakWithWebSpeech = useCallback((text: string) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
-      
+
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0; // Natural rate
       utterance.pitch = 1.1; // Slightly higher pitch for Indian accent
       utterance.volume = 1;
-      
+
       const voices = window.speechSynthesis.getVoices();
       // Prefer Indian English voices, then any Indian voice, then fallback
-      const preferredVoice = voices.find(v => 
-        v.lang.includes('en-IN') || 
+      const preferredVoice = voices.find(v =>
+        v.lang.includes('en-IN') ||
         v.lang.includes('hi-IN') ||
         v.name.toLowerCase().includes('india') ||
         v.name.toLowerCase().includes('indian')
-      ) || voices.find(v => 
-        v.name.includes('Google') || 
+      ) || voices.find(v =>
+        v.name.includes('Google') ||
         v.name.includes('Microsoft') ||
         v.name.includes('Male')
       ) || voices[0];
-      
+
       if (preferredVoice) {
         utterance.voice = preferredVoice;
         utterance.lang = preferredVoice.lang || 'en-IN';
       }
-      
+
       utterance.onstart = () => setIsSpeaking(true);
       utterance.onend = () => setIsSpeaking(false);
       utterance.onerror = () => setIsSpeaking(false);
-      
+
       window.speechSynthesis.speak(utterance);
     }
   }, []);
@@ -97,11 +98,11 @@ export default function AlwaysVisibleAvatar() {
     // 7. Add to .env.local:
     //    NEXT_PUBLIC_DID_AGENT_ID=agt_xxxxx
     //    NEXT_PUBLIC_DID_CLIENT_KEY=xxxxx
-    
+
     // NEXT_PUBLIC_ variables are available at build time in client components
     const envAgentId = process.env.NEXT_PUBLIC_DID_AGENT_ID;
     const envClientKey = process.env.NEXT_PUBLIC_DID_CLIENT_KEY;
-    
+
     if (envAgentId && envClientKey) {
       setAgentId(envAgentId);
       setClientKey(envClientKey);
@@ -212,8 +213,8 @@ export default function AlwaysVisibleAvatar() {
     if (!messageToSend || isLoading || (isGeneratingVideo && mode === 'avatar')) return;
 
     setInputValue('');
-    setMessages(prev => [...prev, { 
-      role: 'user', 
+    setMessages(prev => [...prev, {
+      role: 'user',
       content: messageToSend,
       timestamp: new Date()
     }]);
@@ -255,9 +256,9 @@ export default function AlwaysVisibleAvatar() {
 
       const data = await response.json();
       const assistantResponse = data.response || 'I apologize, but I encountered an error. Please try again.';
-      
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
+
+      setMessages(prev => [...prev, {
+        role: 'assistant',
         content: assistantResponse,
         timestamp: new Date()
       }]);
@@ -278,8 +279,8 @@ export default function AlwaysVisibleAvatar() {
     } catch (error) {
       console.error('Chat error:', error);
       const errorMsg = 'I apologize, but I encountered an error. Please try again.';
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
+      setMessages(prev => [...prev, {
+        role: 'assistant',
         content: errorMsg,
         timestamp: new Date()
       }]);
@@ -367,11 +368,10 @@ export default function AlwaysVisibleAvatar() {
                       setCurrentVideoUrl(null);
                     }
                   }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${
-                    mode === 'chat'
-                      ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
-                      : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'chat'
+                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
+                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
+                    }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -380,19 +380,37 @@ export default function AlwaysVisibleAvatar() {
                 </motion.button>
                 <motion.button
                   onClick={() => setMode('avatar')}
-                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${
-                    mode === 'avatar'
-                      ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
-                      : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
-                  }`}
+                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'avatar'
+                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
+                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
+                    }`}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <Video className="w-3.5 h-3.5" />
-                  Avatar Mode
+                  Avatar
+                </motion.button>
+                <motion.button
+                  onClick={() => setMode('voice')}
+                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'voice'
+                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
+                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
+                    }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Mic className="w-3.5 h-3.5" />
+                  Voice
                 </motion.button>
               </div>
             </div>
+
+            {/* Voice Mode - ElevenLabs Voice Agent */}
+            {mode === 'voice' && (
+              <div className="flex-1 min-h-[400px]">
+                <ElevenLabsVoiceAgent />
+              </div>
+            )}
 
             {/* Avatar Section - Only in Avatar Mode */}
             {mode === 'avatar' && (
@@ -413,7 +431,7 @@ export default function AlwaysVisibleAvatar() {
                       }}
                     />
                   ) : (
-                    <LiveAvatar 
+                    <LiveAvatar
                       videoUrl={currentVideoUrl}
                       isGenerating={isGeneratingVideo || isLoading}
                       onVideoEnd={handleVideoEnd}
@@ -424,7 +442,7 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Quick Actions - Show when no messages or in chat mode */}
+            {/* Quick Actions - Show when no messages or in chat mode (not in voice mode) */}
             {messages.length === 0 && mode === 'chat' && (
               <div className="flex-1 overflow-y-auto px-4 py-4 bg-[var(--background)]/30">
                 <div className="space-y-2">
@@ -452,8 +470,8 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Messages */}
-            {messages.length > 0 && (
+            {/* Messages - Not shown in voice mode */}
+            {messages.length > 0 && mode !== 'voice' && (
               <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-[var(--background)]/30" style={{ maxHeight: mode === 'avatar' ? '200px' : '350px' }}>
                 {messages.map((msg, index) => (
                   <motion.div
@@ -463,11 +481,10 @@ export default function AlwaysVisibleAvatar() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[85%] px-3 py-2 rounded-xl text-xs ${
-                        msg.role === 'user'
-                          ? 'bg-[var(--accent)] text-[var(--background)] rounded-br-md'
-                          : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
-                      }`}
+                      className={`max-w-[85%] px-3 py-2 rounded-xl text-xs ${msg.role === 'user'
+                        ? 'bg-[var(--accent)] text-[var(--background)] rounded-br-md'
+                        : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
+                        }`}
                     >
                       {msg.content}
                     </div>
@@ -502,8 +519,8 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Loading indicator */}
-            {isLoading && (
+            {/* Loading indicator - Not shown in voice mode */}
+            {isLoading && mode !== 'voice' && (
               <div className="px-4 py-2 bg-[var(--background)]/50">
                 <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
                   <motion.div
@@ -516,43 +533,45 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Input Area */}
-            <div className="p-4 border-t border-[var(--border)] bg-[var(--background)]">
-              <div className="flex items-center gap-2">
-                <div className="flex-1 relative">
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Ask me anything..."
-                    disabled={isLoading || isGeneratingVideo || isListening}
-                    className="w-full px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)] text-[var(--foreground)] placeholder:text-[var(--muted)] disabled:opacity-50 transition-all text-sm"
-                    autoFocus
+            {/* Input Area - Not shown in voice mode */}
+            {mode !== 'voice' && (
+              <div className="p-4 border-t border-[var(--border)] bg-[var(--background)]">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 relative">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Ask me anything..."
+                      disabled={isLoading || isGeneratingVideo || isListening}
+                      className="w-full px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)] text-[var(--foreground)] placeholder:text-[var(--muted)] disabled:opacity-50 transition-all text-sm"
+                      autoFocus
+                    />
+                  </div>
+
+                  {/* Voice Input */}
+                  <VoiceInput
+                    onTranscript={handleVoiceTranscript}
+                    onListeningChange={setIsListening}
+                    disabled={isLoading || isGeneratingVideo || isSpeaking}
+                    className="flex-shrink-0"
                   />
+
+                  {/* Send Button */}
+                  <motion.button
+                    onClick={() => handleSend()}
+                    disabled={!inputValue.trim() || isLoading || isGeneratingVideo}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 rounded-xl bg-[var(--accent)] text-[var(--background)] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
+                  >
+                    <Send className="w-4 h-4" />
+                  </motion.button>
                 </div>
-                
-                {/* Voice Input */}
-                <VoiceInput
-                  onTranscript={handleVoiceTranscript}
-                  onListeningChange={setIsListening}
-                  disabled={isLoading || isGeneratingVideo || isSpeaking}
-                  className="flex-shrink-0"
-                />
-                
-                {/* Send Button */}
-                <motion.button
-                  onClick={() => handleSend()}
-                  disabled={!inputValue.trim() || isLoading || isGeneratingVideo}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-xl bg-[var(--accent)] text-[var(--background)] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
-                >
-                  <Send className="w-4 h-4" />
-                </motion.button>
               </div>
-            </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
