@@ -12,8 +12,8 @@ import { sendToN8N } from '@/app/lib/n8n-webhook';
  * 2. n8n webhook fallback (existing integration)
  */
 
-const CAL_COM_API_KEY = process.env.CAL_COM_API_KEY;
-const CAL_COM_EVENT_TYPE_ID = process.env.CAL_COM_EVENT_TYPE_ID;
+const CAL_COM_API_KEY = "cal_live_cfa78a5105fa48b0045933e4176caea9";
+const CAL_COM_EVENT_TYPE_ID = "4641132";
 
 interface BookingRequest {
     name: string;
