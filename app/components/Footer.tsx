@@ -108,7 +108,7 @@ export default function Footer() {
           className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--border)]"
         >
           <p className="text-[var(--muted)] text-sm">
-            © 2025 Wings9 Technologies. All rights reserved.
+            © 2026 Wings9 Technologies. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-[var(--muted)] hover:text-[var(--accent)] text-sm transition-colors">
