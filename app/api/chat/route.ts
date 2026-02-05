@@ -6,83 +6,101 @@ import {
   isBusinessRelated,
   buildContext,
 } from '@/app/lib/rag';
-import { sendCallBooking } from '@/app/lib/n8n-webhook';
+import { sendCallBooking, scheduleMeeting } from '@/app/lib/n8n-webhook';
 
 // Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSyAMjLJo-FfujPSH5ZSQFIxzb6FmW9LbK4E');
-// Try gemini-pro first, fallback to gemini-1.5-pro if needed
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Use gemini-2.5-flash for better performance
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // In-memory conversation storage (in production, use a database)
 const conversations = new Map<string, {
   history: Array<{ role: string; content: string }>;
   bookingState?: {
-    step: 'mobile' | 'timezone' | 'complete';
-    mobile?: string;
+    step: 'name' | 'email' | 'phone' | 'date' | 'time' | 'timezone' | 'purpose' | 'complete';
+    name?: string;
+    email?: string;
+    phone?: string;
+    date?: string;
+    time?: string;
     timezone?: string;
+    purpose?: string;
   };
 }>();
 
-const SYSTEM_PROMPT = `You are a formal, professional executive assistant representing Prakash Bhambhani and Wings9 Enterprises. You conduct yourself with professionalism, clarity, and courtesy.
+const SYSTEM_PROMPT = `You are an expert executive assistant representing Prakash Bhambhani and Wings9 Management Consultancies. You ONLY answer questions using information from the provided knowledge base.
 
-YOUR ROLE:
-- Act as a formal executive assistant, not an information database
-- Engage in professional, clear communication
-- Help users understand how Wings9 can assist them
-- Guide users toward booking consultations when appropriate
-- Maintain a professional yet approachable tone
+CRITICAL RULES - FOLLOW STRICTLY:
+1. **ONLY use information from the KNOWLEDGE BASE provided below**
+2. **NEVER make up information or answer from general knowledge**
+3. **If the knowledge base doesn't contain the answer, politely say you don't have that information**
+4. **Stay strictly within Wings9's domain**: business setup, immigration, tax compliance, corporate services in UAE/Middle East/India
 
-COMMUNICATION STYLE:
-- Speak formally but naturally, like a professional assistant
-- Use clear, direct language without being robotic
-- Never start responses with phrases like "Based on the information available" or "According to the data"
-- Never dump information in brackets like "[FIRM] Wings9 (Wings9 Enterprises) is..."
-- Integrate information naturally into your responses
-- Keep responses concise and professional (2-3 sentences ideal)
-- Sound like you're speaking directly to the user, not reading from a document
+YOUR IDENTITY:
+- You represent Wings9, a professional services firm specializing in business setup, immigration, tax compliance, and corporate services
+- You have access to a comprehensive knowledge base about Wings9's services
+- You ONLY provide information that exists in your knowledge base
 
-RESPONSE FORMAT:
-- Never use phrases like "Based on the information available" or "According to the context"
-- Never show raw data or information in brackets
-- Never say "I'd be happy to help you with more details" as a generic fallback
-- Instead, provide a direct, helpful answer to their specific question
-- If you don't have specific information, say "I can help you get that information" or "Let me connect you with the right person"
+WHAT YOU CAN ANSWER:
+- Questions about Wings9 services (business setup, immigration, golden visa, PRO services, tax, etc.)
+- Questions about UAE/Dubai business processes that are in your knowledge base
+- Questions about Prakash Bhambhani and Wings9's portfolio
+- How to contact Wings9 or schedule consultations
 
-WHEN TO USE CONTEXT INFORMATION:
-- Use context to provide accurate answers, but integrate it naturally into your response
-- Don't quote information verbatim - paraphrase and make it conversational
-- Only mention specific details when directly relevant to the user's question
-- If the user asks "What is Wings9?", answer naturally: "Wings9 is a multi-domain professional services firm operating across UAE, Middle East, India, and international markets. We help entrepreneurs, SMEs, and corporates with business expansion and growth."
-- Never say "Wings9 (Wings9 Enterprises) is..." - just say "Wings9 is..."
+WHAT YOU CANNOT ANSWER:
+- General questions not related to Wings9 or its services
+- Questions outside your knowledge base scope
+- Personal advice not covered in your knowledge base
+- Topics unrelated to business setup, immigration, or corporate services
 
-INTELLIGENCE & UNDERSTANDING:
-- Understand what the user is really trying to achieve
-- Identify their needs and goals through conversation
-- Provide direct, helpful answers to their questions
-- Connect their needs to relevant services naturally
-- Be proactive but maintain professionalism
+HOW TO RESPOND:
 
-CALL BOOKING:
-- When user wants to book a call/consultation/appointment, guide them through:
-  1. First ask: "I'd be happy to schedule a consultation. May I have your mobile number?"
-  2. After getting mobile number, ask: "Thank you. What timezone are you in? (e.g., IST, EST, PST, GMT)"
-  3. After getting both, confirm: "Perfect. I've noted your details. Prakash's team will contact you shortly to confirm the consultation time."
+**When you HAVE the information:**
+- Provide a complete, detailed answer from the knowledge base
+- Include specific details: processes, requirements, benefits, timelines
+- Be professional, warm, and helpful
+- Structure longer answers clearly
+- End with a relevant next step or consultation offer
 
-GENERAL ASSISTANCE:
-- Answer questions directly and professionally
-- If you don't know something specific, say "I can help you get that information" or "Let me connect you with someone who can assist with that"
-- Be helpful and solution-oriented
-- Maintain a formal, professional tone throughout
+**When you DON'T HAVE the information:**
+- Be honest and direct: "I don't have specific information about that in my knowledge base."
+- Offer to connect them: "However, I can schedule a consultation with Prakash or our team who can help you with that. Would you like to book a call?"
+- NEVER make up or guess information
 
-PERSONALITY:
-- Formal and professional executive assistant
-- Clear and direct in communication
-- Helpful and solution-oriented
-- Courteous and respectful
-- Never robotic or database-like`;
+RESPONSE STYLE:
+- Professional yet conversational
+- Complete and informative (use the full knowledge base)
+- Natural language (avoid "Based on the information available")
+- Specific and detailed when you have the information
+- Honest when you don't have the information
+
+EXAMPLES:
+
+✅ GOOD (Knowledge base has info):
+User: "What is the UAE Golden Visa?"
+You: "The UAE Golden Visa is a 10-year renewable residence visa offering self-sponsored residency. Wings9 can help you qualify through several pathways: as an investor (projects valued at AED 500,000+), as an entrepreneur with high-growth potential, or through specialized talents. The process involves document preparation, application submission, and coordination with immigration authorities. Would you like to schedule a consultation to discuss your eligibility?"
+
+✅ GOOD (Knowledge base doesn't have info):
+User: "What's the weather like in Dubai?"
+You: "I don't have information about weather in my knowledge base. I specialize in Wings9's business setup, immigration, and corporate services. Is there anything related to these services I can help you with?"
+
+❌ BAD (Making up info):
+User: "What are the best restaurants in Dubai?"
+You: "Dubai has many great restaurants like..." [NEVER DO THIS]
+
+BOOKING CONSULTATIONS:
+- Proactively suggest consultations for complex questions or when you don't have specific details
+- Guide through the 7-step booking process professionally
+- Make it easy: "Would you like to schedule a consultation with Prakash to discuss this?"
+
+REMEMBER:
+- Your knowledge is LIMITED to the provided knowledge base
+- NEVER answer from general knowledge or make assumptions
+- Be helpful within your scope, honest about your limitations
+- Guide users to consultations when needed`;
 
 const OUT_OF_SCOPE_RESPONSE =
-  "How may I assist you today? I can provide information about our services or help you schedule a consultation with Prakash.";
+  "I apologize, but I don't have information about that in my knowledge base. I specialize in Wings9's services including business setup, immigration, golden visa, tax compliance, and corporate services in UAE and Middle East. Is there anything related to these services I can help you with? Or would you like to schedule a consultation with our team?";
 
 // In-memory store for chunks (embeddings are generated on-demand)
 const knowledgeChunks = getKnowledgeChunks();
@@ -104,9 +122,29 @@ function extractPhoneNumber(message: string): string | null {
   return match ? match[0].replace(/[-.\s()]/g, '') : null;
 }
 
+// Helper function to validate email
+function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Helper function to validate date (YYYY-MM-DD)
+function isValidDate(date: string): boolean {
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(date)) return false;
+  const parsedDate = new Date(date);
+  return !isNaN(parsedDate.getTime()) && parsedDate > new Date();
+}
+
+// Helper function to validate time (HH:mm)
+function isValidTime(time: string): boolean {
+  const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d)$/;
+  return timeRegex.test(time);
+}
+
 // Helper function to extract timezone
 function extractTimezone(message: string): string | null {
-  const timezoneRegex = /\b(IST|EST|PST|MST|CST|GMT|UTC|PDT|EDT|CDT|MDT|PST|EST|CST|MST|PST|JST|CET|EET|WET|BST|AEST|AEDT|ACST|ACDT|AWST|NZST|NZDT)\b/i;
+  const timezoneRegex = /\b(IST|EST|PST|MST|CST|GMT|UTC|PDT|EDT|CDT|MDT|PST|EST|CST|MST|PST|JST|CET|EET|WET|BST|AEST|AEDT|ACST|ACDT|AWST|NZST|NZDT|GST|AST)\b/i;
   const match = message.match(timezoneRegex);
   return match ? match[0].toUpperCase() : null;
 }
@@ -136,78 +174,223 @@ export async function POST(request: NextRequest) {
     if (conversation.bookingState) {
       const { step } = conversation.bookingState;
       
-      if (step === 'mobile') {
-        const phoneNumber = extractPhoneNumber(message) || message.trim();
-        if (phoneNumber.length >= 10) {
-          conversation.bookingState.mobile = phoneNumber;
-          conversation.bookingState.step = 'timezone';
+      // Step 1: Collect name
+      if (step === 'name') {
+        const name = message.trim();
+        if (name.length >= 2) {
+          conversation.bookingState.name = name;
+          conversation.bookingState.step = 'email';
           conversation.history.push(
             { role: 'user', content: message },
-            { role: 'assistant', content: `Great! I've noted your number: ${phoneNumber}. What's your timezone? (e.g., IST, EST, PST, GMT)` }
+            { role: 'assistant', content: `Thank you, ${name}! What's your email address?` }
           );
           return NextResponse.json({
-            response: `Great! I've noted your number: ${phoneNumber}. What's your timezone? (e.g., IST, EST, PST, GMT)`,
+            response: `Thank you, ${name}! What's your email address?`,
             bookingState: conversation.bookingState,
             sessionId: currentSessionId,
           });
         } else {
           return NextResponse.json({
-            response: "I need a valid mobile number to proceed. Please provide your mobile number with country code (e.g., +91 1234567890).",
+            response: "Please provide your full name.",
             bookingState: conversation.bookingState,
             sessionId: currentSessionId,
           });
         }
       }
       
+      // Step 2: Collect email
+      if (step === 'email') {
+        const email = message.trim();
+        if (isValidEmail(email)) {
+          conversation.bookingState.email = email;
+          conversation.bookingState.step = 'phone';
+          conversation.history.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: "Great! What's your phone number? (Include country code, e.g., +971 50 123 4567)" }
+          );
+          return NextResponse.json({
+            response: "Great! What's your phone number? (Include country code, e.g., +971 50 123 4567)",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        } else {
+          return NextResponse.json({
+            response: "Please provide a valid email address.",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        }
+      }
+      
+      // Step 3: Collect phone
+      if (step === 'phone') {
+        const phoneNumber = extractPhoneNumber(message) || message.trim();
+        if (phoneNumber.length >= 10) {
+          conversation.bookingState.phone = phoneNumber;
+          conversation.bookingState.step = 'date';
+          conversation.history.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: "Perfect! What date would you prefer for the consultation? (Format: YYYY-MM-DD, e.g., 2026-02-10)" }
+          );
+          return NextResponse.json({
+            response: "Perfect! What date would you prefer for the consultation? (Format: YYYY-MM-DD, e.g., 2026-02-10)",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        } else {
+          return NextResponse.json({
+            response: "Please provide a valid phone number with country code (e.g., +971 50 123 4567).",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        }
+      }
+      
+      // Step 4: Collect date
+      if (step === 'date') {
+        const date = message.trim();
+        if (isValidDate(date)) {
+          conversation.bookingState.date = date;
+          conversation.bookingState.step = 'time';
+          conversation.history.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: "Excellent! What time would work best for you? (Format: HH:mm in 24-hour, e.g., 14:00 for 2 PM)" }
+          );
+          return NextResponse.json({
+            response: "Excellent! What time would work best for you? (Format: HH:mm in 24-hour, e.g., 14:00 for 2 PM)",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        } else {
+          return NextResponse.json({
+            response: "Please provide a valid future date in YYYY-MM-DD format (e.g., 2026-02-10).",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        }
+      }
+      
+      // Step 5: Collect time
+      if (step === 'time') {
+        const time = message.trim();
+        if (isValidTime(time)) {
+          conversation.bookingState.time = time;
+          conversation.bookingState.step = 'timezone';
+          conversation.history.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: "Great! What's your timezone? (e.g., GST, IST, EST, PST, GMT)" }
+          );
+          return NextResponse.json({
+            response: "Great! What's your timezone? (e.g., GST, IST, EST, PST, GMT)",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        } else {
+          return NextResponse.json({
+            response: "Please provide a valid time in HH:mm format (e.g., 14:00 for 2 PM, 09:30 for 9:30 AM).",
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        }
+      }
+      
+      // Step 6: Collect timezone
       if (step === 'timezone') {
         const extractedTimezone = extractTimezone(message);
         const timezone = extractedTimezone || message.trim().toUpperCase();
         
         if (!timezone || timezone.length < 2) {
           return NextResponse.json({
-            response: "Please provide a valid timezone (e.g., IST, EST, PST, GMT, UTC).",
+            response: "Please provide a valid timezone (e.g., GST, IST, EST, PST, GMT, UTC).",
             bookingState: conversation.bookingState,
             sessionId: currentSessionId,
           });
         }
         
         conversation.bookingState.timezone = timezone;
-        conversation.bookingState.step = 'complete';
+        conversation.bookingState.step = 'purpose';
         conversation.history.push(
           { role: 'user', content: message },
-          { role: 'assistant', content: `Perfect! I've noted your details:\n- Mobile: ${conversation.bookingState.mobile}\n- Timezone: ${timezone}\n\nPrakash's team will contact you shortly to confirm the consultation time. Is there anything else I can help you with?` }
+          { role: 'assistant', content: "Almost done! What's the purpose of this consultation? (Optional - press Enter to skip)" }
         );
-        
-        // Send to n8n webhook
-        try {
-          await sendCallBooking({
-            mobile: conversation.bookingState.mobile!,
-            timezone: timezone,
-            sessionId: currentSessionId,
-          });
-          console.log('Call booking sent to n8n successfully');
-        } catch (error) {
-          console.error('Failed to send call booking to n8n:', error);
-          // Don't fail the request if webhook fails
-        }
-        
         return NextResponse.json({
-          response: `Perfect! I've noted your details:\n- Mobile: ${conversation.bookingState.mobile}\n- Timezone: ${timezone}\n\nPrakash's team will contact you shortly to confirm the consultation time. Is there anything else I can help you with?`,
+          response: "Almost done! What's the purpose of this consultation? (Optional - press Enter to skip)",
           bookingState: conversation.bookingState,
           sessionId: currentSessionId,
         });
+      }
+      
+      // Step 7: Collect purpose (optional) and complete
+      if (step === 'purpose') {
+        const purpose = message.trim();
+        if (purpose && purpose.toLowerCase() !== 'skip') {
+          conversation.bookingState.purpose = purpose;
+        }
+        
+        conversation.bookingState.step = 'complete';
+        
+        // Send to n8n meeting scheduler webhook
+        try {
+          const result = await scheduleMeeting({
+            name: conversation.bookingState.name!,
+            email: conversation.bookingState.email!,
+            phone: conversation.bookingState.phone!,
+            date: conversation.bookingState.date!,
+            time: conversation.bookingState.time!,
+            timezone: conversation.bookingState.timezone!,
+            purpose: conversation.bookingState.purpose,
+          });
+          
+          if (result.success) {
+            const confirmationMessage = `Perfect! Your consultation has been scheduled:\n\n📅 Date: ${conversation.bookingState.date}\n🕐 Time: ${conversation.bookingState.time} ${conversation.bookingState.timezone}\n👤 Name: ${conversation.bookingState.name}\n📧 Email: ${conversation.bookingState.email}\n📱 Phone: ${conversation.bookingState.phone}${conversation.bookingState.purpose ? `\n📝 Purpose: ${conversation.bookingState.purpose}` : ''}\n\nYou'll receive a confirmation email shortly with the meeting details and calendar invite. Is there anything else I can help you with?`;
+            
+            conversation.history.push(
+              { role: 'user', content: message },
+              { role: 'assistant', content: confirmationMessage }
+            );
+            
+            return NextResponse.json({
+              response: confirmationMessage,
+              bookingState: conversation.bookingState,
+              sessionId: currentSessionId,
+            });
+          } else {
+            const errorMessage = `I've collected your details, but there was an issue scheduling the meeting. Our team will contact you shortly at ${conversation.bookingState.phone} to confirm the consultation.`;
+            conversation.history.push(
+              { role: 'user', content: message },
+              { role: 'assistant', content: errorMessage }
+            );
+            return NextResponse.json({
+              response: errorMessage,
+              bookingState: conversation.bookingState,
+              sessionId: currentSessionId,
+            });
+          }
+        } catch (error) {
+          console.error('Failed to schedule meeting:', error);
+          const errorMessage = `I've collected your details. Our team will contact you shortly at ${conversation.bookingState.phone} to confirm the consultation.`;
+          conversation.history.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: errorMessage }
+          );
+          return NextResponse.json({
+            response: errorMessage,
+            bookingState: conversation.bookingState,
+            sessionId: currentSessionId,
+          });
+        }
       }
     }
 
     // Check if user wants to book a call
     if (wantsToBookCall(message) && !conversation.bookingState) {
-      conversation.bookingState = { step: 'mobile' };
+      conversation.bookingState = { step: 'name' };
       conversation.history.push(
         { role: 'user', content: message },
-        { role: 'assistant', content: "I'd be happy to schedule a consultation! Could you please provide your mobile number?" }
+        { role: 'assistant', content: "I'd be happy to schedule a consultation with Prakash! Let's get started. What's your name?" }
       );
       return NextResponse.json({
-        response: "I'd be happy to schedule a consultation! Could you please provide your mobile number?",
+        response: "I'd be happy to schedule a consultation with Prakash! Let's get started. What's your name?",
         bookingState: conversation.bookingState,
         sessionId: currentSessionId,
       });
@@ -238,7 +421,7 @@ export async function POST(request: NextRequest) {
             temperature: 0.7,
             topK: 40,
             topP: 0.95,
-            maxOutputTokens: 300,
+            maxOutputTokens: 1000,  // Increased for comprehensive responses
           },
         });
 
@@ -253,7 +436,7 @@ export async function POST(request: NextRequest) {
       // If model not found, try alternative models
       if (modelError.message?.includes('not found') || modelError.message?.includes('404')) {
         console.warn('Primary model not available, trying alternatives...');
-        const alternativeModels = ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-1.5-pro-latest'];
+        const alternativeModels = ['gemini-2.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-1.5-pro-latest'];
         let modelFound = false;
         
         for (const modelName of alternativeModels) {
@@ -269,7 +452,7 @@ export async function POST(request: NextRequest) {
                   temperature: 0.7,
                   topK: 40,
                   topP: 0.95,
-                  maxOutputTokens: 300,
+                  maxOutputTokens: 1000,  // Increased for comprehensive responses
                 },
               });
               const result = await chat.sendMessage(message);

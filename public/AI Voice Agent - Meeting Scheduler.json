@@ -1,0 +1,139 @@
+{
+  "name": "AI Voice Agent - Meeting Scheduler",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "schedule-meeting",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        240,
+        32
+      ],
+      "webhookId": "auto-generated",
+      "id": "ffdba42b-ac2c-433c-9f46-3d2d5c78e030"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and format data from webhook\nconst name = $input.item.json.name;\nconst email = $input.item.json.email;\nconst date = $input.item.json.date;\nconst time = $input.item.json.time;\nconst timezone = $input.item.json.timezone || 'America/New_York';\nconst purpose = $input.item.json.purpose || 'Meeting';\nconst phone = $input.item.json.phone || '';\n\n// Create start datetime\nconst startDateTime = `${date}T${time}:00`;\n\n// Calculate end time (1 hour later)\nconst start = new Date(startDateTime);\nconst end = new Date(start.getTime() + 60 * 60 * 1000);\nconst endDateTime = end.toISOString().split('.')[0];\n\n// Format time for email (2:00 PM)\nconst timeFormatted = new Date(`${date}T${time}`).toLocaleTimeString('en-US', {\n  hour: 'numeric',\n  minute: '2-digit',\n  hour12: true\n});\n\n// Format date for email (Tuesday, February 15, 2025)\nconst dateFormatted = new Date(date).toLocaleDateString('en-US', {\n  weekday: 'long',\n  year: 'numeric',\n  month: 'long',\n  day: 'numeric'\n});\n\nreturn {\n  name,\n  email,\n  phone,\n  startDateTime,\n  endDateTime,\n  timezone,\n  purpose,\n  timeFormatted,\n  dateFormatted\n};"
+      },
+      "name": "Process Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        32
+      ],
+      "id": "399482ac-874b-43ec-910a-f4322e61fe16"
+    },
+    {
+      "parameters": {
+        "calendar": "primary",
+        "start": "={{ $json.startDateTime }}",
+        "end": "={{ $json.endDateTime }}",
+        "useDefaultReminders": false,
+        "additionalFields": {}
+      },
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        640,
+        32
+      ],
+      "id": "53bd579d-9c84-495b-9b3e-ad9fe5a8e3dd"
+    },
+    {
+      "parameters": {
+        "subject": "=Meeting Confirmed: {{ $('Process Data').item.json.purpose }}",
+        "message": "=<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: #4285f4; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }\n    .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 5px 5px; }\n    .details { background: white; padding: 20px; border-left: 4px solid #4285f4; margin: 20px 0; }\n    .button { display: inline-block; padding: 12px 30px; background: #4285f4; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }\n    .footer { text-align: center; margin-top: 20px; color: #777; font-size: 12px; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>✅ Meeting Confirmed!</h1>\n    </div>\n    <div class=\"content\">\n      <p>Hi {{ $('Process Data').item.json.name }},</p>\n      <p>Your meeting has been successfully scheduled. Here are the details:</p>\n      \n      <div class=\"details\">\n        <p><strong>📅 Date:</strong> {{ $('Process Data').item.json.dateFormatted }}</p>\n        <p><strong>⏰ Time:</strong> {{ $('Process Data').item.json.timeFormatted }} ({{ $('Process Data').item.json.timezone }})</p>\n        <p><strong>📝 Purpose:</strong> {{ $('Process Data').item.json.purpose }}</p>\n        <p><strong>🔗 Meeting Link:</strong> <a href=\"{{ $json.hangoutLink }}\">Join Google Meet</a></p>\n      </div>\n      \n      <p>A calendar invitation has been sent to your email. Please accept it to add the meeting to your calendar.</p>\n      \n      <a href=\"{{ $json.htmlLink }}\" class=\"button\">View in Google Calendar</a>\n      \n      <p><strong>Need to reschedule?</strong> Just reply to this email and we'll help you out.</p>\n      \n      <div class=\"footer\">\n        <p>This is an automated confirmation from your AI assistant.</p>\n      </div>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {}
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2,
+      "position": [
+        848,
+        32
+      ],
+      "id": "673038cd-ed76-41a2-a747-215ec8b1f6d3",
+      "webhookId": "984e3f52-ea2c-470b-89b2-758376aa4307"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"success\": true,\n  \"message\": \"Meeting scheduled successfully\",\n  \"details\": {\n    \"eventId\": \"{{ $('Google Calendar').item.json.id }}\",\n    \"meetingLink\": \"{{ $('Google Calendar').item.json.hangoutLink }}\",\n    \"calendarLink\": \"{{ $('Google Calendar').item.json.htmlLink }}\",\n    \"date\": \"{{ $('Process Data').item.json.dateFormatted }}\",\n    \"time\": \"{{ $('Process Data').item.json.timeFormatted }}\"\n  }\n}",
+        "options": {}
+      },
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        32
+      ],
+      "id": "7a71e8f6-0767-43c8-b74a-0f9d212b89b0"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Process Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Data": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "",
+  "meta": {
+    "instanceId": "ebf3c089ab09839c90f9105bdf53ec06b2223118d0573f12e0bb292d43727587"
+  },
+  "tags": []
+}

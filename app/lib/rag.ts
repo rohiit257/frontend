@@ -1,4 +1,5 @@
 import { knowledgeBase } from './knowledge-base';
+import { getWings9CorpusChunks } from './wings9-corpus';
 import OpenAI from 'openai';
 
 /**
@@ -298,6 +299,15 @@ export function getKnowledgeChunks(): KnowledgeChunk[] {
     type: 'firm',
     metadata: {}
   });
+
+  // Add Wings9 Corpus chunks
+  try {
+    const corpusChunks = getWings9CorpusChunks();
+    chunks.push(...corpusChunks);
+    console.log(`Integrated ${corpusChunks.length} Wings9 corpus chunks into knowledge base`);
+  } catch (error) {
+    console.error('Failed to load Wings9 corpus chunks:', error);
+  }
 
   return chunks;
 }

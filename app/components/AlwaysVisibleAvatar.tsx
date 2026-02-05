@@ -14,7 +14,7 @@ interface Message {
   timestamp: Date;
 }
 
-type Mode = 'chat' | 'avatar' | 'voice';
+type Mode = 'chat' | 'voice';
 
 const QUICK_ACTIONS = [
   { text: 'Who is Prakash?', icon: User },
@@ -131,74 +131,14 @@ export default function AlwaysVisibleAvatar() {
     }
   }, [useRealtimeAgent]);
 
-  // Generate D-ID video avatar with lip sync - Only called in avatar mode
+  // Generate D-ID video avatar with lip sync - No longer used since avatar mode removed
   const generateVideoAvatar = useCallback(async (text: string) => {
-    // Double check we're in avatar mode before generating
-    if (mode !== 'avatar') {
-      speakWithWebSpeech(text);
-      return;
-    }
-
-    // Try real-time agent first (using SDK)
-    if (useRealtimeAgent && agentId && clientKey) {
-      const sent = await sendToAgent(text);
-      if (sent) {
-        return; // Real-time agent is handling it
-      }
-    }
-
-    // Fallback to video generation
-    setIsGeneratingVideo(true);
-    setCurrentVideoUrl(null);
-    setIsSpeaking(true);
-
-    try {
-      const response = await fetch('/api/did/talk', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text,
-          language: 'en',
-          voiceGender: 'male',
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Video generation failed');
-      }
-
-      const data = await response.json();
-      if (data.videoUrl) {
-        setCurrentVideoUrl(data.videoUrl);
-      } else {
-        throw new Error('No video URL returned');
-      }
-    } catch (error: any) {
-      console.error('Video generation error:', error);
-      speakWithWebSpeech(text);
-    } finally {
-      setIsGeneratingVideo(false);
-    }
-  }, [speakWithWebSpeech, mode, useRealtimeAgent, agentId, clientKey, sendToAgent]);
+    // Just use web speech as fallback
+    speakWithWebSpeech(text);
+  }, [speakWithWebSpeech]);
 
 
-  // Initial greeting - only in avatar mode
-  useEffect(() => {
-    if (!hasGreeted && mode === 'avatar' && isOpen) {
-      setHasGreeted(true);
-      const greeting = "Hello! I'm Prakash's AI assistant. Ask me anything about our services or businesses.";
-      setTimeout(() => {
-        generateVideoAvatar(greeting);
-      }, 1000);
-    }
-    // Reset greeting when switching modes
-    if (mode === 'chat' && hasGreeted) {
-      setHasGreeted(false);
-    }
-  }, [hasGreeted, generateVideoAvatar, mode, isOpen]);
+
 
   // Handle video end
   const handleVideoEnd = useCallback(() => {
@@ -209,8 +149,7 @@ export default function AlwaysVisibleAvatar() {
   // Send message
   const handleSend = useCallback(async (overrideMessage?: string) => {
     const messageToSend = overrideMessage || inputValue.trim();
-    // Only block if loading, or if generating video in avatar mode
-    if (!messageToSend || isLoading || (isGeneratingVideo && mode === 'avatar')) return;
+    if (!messageToSend || isLoading) return;
 
     setInputValue('');
     setMessages(prev => [...prev, {
@@ -221,21 +160,7 @@ export default function AlwaysVisibleAvatar() {
     setIsLoading(true);
     setCurrentResponse('');
 
-    // If using real-time agent in avatar mode, use agent's chat method directly
-    if (mode === 'avatar' && useRealtimeAgent && agentChatRef.current) {
-      try {
-        setIsSpeaking(true);
-        // Agent will respond via its LLM and stream the video automatically
-        agentChatRef.current(messageToSend);
-        // The agent will handle the response via onNewMessage callback
-        setIsLoading(false);
-        return;
-      } catch (error) {
-        console.error('Agent chat error:', error);
-        setIsLoading(false);
-        setIsSpeaking(false);
-      }
-    }
+
 
     // Otherwise, use our chat API
     try {
@@ -264,16 +189,8 @@ export default function AlwaysVisibleAvatar() {
       }]);
       setCurrentResponse(assistantResponse);
 
-      // Generate lip-sync video only in avatar mode
-      if (mode === 'avatar') {
-        // If using real-time agent, use speak method
-        if (useRealtimeAgent && agentSpeakRef.current) {
-          agentSpeakRef.current(assistantResponse);
-        } else {
-          await generateVideoAvatar(assistantResponse);
-        }
-      } else {
-        // In chat mode, use text-to-speech only (no video generation)
+      // Use text-to-speech only in voice mode, not in chat mode
+      if (mode === 'voice') {
         speakWithWebSpeech(assistantResponse);
       }
     } catch (error) {
@@ -307,7 +224,7 @@ export default function AlwaysVisibleAvatar() {
   };
 
   return (
-    <div className="fixed bottom-6 left-6 z-50">
+    <div className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50">
       {/* Small Button to Open Assistant */}
       <AnimatePresence>
         {!isOpen && (
@@ -317,12 +234,12 @@ export default function AlwaysVisibleAvatar() {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 200 }}
             onClick={() => setIsOpen(true)}
-            className="w-14 h-14 rounded-full bg-[var(--accent)] text-[var(--background)] shadow-2xl flex items-center justify-center border-2 border-[var(--background)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95"
+            className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] shadow-2xl flex items-center justify-center border-2 border-[var(--background)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Open AI Assistant"
           >
-            <Bot className="w-6 h-6" />
+            <Bot className="w-7 h-7 md:w-6 md:h-6" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -335,30 +252,30 @@ export default function AlwaysVisibleAvatar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="w-[420px] max-w-[calc(100vw-3rem)] bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col"
-            style={{ maxHeight: 'calc(100vh - 120px)' }}
+            className="w-[calc(100vw-2rem)] md:w-[420px] max-w-[calc(100vw-2rem)] md:max-w-[420px] bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col"
+            style={{ maxHeight: 'calc(100vh - 100px)' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with Mode Toggle */}
-            <div className="bg-[var(--background)] p-3 border-b border-[var(--border)]">
+            <div className="bg-[var(--background)] p-3 md:p-3 border-b border-[var(--border)]">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <div className={`w-2 h-2 rounded-full ${isSpeaking || isLoading ? 'bg-green-500 animate-pulse' : 'bg-[var(--accent)]'}`} />
-                  <h3 className="font-semibold text-sm text-[var(--foreground)]">AI Assistant</h3>
+                  <h3 className="font-semibold text-sm md:text-sm text-[var(--foreground)]">AI Assistant</h3>
                 </div>
                 <motion.button
                   onClick={() => setIsOpen(false)}
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
-                  className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--muted)]/20 flex items-center justify-center transition-colors"
+                  className="w-8 h-8 md:w-7 md:h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--muted)]/20 flex items-center justify-center transition-colors"
                   aria-label="Close"
                 >
-                  <X className="w-4 h-4 text-[var(--foreground)]" />
+                  <X className="w-5 h-5 md:w-4 md:h-4 text-[var(--foreground)]" />
                 </motion.button>
               </div>
 
               {/* Mode Toggle Buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-1.5 md:gap-2">
                 <motion.button
                   onClick={() => {
                     setMode('chat');
@@ -368,7 +285,7 @@ export default function AlwaysVisibleAvatar() {
                       setCurrentVideoUrl(null);
                     }
                   }}
-                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'chat'
+                  className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'chat'
                     ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
                     : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
                     }`}
@@ -376,23 +293,12 @@ export default function AlwaysVisibleAvatar() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  Chat Mode
-                </motion.button>
-                <motion.button
-                  onClick={() => setMode('avatar')}
-                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'avatar'
-                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
-                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
-                    }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Video className="w-3.5 h-3.5" />
-                  Avatar
+                  <span className="hidden sm:inline">Chat Mode</span>
+                  <span className="sm:hidden">Chat</span>
                 </motion.button>
                 <motion.button
                   onClick={() => setMode('voice')}
-                  className={`flex-1 px-3 py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-2 ${mode === 'voice'
+                  className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'voice'
                     ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
                     : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
                     }`}
@@ -400,51 +306,24 @@ export default function AlwaysVisibleAvatar() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <Mic className="w-3.5 h-3.5" />
-                  Voice
+                  <span className="hidden sm:inline">Voice</span>
+                  <span className="sm:hidden">Voice</span>
                 </motion.button>
               </div>
             </div>
 
             {/* Voice Mode - ElevenLabs Voice Agent */}
             {mode === 'voice' && (
-              <div className="flex-1 min-h-[400px]">
+              <div className="flex-1 min-h-[300px] md:min-h-[400px]">
                 <ElevenLabsVoiceAgent />
               </div>
             )}
 
-            {/* Avatar Section - Only in Avatar Mode */}
-            {mode === 'avatar' && (
-              <div className="p-4 bg-[var(--background)]/50 border-b border-[var(--border)] flex justify-center">
-                <div className="w-32 h-32">
-                  {useRealtimeAgent && agentId && clientKey ? (
-                    <DIDAgentManager
-                      agentId={agentId}
-                      clientKey={clientKey}
-                      isSpeaking={isSpeaking}
-                      onSpeakingChange={setIsSpeaking}
-                      onReady={(speakFn) => {
-                        agentSpeakRef.current = speakFn;
-                        // Also get chat function from window
-                        if (typeof (window as any).__agentChat === 'function') {
-                          agentChatRef.current = (window as any).__agentChat;
-                        }
-                      }}
-                    />
-                  ) : (
-                    <LiveAvatar
-                      videoUrl={currentVideoUrl}
-                      isGenerating={isGeneratingVideo || isLoading}
-                      onVideoEnd={handleVideoEnd}
-                      isSpeaking={isSpeaking}
-                    />
-                  )}
-                </div>
-              </div>
-            )}
+
 
             {/* Quick Actions - Show when no messages or in chat mode (not in voice mode) */}
             {messages.length === 0 && mode === 'chat' && (
-              <div className="flex-1 overflow-y-auto px-4 py-4 bg-[var(--background)]/30">
+              <div className="flex-1 overflow-y-auto px-3 md:px-4 py-3 md:py-4 bg-[var(--background)]/30">
                 <div className="space-y-2">
                   <p className="text-xs text-[var(--muted)] mb-3 text-center">Quick Actions:</p>
                   {QUICK_ACTIONS.map((action, index) => {
@@ -459,7 +338,7 @@ export default function AlwaysVisibleAvatar() {
                         transition={{ delay: index * 0.1 }}
                         whileHover={{ scale: 1.02, x: 4 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full px-4 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-left text-xs text-[var(--foreground)] hover:bg-[var(--surface)]/80 hover:border-[var(--accent)] transition-all flex items-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full px-3 md:px-4 py-3 md:py-3 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-left text-xs text-[var(--foreground)] hover:bg-[var(--surface)]/80 hover:border-[var(--accent)] transition-all flex items-center gap-2 md:gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Icon className="w-4 h-4 text-[var(--accent)] flex-shrink-0" />
                         <span className="flex-1">{action.text}</span>
@@ -472,7 +351,7 @@ export default function AlwaysVisibleAvatar() {
 
             {/* Messages - Not shown in voice mode */}
             {messages.length > 0 && mode !== 'voice' && (
-              <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 bg-[var(--background)]/30" style={{ maxHeight: mode === 'avatar' ? '200px' : '350px' }}>
+              <div className="flex-1 overflow-y-auto px-3 md:px-4 py-2 md:py-3 space-y-2 md:space-y-3 bg-[var(--background)]/30" style={{ maxHeight: '350px' }}>
                 {messages.map((msg, index) => (
                   <motion.div
                     key={index}
@@ -481,7 +360,7 @@ export default function AlwaysVisibleAvatar() {
                     className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[85%] px-3 py-2 rounded-xl text-xs ${msg.role === 'user'
+                      className={`max-w-[90%] md:max-w-[85%] px-3 py-2 rounded-xl text-xs ${msg.role === 'user'
                         ? 'bg-[var(--accent)] text-[var(--background)] rounded-br-md'
                         : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
                         }`}
@@ -508,7 +387,7 @@ export default function AlwaysVisibleAvatar() {
                         disabled={isLoading || isGeneratingVideo}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="px-3 py-1.5 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-xs text-[var(--foreground)] hover:bg-[var(--surface)]/80 hover:border-[var(--accent)] transition-all flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-2 md:px-3 py-1.5 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-xs text-[var(--foreground)] hover:bg-[var(--surface)]/80 hover:border-[var(--accent)] transition-all flex items-center gap-1 md:gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Icon className="w-3 h-3 text-[var(--accent)]" />
                         <span>{action.text}</span>
@@ -535,7 +414,7 @@ export default function AlwaysVisibleAvatar() {
 
             {/* Input Area - Not shown in voice mode */}
             {mode !== 'voice' && (
-              <div className="p-4 border-t border-[var(--border)] bg-[var(--background)]">
+              <div className="p-3 md:p-4 border-t border-[var(--border)] bg-[var(--background)]">
                 <div className="flex items-center gap-2">
                   <div className="flex-1 relative">
                     <input
@@ -546,7 +425,7 @@ export default function AlwaysVisibleAvatar() {
                       onKeyPress={handleKeyPress}
                       placeholder="Ask me anything..."
                       disabled={isLoading || isGeneratingVideo || isListening}
-                      className="w-full px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)] text-[var(--foreground)] placeholder:text-[var(--muted)] disabled:opacity-50 transition-all text-sm"
+                      className="w-full px-3 md:px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)] text-[var(--foreground)] placeholder:text-[var(--muted)] disabled:opacity-50 transition-all text-sm"
                       autoFocus
                     />
                   </div>
@@ -565,9 +444,9 @@ export default function AlwaysVisibleAvatar() {
                     disabled={!inputValue.trim() || isLoading || isGeneratingVideo}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 rounded-xl bg-[var(--accent)] text-[var(--background)] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
+                    className="w-11 h-11 md:w-10 md:h-10 rounded-xl bg-[var(--accent)] text-[var(--background)] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
                   >
-                    <Send className="w-4 h-4" />
+                    <Send className="w-5 h-5 md:w-4 md:h-4" />
                   </motion.button>
                 </div>
               </div>

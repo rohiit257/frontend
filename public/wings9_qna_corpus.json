@@ -1,0 +1,1242 @@
+{
+  "corpus_metadata": {
+    "title": "Wings9 Portfolio QNA Corpus",
+    "version": "1.0",
+    "created_date": "2026-02-04",
+    "description": "Comprehensive question-answer pairs for RAG bot training covering Wings9 Management Consultancies services, Prakash Bhambhani's portfolio, and Wings9 global operations",
+    "total_questions": 150,
+    "categories": [
+      "company_overview",
+      "services",
+      "business_setup",
+      "golden_visa",
+      "tax_compliance",
+      "immigration",
+      "leadership",
+      "contact_information",
+      "pricing",
+      "process",
+      "location_specific"
+    ]
+  },
+  "qna_pairs": [
+    {
+      "id": "Q001",
+      "category": "company_overview",
+      "question": "What is Wings9 Management Consultancies?",
+      "answer": "Wings9 Management Consultancies is a leading business consultancy based in Dubai, UAE, specializing in end-to-end corporate solutions including company setup, business formation, PRO services, Golden Visa assistance, VAT and corporate tax services, and more. They help entrepreneurs, SMEs, and multinational corporations establish and grow their businesses in the UAE.",
+      "keywords": ["wings9", "management consultancies", "dubai", "business consultancy"],
+      "related_links": ["https://wings9.ae/", "https://wings9.ae/about/"]
+    },
+    {
+      "id": "Q002",
+      "category": "company_overview",
+      "question": "Who is Prakash Bhambhani?",
+      "answer": "Prakash Bhambhani is a seasoned entrepreneur and consultant with 25+ years of experience in industries like hospitality, legal, real estate, international business, and consultancy. He is the CEO and driving force behind Wings9 Enterprises, leading five trailblazing enterprises that shape the future of their respective domains.",
+      "keywords": ["prakash bhambhani", "ceo", "entrepreneur", "wings9 founder"],
+      "related_links": ["https://www.prakash.ae/", "https://frontend-eta-nine-98.vercel.app/"]
+    },
+    {
+      "id": "Q003",
+      "category": "company_overview",
+      "question": "What companies are part of Wings9 Enterprises?",
+      "answer": "Wings9 Enterprises comprises five companies: 1) Wings9 Consultancies - business setup and consulting, 2) Wings9 Properties - real estate services, 3) Wings9 Vacation Homes - luxury vacation rentals, 4) Wings9 Technologies - technology solutions and digital transformation, and 5) Wings9 Fashions - contemporary fashion and lifestyle brand development.",
+      "keywords": ["wings9 enterprises", "companies", "portfolio", "subsidiaries"],
+      "related_links": ["https://www.prakash.ae/companies/"]
+    },
+    {
+      "id": "Q004",
+      "category": "services",
+      "question": "What are the main services offered by Wings9?",
+      "answer": "Wings9 offers comprehensive services including: Business Setup (Mainland, Free Zone, Offshore), Golden Visa assistance, VAT & Corporate Tax registration and filing, PRO Services, Embassy Services, Attestation & Notary services, Banking Solutions, SEZ (Special Economic Zone) setup, and Legal Assistance.",
+      "keywords": ["services", "business setup", "golden visa", "pro services"],
+      "related_links": ["https://wings9.ae/services"]
+    },
+    {
+      "id": "Q005",
+      "category": "business_setup",
+      "question": "What is the difference between Mainland and Free Zone company setup?",
+      "answer": "Mainland company setup allows you to operate your business seamlessly across Dubai and globally without restrictions, enabling direct B2C and B2B engagement throughout the UAE and bidding for government contracts. Free Zone setup offers 100% foreign ownership, zero income tax, complete repatriation of capital and profits, and operates within designated free zones with tax benefits but has restrictions on local market access.",
+      "keywords": ["mainland", "free zone", "company setup", "comparison"],
+      "related_links": ["https://wings9.ae/services/mainland", "https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q006",
+      "category": "business_setup",
+      "question": "What is offshore company setup?",
+      "answer": "Offshore company setup allows you to establish a company with global operations and maintain a Dubai corporate bank account. It's ideal for international business operations, asset protection, and tax optimization while maintaining a UAE presence.",
+      "keywords": ["offshore", "company setup", "international business"],
+      "related_links": ["https://wings9.ae/services/offshore"]
+    },
+    {
+      "id": "Q007",
+      "category": "golden_visa",
+      "question": "What is the UAE Golden Visa?",
+      "answer": "The UAE Golden Visa is a long-term residency initiative offering 10-year self-sponsored residence for investors, entrepreneurs, and specialized talents. It provides privileges including full ownership of businesses in the UAE, residency for family members, and the ability to live and work in the UAE without employer sponsorship.",
+      "keywords": ["golden visa", "uae residency", "long-term visa"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q008",
+      "category": "golden_visa",
+      "question": "Who is eligible for the Golden Visa?",
+      "answer": "Entrepreneurs with projects valued at AED 500,000+ or with high-growth potential, investors, specialized talents, outstanding students, and professionals in specific fields are eligible for the Golden Visa. Wings9 assists in understanding prerequisites and facilitating approvals from concerned authorities.",
+      "keywords": ["golden visa eligibility", "requirements", "aed 500k"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q009",
+      "category": "services",
+      "question": "What are PRO services?",
+      "answer": "PRO (Public Relations Officer) services handle all government-related tasks including visas, work permits, document clearances, licensing, and approvals. Wings9's PRO services ensure smooth operations and legal compliance, streamlining the business setup process in Dubai.",
+      "keywords": ["pro services", "visa processing", "government liaison"],
+      "related_links": ["https://wings9.ae/services/pro-service"]
+    },
+    {
+      "id": "Q010",
+      "category": "tax_compliance",
+      "question": "What VAT and Corporate Tax services does Wings9 provide?",
+      "answer": "Wings9 provides comprehensive VAT and Corporate Tax services including registration and deregistration with the Federal Tax Authority (FTA), accurate tax return submissions, tax planning to minimize burden, and ensuring financial statements align with international audit standards. They help businesses comply with UAE's 9% Corporate Tax and VAT regulations.",
+      "keywords": ["vat", "corporate tax", "tax compliance", "fta"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q011",
+      "category": "tax_compliance",
+      "question": "What is the UAE Corporate Tax rate?",
+      "answer": "The UAE Corporate Tax is 9% on profits exceeding AED 375,000. The first AED 375,000 of profit is taxed at 0%. Wings9 offers tax structural modeling and planning to help businesses optimize their tax obligations while maintaining compliance.",
+      "keywords": ["corporate tax", "9%", "aed 375000", "tax rate"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q012",
+      "category": "services",
+      "question": "What banking solutions does Wings9 offer?",
+      "answer": "Wings9 provides expert guidance for opening corporate bank accounts in Dubai banks. They simplify everyday banking needs and address complex financial requirements with tailored solutions through strong bank partnerships, helping businesses navigate the KYC and compliance requirements.",
+      "keywords": ["banking solutions", "corporate account", "bank opening"],
+      "related_links": ["https://wings9.ae/services/banking-solutions"]
+    },
+    {
+      "id": "Q013",
+      "category": "services",
+      "question": "What are Embassy and Attestation services?",
+      "answer": "Wings9 provides document authentication and attestation services globally, handling all necessary liaison work with embassies and consulates. They also offer legal guidance, power of attorney services, and ensure documents are recognized internationally.",
+      "keywords": ["embassy services", "attestation", "document authentication"],
+      "related_links": ["https://wings9.ae/services/embassy-services", "https://wings9.ae/services/attestation-notary"]
+    },
+    {
+      "id": "Q014",
+      "category": "services",
+      "question": "What is SEZ and how does Wings9 help?",
+      "answer": "SEZ (Special Economic Zone) refers to designated areas in India with special economic regulations. Wings9 provides SEZ Unit Setup in India, ensures compliance with SEZ Act and Rules, handles monthly and annual performance reporting (APR), manages customs documents, and provides liaison with the Development Commissioner. They also offer guidance on duty-free imports, GST zero-rating, and income tax exemptions.",
+      "keywords": ["sez", "special economic zone", "india", "make in india"],
+      "related_links": ["https://wings9.ae/services/sez"]
+    },
+    {
+      "id": "Q015",
+      "category": "process",
+      "question": "What is the step-by-step business setup process with Wings9?",
+      "answer": "The Wings9 business setup process includes: 1) Initial Consultation - understanding business goals and aligning services, 2) Choosing the Right Structure - selecting between Free Zone, Mainland, or Offshore, 3) Documentation & Licensing - end-to-end assistance with all paperwork and licenses, and 4) Setup Completion - ensuring seamless integration and operational support.",
+      "keywords": ["business setup process", "steps", "procedure"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q016",
+      "category": "contact_information",
+      "question": "How can I contact Wings9 Dubai?",
+      "answer": "You can contact Wings9 Dubai through: Phone: +971 4 284 4257 or +971 54 305 9298, Email: info@wings9.ae, WhatsApp: +971 54 305 9298, Office Address: R02, API Building, Al Souq Al Kabeer, Al Fahidi, Bur Dubai, Dubai, UAE. They also have an AI assistant available at https://assistant.wings9.ae/",
+      "keywords": ["contact", "phone", "email", "address", "dubai"],
+      "related_links": ["https://wings9.ae/contact-us/"]
+    },
+    {
+      "id": "Q017",
+      "category": "contact_information",
+      "question": "How can I reach Prakash Bhambhani?",
+      "answer": "You can reach Prakash Bhambhani through: Phone: +971 56 760 9898, Email: me.prakash.ae, LinkedIn: https://www.linkedin.com/in/prakash-bhambhani/. He is based in Dubai, UAE.",
+      "keywords": ["prakash bhambhani contact", "phone", "email"],
+      "related_links": ["https://www.prakash.ae/"]
+    },
+    {
+      "id": "Q018",
+      "category": "services",
+      "question": "What is Global Business Advisors service?",
+      "answer": "Global Business Advisors provides strategic support for businesses seeking international expansion with tailored market entry strategies, compliance guidance, growth opportunities, and golden visa assistance.",
+      "keywords": ["global business advisors", "international expansion", "market entry"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q019",
+      "category": "services",
+      "question": "What real estate services does Wings9 Properties offer?",
+      "answer": "Wings9 Properties offers comprehensive real estate services including property sales, leasing, investment consulting, rental solutions, and property management designed for individuals and businesses in Dubai and UAE.",
+      "keywords": ["real estate", "property", "wings9 properties"],
+      "related_links": ["https://www.prakash.ae/companies/properties/"]
+    },
+    {
+      "id": "Q020",
+      "category": "services",
+      "question": "What is Rental Dispute service?",
+      "answer": "Rental Dispute service resolves conflicts between landlords and tenants through mediation, negotiation, or legal processes. It ensures fair outcomes while protecting the rights of both parties as per UAE Guidelines.",
+      "keywords": ["rental dispute", "landlord", "tenant", "mediation"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q021",
+      "category": "business_setup",
+      "question": "What is Corporate Bankability and why is it important?",
+      "answer": "Corporate Bankability refers to a company's ability to open and maintain corporate bank accounts. While obtaining a license is relatively easy, opening a bank account is challenging in the UAE. Wings9 focuses on 'KYC Readiness' to ensure business profiles satisfy banks' compliance requirements.",
+      "keywords": ["corporate bankability", "kyc", "bank account opening"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q022",
+      "category": "business_setup",
+      "question": "What are UBO Transparency Obligations?",
+      "answer": "UBO (Ultimate Beneficial Owners) must be disclosed to the Ministry of Economy to prevent illicit financial flows and preserve UAE's 'White List status'. This is a mandatory requirement for all UAE companies to maintain transparency in ownership structures.",
+      "keywords": ["ubo", "beneficial owners", "transparency", "compliance"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q023",
+      "category": "business_setup",
+      "question": "What is Economic Substance Regulation (ESR)?",
+      "answer": "Economic Substance Regulation (ESR) applies to companies engaged in 'Relevant Activities' such as banking, shipping, or intellectual property. Companies must demonstrate that their core activities are occurring in the UAE to comply with ESR requirements.",
+      "keywords": ["esr", "economic substance", "relevant activities"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q024",
+      "category": "business_setup",
+      "question": "What is E-Invoicing Implementation in UAE?",
+      "answer": "The UAE is switching to a real-time digital taxation reporting system called E-Invoicing. Wings9 assists in integrating 'Tax Compliant ERPs' for auto-filing VAT returns and Corporate Taxes, ensuring businesses are ready for this implementation in 2026.",
+      "keywords": ["e-invoicing", "digital taxation", "erp", "2026"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q025",
+      "category": "business_setup",
+      "question": "What is Compliance Hygiene?",
+      "answer": "Compliance Hygiene refers to the critical first 90 days after business setup when companies must register for VAT, Corporate Tax, and Labour systems to avoid administrative penalties. Wings9 ensures all compliance requirements are met during this crucial window.",
+      "keywords": ["compliance hygiene", "90 days", "registration", "penalties"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q026",
+      "category": "business_setup",
+      "question": "Why is Activity Granularity important for business licenses?",
+      "answer": "Activity Granularity refers to selecting the right business activities for your license. Choosing too many or mismatched activities can trigger bank denials. Wings9 performs 'Activity Mapping' to ensure licenses reflect actual revenue streams and business operations.",
+      "keywords": ["activity granularity", "business activities", "license"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q027",
+      "category": "business_setup",
+      "question": "What is Market Autonomy in Mainland licenses?",
+      "answer": "Market Autonomy for Mainland licenses enables businesses to conduct operations without geographical limitations within the UAE. This means direct B2C and B2B engagement throughout the UAE and the ability to bid for high-value government contracts.",
+      "keywords": ["market autonomy", "mainland", "government contracts"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q028",
+      "category": "business_setup",
+      "question": "Is 100% foreign ownership allowed in UAE?",
+      "answer": "Yes, most sectors in commerce and industry allow 100% foreign ownership (100% Expat Sovereignty). However, certain 'Strategic Impact' sectors like security and defense might require domestic partnership frameworks. Free Zones typically offer 100% foreign ownership across all permitted activities.",
+      "keywords": ["foreign ownership", "100%", "expat sovereignty"],
+      "related_links": ["https://wings9.ae/services/mainland", "https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q029",
+      "category": "business_setup",
+      "question": "What is an LSA Agreement?",
+      "answer": "LSA (Local Service Agent) Agreement is relevant for professional licenses in specific service vocations. An LSA acts as an intermediary without equity involvement, allowing foreign entrepreneurs to maintain 100% equity while complying with UAE regulations.",
+      "keywords": ["lsa", "local service agent", "professional license"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q030",
+      "category": "business_setup",
+      "question": "What is Ejari Integration?",
+      "answer": "Ejari Integration is the process of registering your tenancy contract with the Dubai Land Department. It's a legal requirement that forms the basis of your business license, establishing your company's tangible, recognized location in Dubai.",
+      "keywords": ["ejari", "tenancy registration", "dubai land department"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q031",
+      "category": "business_setup",
+      "question": "What is DED Instant License?",
+      "answer": "DED Instant License is a fast-track 'pre-approved' licensing route for certain business activities. It enables entrepreneurs to start operations for the first year without necessarily having a physical office, streamlining the setup process.",
+      "keywords": ["ded instant license", "fast-track", "no office"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q032",
+      "category": "business_setup",
+      "question": "What is Tax Residency Substantiation in Free Zones?",
+      "answer": "Tax Residency Substantiation means qualifying for 0% corporate tax in Free Zones by maintaining 'Substantial Economic Presence' and ensuring income is derived from 'Qualifying Activities'. This allows businesses to benefit from tax-free operations.",
+      "keywords": ["tax residency", "free zone", "0% tax", "qualifying activities"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q033",
+      "category": "business_setup",
+      "question": "What are the benefits of Sector-specific Clustering in Free Zones?",
+      "answer": "Sector-specific Clustering refers to Free Zones specializing in particular industries (e.g., DMCC for Commodities, Dubai Internet City for Tech). This creates a 'network effect' where businesses benefit from high-density ecosystems of potential partners, clients, and industry peers.",
+      "keywords": ["clustering", "free zone", "dmcc", "dubai internet city"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q034",
+      "category": "business_setup",
+      "question": "How does Capital Repatriation work in Free Zones?",
+      "answer": "Free Zones offer 100% Capital Repatriation Fluidity, allowing companies to repatriate 100% of capital and profits back to their home country with absolutely no currency restrictions or limitations.",
+      "keywords": ["capital repatriation", "profit repatriation", "free zone"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q035",
+      "category": "business_setup",
+      "question": "Does Customs Duty Immunity apply to all Free Zone imports?",
+      "answer": "Yes, goods imported to the 'Designated Zone' for processing or re-export are exempt from the 5% customs levy. This optimizes global supply chain costs and makes Free Zones attractive for trading and manufacturing businesses.",
+      "keywords": ["customs duty", "import exemption", "5%", "free zone"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q036",
+      "category": "business_setup",
+      "question": "What is Dual-Licensing Protocol?",
+      "answer": "Dual-Licensing Protocol allows some Free Zone authorities to issue a 'Mainland Branch' permit, enabling businesses to bridge their tax-free Free Zone hub with the local UAE market, combining benefits of both jurisdictions.",
+      "keywords": ["dual licensing", "mainland branch", "free zone"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q037",
+      "category": "business_setup",
+      "question": "What is Flexi-Desk Scalability?",
+      "answer": "Flexi-Desk Scalability offers a registered business address and visa option at a fraction of private office costs. It's perfect for consultants and small businesses testing market feasibility without major infrastructure investment.",
+      "keywords": ["flexi desk", "virtual office", "cost-effective"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q038",
+      "category": "business_setup",
+      "question": "Are Free Zone entities required to be audited?",
+      "answer": "While some zones previously had relaxed requirements, 2026 regulations require most Free Zone entities to maintain 'Financial Transparency' including annual audits to support Corporate Tax compliance and regulatory requirements.",
+      "keywords": ["audit", "free zone", "financial transparency", "2026"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q039",
+      "category": "business_setup",
+      "question": "What is NOC Requirement for Free Zone employees?",
+      "answer": "NOC (No Objection Certificate) is required if you already hold a UAE visa and want to transfer to your own Free Zone business. It's a vital document that facilitates the transition to entrepreneurship while maintaining legal residency.",
+      "keywords": ["noc", "no objection certificate", "visa transfer"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q040",
+      "category": "business_setup",
+      "question": "What is Legal Neutrality in DIFC/ADGM?",
+      "answer": "DIFC (Dubai International Financial Centre) and ADGM (Abu Dhabi Global Market) operate under Common Law (English law system), providing legal neutrality that ensures ease for international investors and private equity houses familiar with common law frameworks.",
+      "keywords": ["difc", "adgm", "common law", "legal neutrality"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q041",
+      "category": "immigration",
+      "question": "What immigration services does Wings9 provide?",
+      "answer": "Wings9 provides comprehensive immigration services including Business Visa, Family Visa, Green Card Visa, Permanent Residency Visa, Study Visa, Visitor Visa, Work Permit, and Citizenship by Investment programs for countries including UAE, USA, Canada, Australia, and UK.",
+      "keywords": ["immigration", "visa services", "global immigration"],
+      "related_links": ["https://www.wingsnine.com/immigration-services/"]
+    },
+    {
+      "id": "Q042",
+      "category": "immigration",
+      "question": "Which countries does Wings9 provide immigration services for?",
+      "answer": "Wings9 provides immigration services for United Arab Emirates (UAE), United States of America (USA), Canada, Australia, and United Kingdom. They have expertise in visa applications, document processing, and settlement services for these countries.",
+      "keywords": ["countries", "uae", "usa", "canada", "australia", "uk"],
+      "related_links": ["https://www.wingsnine.com/countries/"]
+    },
+    {
+      "id": "Q043",
+      "category": "immigration",
+      "question": "What is a Business Visa and how can Wings9 help?",
+      "answer": "A Business Visa allows entrepreneurs and business professionals to enter and operate businesses in foreign countries. Wings9 assists with business visa applications, documentation, and guidance for countries like UAE, USA, Canada, Australia, and UK.",
+      "keywords": ["business visa", "entrepreneur visa"],
+      "related_links": ["https://www.wingsnine.com/business-visa/"]
+    },
+    {
+      "id": "Q044",
+      "category": "immigration",
+      "question": "Does Wings9 help with Study Visas?",
+      "answer": "Yes, Wings9 provides comprehensive study visa assistance, particularly for Canada and other countries. They help students with visa applications, document preparation, and guidance for securing admission to educational institutions abroad.",
+      "keywords": ["study visa", "student visa", "education"],
+      "related_links": ["https://www.wingsnine.com/study-visa/"]
+    },
+    {
+      "id": "Q045",
+      "category": "immigration",
+      "question": "What is Citizenship by Investment?",
+      "answer": "Citizenship by Investment programs allow individuals to obtain citizenship or residency through qualified investments in a country. Wings9 assists with various citizenship by investment programs globally, providing guidance on investment requirements and application processes.",
+      "keywords": ["citizenship by investment", "investment immigration"],
+      "related_links": ["https://www.wingsnine.com/citizenship-by-investment/"]
+    },
+    {
+      "id": "Q046",
+      "category": "services",
+      "question": "Does Wings9 provide overseas recruitment services?",
+      "answer": "Yes, Wings9 Management Consultants operates as a top overseas manpower recruitment company, connecting companies with qualified job seekers. They help individuals find overseas employment opportunities and assist companies in recruiting qualified employees internationally.",
+      "keywords": ["recruitment", "manpower", "overseas jobs"],
+      "related_links": ["https://www.wingsnine.com/overseas-manpower-recruitment-company/"]
+    },
+    {
+      "id": "Q047",
+      "category": "leadership",
+      "question": "Who is Mrs. Kalpana Saroj and what is her role in Wings9?",
+      "answer": "Mrs. Kalpana Saroj is an Indian Entrepreneur, TEDx speaker, and Padma Shri awardee (2013) for contributions to Trade & Industry. She is one of the Key Founders of Wings9 Management Consultants. Her mission focuses on world peace, women empowerment, social justice, and self-employment.",
+      "keywords": ["kalpana saroj", "founder", "padma shri", "women empowerment"],
+      "related_links": ["https://www.wingsnine.com/"]
+    },
+    {
+      "id": "Q048",
+      "category": "company_overview",
+      "question": "Where are Wings9's offices located?",
+      "answer": "Wings9 has offices in Dubai, UAE (R02, API Building, Al Souq Al Kabeer, Al Fahidi, Bur Dubai; and Office P05/Unit-107, Level P, Building No.7, Bay Square Business Bay) and in India (No-73C, Prem Complex, 4th floor, Gurudwara Road, Near New Friends Colony, Taimoor Nagar, New Delhi-110025).",
+      "keywords": ["office locations", "dubai office", "india office"],
+      "related_links": ["https://wings9.ae/contact-us/", "https://www.wingsnine.com/contact-us/"]
+    },
+    {
+      "id": "Q049",
+      "category": "services",
+      "question": "What is Venture Launch Hub?",
+      "answer": "Venture Launch Hub supports entrepreneurs with tailored business planning, funding solutions, and market strategies to successfully launch and scale their ventures. It provides comprehensive support for startups and new business initiatives.",
+      "keywords": ["venture launch", "startup support", "business planning"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q050",
+      "category": "services",
+      "question": "What is Swift Property Solutions?",
+      "answer": "Swift Property Solutions simplifies property transactions with efficient sales, rentals, and leasing services. It connects buyers, sellers, and renters with reliable solutions designed for time-sensitive property needs.",
+      "keywords": ["property solutions", "real estate", "quick transactions"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q051",
+      "category": "company_overview",
+      "question": "What is Wings9 Technologies?",
+      "answer": "Wings9 Technologies is one of the five enterprises under Wings9 group, focusing on leading technology solutions, digital transformation, innovative marketing strategies, and IT services to enhance business operations.",
+      "keywords": ["wings9 technologies", "it services", "digital transformation"],
+      "related_links": ["https://www.prakash.ae/companies/technologies/"]
+    },
+    {
+      "id": "Q052",
+      "category": "company_overview",
+      "question": "What is Wings9 Vacation Homes?",
+      "answer": "Wings9 Vacation Homes specializes in luxury vacation rentals and property management services in Dubai and UAE, offering premium short-term accommodation solutions and comprehensive property management.",
+      "keywords": ["vacation homes", "luxury rentals", "property management"],
+      "related_links": ["https://www.prakash.ae/companies/vacationhomes/"]
+    },
+    {
+      "id": "Q053",
+      "category": "company_overview",
+      "question": "What is Wings9 Fashions?",
+      "answer": "Wings9 Fashions focuses on contemporary fashion and lifestyle brand development, representing the fashion and lifestyle vertical of the Wings9 enterprise portfolio.",
+      "keywords": ["wings9 fashions", "fashion brand", "lifestyle"],
+      "related_links": ["https://www.prakash.ae/companies/fashions/"]
+    },
+    {
+      "id": "Q054",
+      "category": "services",
+      "question": "What is Innovative Marketing service?",
+      "answer": "Innovative Marketing service crafts innovative marketing strategies to enhance brand visibility, engage target audiences, and drive sustainable business growth through modern digital and traditional marketing approaches.",
+      "keywords": ["marketing", "brand visibility", "growth strategies"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q055",
+      "category": "services",
+      "question": "What is Prime Realty service?",
+      "answer": "Prime Realty offers comprehensive real estate services including property sales, leasing, and investment consulting designed for both individuals and businesses in Dubai and UAE markets.",
+      "keywords": ["prime realty", "real estate", "property investment"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q056",
+      "category": "contact_information",
+      "question": "What are the contact numbers for Wings9 India office?",
+      "answer": "Wings9 India office can be contacted at: +91-9953910483 and +91-11-26320408. Email contacts include: ankur.mahendru@gmail.com, md@wingsnine.com, and prakash@wingsnine.com",
+      "keywords": ["india contact", "phone numbers", "delhi office"],
+      "related_links": ["https://www.wingsnine.com/contact-us/"]
+    },
+    {
+      "id": "Q057",
+      "category": "contact_information",
+      "question": "What are additional Wings9 UAE contact numbers?",
+      "answer": "Additional UAE contact numbers include: +971 56 610 1703, +971 56 996 6080, and +971 4 201 6300. These numbers can be used for various Wings9 services across UAE.",
+      "keywords": ["uae contact", "dubai phone", "multiple numbers"],
+      "related_links": ["https://www.wingsnine.com/contact-us/"]
+    },
+    {
+      "id": "Q058",
+      "category": "company_overview",
+      "question": "How long has Wings9 been in operation?",
+      "answer": "Wings9 has been operating for 20+ years, with leadership from Prakash Bhambhani who brings 25+ years of experience across multiple industries. The company has served 100+ clients and has established itself as a leading consultancy in UAE and India.",
+      "keywords": ["experience", "20 years", "history"],
+      "related_links": ["https://www.prakash.ae/", "https://www.wingsnine.com/about-us/"]
+    },
+    {
+      "id": "Q059",
+      "category": "pricing",
+      "question": "Does Wings9 offer free consultation?",
+      "answer": "Yes, Wings9 offers free consultation services. They provide free visa application reviews, free assessment for express entry programs, and initial consultations to understand business needs and provide guidance on the best solutions.",
+      "keywords": ["free consultation", "no cost assessment"],
+      "related_links": ["https://wings9.ae/contact-us/", "https://www.wingsnine.com/"]
+    },
+    {
+      "id": "Q060",
+      "category": "business_setup",
+      "question": "Can Wings9 help with business setup cost calculation?",
+      "answer": "Yes, Wings9 provides a comprehensive cost calculator to estimate the total investment needed for company setup in Dubai. This includes licensing and registration fees, infrastructure, equipment, and operational expenses to help with financial planning.",
+      "keywords": ["cost calculator", "pricing estimate", "investment planning"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q061",
+      "category": "business_setup",
+      "question": "How many free zones are available in Dubai?",
+      "answer": "There are over 20 free zones in Dubai. Wings9 helps businesses select the most appropriate free zone based on their industry, business activities, and strategic objectives.",
+      "keywords": ["free zones", "20+ zones", "dubai free zones"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q062",
+      "category": "business_setup",
+      "question": "What is MOA Alignment?",
+      "answer": "MOA (Memorandum of Association) Alignment ensures the document serves as a comprehensive roadmap of corporate governance, not just a filing requirement. Wings9 ensures MOA is properly structured to protect businesses from future regulatory changes.",
+      "keywords": ["moa", "memorandum of association", "corporate governance"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q063",
+      "category": "business_setup",
+      "question": "What is Operational Footprint in visa applications?",
+      "answer": "Operational Footprint refers to the relationship between office space and visa allocation. In Mainland setups, the number of visas is directly associated with real estate space - larger spaces allow for more employee visas.",
+      "keywords": ["operational footprint", "office space", "visa quota"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q064",
+      "category": "business_setup",
+      "question": "What is External Approval Synchronicity?",
+      "answer": "External Approval Synchronicity refers to obtaining approvals from specific authorities for certain industries (e.g., DHA/RCA for medical, RTA for transport). Wings9 handles 'multi-tier' approvals to avoid licensing delays.",
+      "keywords": ["external approvals", "dha", "rta", "regulatory approvals"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q065",
+      "category": "business_setup",
+      "question": "Can a Mainland company have multiple branches?",
+      "answer": "Yes, a Mainland Hub allows multiple branches to operate under one company umbrella, enabling flexibility for rapid expansion of retail or service chains across the UAE.",
+      "keywords": ["branches", "mainland expansion", "multiple locations"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q066",
+      "category": "business_setup",
+      "question": "What is Jurisdictional Versatility in UAE Tenders?",
+      "answer": "Only Mainland-registered companies have the sovereign right to be primary contractors in federal and municipal projects. This gives Mainland companies exclusive access to government tender opportunities.",
+      "keywords": ["government tenders", "mainland advantage", "contracts"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q067",
+      "category": "business_setup",
+      "question": "What is Inter-Zone Portability?",
+      "answer": "While licenses cannot be directly 'moved' between zones, Wings9 assists businesses in changing zones of operation when they're ready to move past their current regulatory zone, facilitating smooth transitions.",
+      "keywords": ["zone change", "portability", "business relocation"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q068",
+      "category": "services",
+      "question": "Does Wings9 provide legal assistance for business matters?",
+      "answer": "Yes, Wings9 provides comprehensive legal assistance services including power of attorney (POA) services, contract reviews, legal compliance, and guidance for navigating embassy procedures for business and personal matters.",
+      "keywords": ["legal assistance", "poa", "legal compliance"],
+      "related_links": ["https://wings9.ae/services/attestation-notary", "https://www.wingsnine.com/legal-assistance-services/"]
+    },
+    {
+      "id": "Q069",
+      "category": "services",
+      "question": "What accounting services does Wings9 provide?",
+      "answer": "Wings9 offers precise accounting services including bookkeeping, VAT registration and filing, corporate tax compliance, financial reporting, and audit support to ensure smooth and efficient financial operations.",
+      "keywords": ["accounting", "bookkeeping", "financial services"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q070",
+      "category": "immigration",
+      "question": "What is a Green Card Visa?",
+      "answer": "Green Card Visa provides permanent residency in countries like the USA. Wings9 assists with green card applications, documentation, and the complete immigration process for qualifying individuals and families.",
+      "keywords": ["green card", "permanent residency", "usa immigration"],
+      "related_links": ["https://www.wingsnine.com/green-card-visa/"]
+    },
+    {
+      "id": "Q071",
+      "category": "immigration",
+      "question": "Does Wings9 help with Family Visas?",
+      "answer": "Yes, Wings9 provides comprehensive family visa services, helping clients sponsor their family members for residency in UAE and other countries. They handle all documentation and application processes.",
+      "keywords": ["family visa", "dependent visa", "family sponsorship"],
+      "related_links": ["https://www.wingsnine.com/family-visa/"]
+    },
+    {
+      "id": "Q072",
+      "category": "immigration",
+      "question": "What is a Work Permit and how does Wings9 help?",
+      "answer": "A Work Permit allows foreign nationals to work legally in a country. Wings9 assists with work permit applications, employment visa processing, and all related documentation for various countries including UAE, Canada, Australia, USA, and UK.",
+      "keywords": ["work permit", "employment visa", "work authorization"],
+      "related_links": ["https://www.wingsnine.com/work-permit/"]
+    },
+    {
+      "id": "Q073",
+      "category": "immigration",
+      "question": "Does Wings9 help with Visitor Visas?",
+      "answer": "Yes, Wings9 provides visitor visa services for tourism, business visits, and family visits to countries including UAE, USA, Canada, Australia, and UK. They handle the complete application process and documentation.",
+      "keywords": ["visitor visa", "tourist visa", "travel visa"],
+      "related_links": ["https://www.wingsnine.com/visitor-visa/"]
+    },
+    {
+      "id": "Q074",
+      "category": "immigration",
+      "question": "What is Permanent Residency Visa?",
+      "answer": "Permanent Residency Visa provides long-term or indefinite residence rights in a country. Wings9 assists with PR applications for various countries, providing comprehensive support throughout the immigration process.",
+      "keywords": ["permanent residency", "pr visa", "long-term residency"],
+      "related_links": ["https://www.wingsnine.com/permanent-residency-visa/"]
+    },
+    {
+      "id": "Q075",
+      "category": "company_overview",
+      "question": "Why choose Wings9 for business setup in Dubai?",
+      "answer": "Wings9 offers: 1) 20+ years of experience, 2) End-to-end corporate solutions, 3) Transparent and compliant processes, 4) Strong government and bank relationships, 5) Expert guidance on Mainland, Free Zone, and Offshore setups, 6) Comprehensive post-setup support including PRO services, VAT, and banking assistance.",
+      "keywords": ["why choose", "benefits", "advantages"],
+      "related_links": ["https://wings9.ae/about/"]
+    },
+    {
+      "id": "Q076",
+      "category": "company_overview",
+      "question": "What government agencies does Wings9 work with?",
+      "answer": "Wings9 collaborates closely with all relevant government agencies in UAE including the Department of Economic Development (DED), Federal Tax Authority (FTA), Ministry of Economy, various Free Zone authorities, and banking regulators to ensure clients receive the latest legal information and strategies.",
+      "keywords": ["government agencies", "ded", "fta", "ministry"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q077",
+      "category": "process",
+      "question": "How long does business setup take in Dubai?",
+      "answer": "The timeline varies based on business structure and requirements. With Wings9's streamlined process and strong government relationships, setup can be completed efficiently. Some Free Zones offer instant licenses for certain activities, while Mainland setup may take a few weeks depending on approvals required.",
+      "keywords": ["timeline", "duration", "how long"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q078",
+      "category": "business_setup",
+      "question": "Do I need a physical office for company setup in Dubai?",
+      "answer": "Requirements vary by structure. Mainland companies traditionally needed physical offices, though DED Instant License now allows some activities to operate without offices initially. Free Zones offer flexible options including Flexi-Desk (virtual office) and physical offices. Wings9 helps determine the best option for your business needs.",
+      "keywords": ["office requirement", "physical office", "virtual office"],
+      "related_links": ["https://wings9.ae/services/mainland", "https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q079",
+      "category": "services",
+      "question": "What is goAML Registration?",
+      "answer": "goAML Registration is mandatory for certain sectors (Real Estate, Gold, Jewellery, Law firms) to report suspicious transactions. It ensures 'Fiduciary Integrity' and helps UAE maintain compliance with international anti-money laundering standards.",
+      "keywords": ["goaml", "aml", "anti-money laundering", "compliance"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q080",
+      "category": "tax_compliance",
+      "question": "When is VAT registration required in UAE?",
+      "answer": "VAT registration is mandatory for businesses with annual taxable supplies exceeding AED 375,000. Voluntary registration is available for businesses with supplies between AED 187,500 and AED 375,000. Wings9 handles complete VAT registration and compliance.",
+      "keywords": ["vat registration", "threshold", "aed 375000"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q081",
+      "category": "company_overview",
+      "question": "Does Wings9 have an AI assistant?",
+      "answer": "Yes, Wings9 has an AI assistant available at https://assistant.wings9.ae/ that can provide instant answers to questions about their services, business setup, and general inquiries.",
+      "keywords": ["ai assistant", "chatbot", "automated support"],
+      "related_links": ["https://assistant.wings9.ae/"]
+    },
+    {
+      "id": "Q082",
+      "category": "services",
+      "question": "What industries does Wings9 specialize in?",
+      "answer": "Wings9 has expertise across multiple industries including hospitality, legal services, real estate, technology, fashion, retail, consulting, trading, e-commerce, professional services, and more. Their 25+ years of experience spans diverse sectors.",
+      "keywords": ["industries", "sectors", "specialization"],
+      "related_links": ["https://wings9.ae/about/"]
+    },
+    {
+      "id": "Q083",
+      "category": "business_setup",
+      "question": "What is the minimum investment required for business setup in Dubai?",
+      "answer": "Minimum investment varies by business structure and activity. Free Zone setups can start from lower amounts, while Mainland businesses may have different requirements based on activity. Wings9's cost calculator helps estimate total investment including licensing, office, and operational costs.",
+      "keywords": ["minimum investment", "capital requirement", "startup cost"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q084",
+      "category": "golden_visa",
+      "question": "Can family members get Golden Visa through the main applicant?",
+      "answer": "Yes, Golden Visa holders can sponsor their family members including spouse and children for long-term residency. Wings9 assists with complete family sponsorship as part of their Golden Visa services.",
+      "keywords": ["family sponsorship", "golden visa family", "dependents"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q085",
+      "category": "business_setup",
+      "question": "What is the difference between trade license and professional license?",
+      "answer": "Trade licenses are for trading and commercial activities, while professional licenses are for service-based businesses and professional consultancies. Requirements and fee structures differ. Wings9 helps identify the appropriate license type based on business activities.",
+      "keywords": ["trade license", "professional license", "license types"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q086",
+      "category": "services",
+      "question": "Does Wings9 provide business management consulting?",
+      "answer": "Yes, Wings9 provides comprehensive business management consulting including strategic planning, operational optimization, market analysis, and growth strategies. They help businesses make effective decisions and calculated risks to reach their full potential.",
+      "keywords": ["business management", "consulting", "strategy"],
+      "related_links": ["https://www.wingsnine.com/business-management-company/"]
+    },
+    {
+      "id": "Q087",
+      "category": "immigration",
+      "question": "What is the success rate of Wings9's immigration services?",
+      "answer": "Wings9 boasts a high success rate in immigration applications, backed by experienced consultants with excellent track records. They offer fast and reliable service with short application approval times and have satisfied numerous customers over the years.",
+      "keywords": ["success rate", "track record", "reliability"],
+      "related_links": ["https://www.wingsnine.com/"]
+    },
+    {
+      "id": "Q088",
+      "category": "business_setup",
+      "question": "Can I change my business activity after getting the license?",
+      "answer": "Yes, business activities can be amended after license issuance through the appropriate authority (DED for Mainland, respective Free Zone authority for Free Zone companies). Wings9 assists with license amendments and activity modifications.",
+      "keywords": ["activity change", "license amendment", "modification"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q089",
+      "category": "business_setup",
+      "question": "What is a trade name reservation?",
+      "answer": "Trade name reservation is the first step in company formation where you secure your desired business name. Wings9 assists with name reservation, ensuring it complies with UAE naming conventions and is approved by relevant authorities.",
+      "keywords": ["trade name", "business name", "name reservation"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q090",
+      "category": "services",
+      "question": "Does Wings9 help with company liquidation?",
+      "answer": "While primarily focused on business setup and growth, Wings9 can provide guidance on business restructuring and compliance matters. For specific liquidation services, they can refer to appropriate legal specialists.",
+      "keywords": ["liquidation", "closure", "business exit"],
+      "related_links": ["https://wings9.ae/services/"]
+    },
+    {
+      "id": "Q091",
+      "category": "immigration",
+      "question": "Which is better for immigration - Canada or Australia?",
+      "answer": "Both countries offer excellent opportunities. Canada has abundant job opportunities, fast-growing economy, and welcoming immigration policies. Australia offers fresh environment, fine job opportunities, exceptional social benefits, and ever-growing economy. Wings9 helps assess which country aligns better with your specific situation, qualifications, and goals.",
+      "keywords": ["canada vs australia", "comparison", "immigration choice"],
+      "related_links": ["https://www.wingsnine.com/country/canada/", "https://www.wingsnine.com/country/australia/"]
+    },
+    {
+      "id": "Q092",
+      "category": "immigration",
+      "question": "Why is UAE a good destination for immigration?",
+      "answer": "UAE offers diverse culture, great education, health services, quality transportation, tax-free income, strategic location, and a dedicated Minister of State for Happiness. It has become a top destination for professionals and entrepreneurs globally.",
+      "keywords": ["uae immigration", "dubai benefits", "why uae"],
+      "related_links": ["https://www.wingsnine.com/country/uae/"]
+    },
+    {
+      "id": "Q093",
+      "category": "immigration",
+      "question": "What makes UK attractive for immigration?",
+      "answer": "UK offers welcoming immigration policies, plethora of job opportunities, high-quality life, world-class education system, and strong economy. It's consistently on the list of best countries to migrate to globally.",
+      "keywords": ["uk immigration", "united kingdom", "uk benefits"],
+      "related_links": ["https://www.wingsnine.com/country/united-kingdom/"]
+    },
+    {
+      "id": "Q094",
+      "category": "immigration",
+      "question": "What opportunities does USA offer for immigrants?",
+      "answer": "USA offers abundant job opportunities, world-class education, excellent business environment, diverse locations for business setup, and opportunities for professional growth. It's one of the most developed nations with extensive resources.",
+      "keywords": ["usa immigration", "america", "usa opportunities"],
+      "related_links": ["https://www.wingsnine.com/country/united-states/"]
+    },
+    {
+      "id": "Q095",
+      "category": "company_overview",
+      "question": "What recognition has Wings9 received?",
+      "answer": "Wings9 Management Consultants has been nominated as one of the fastest growing companies in India and has received appreciation at the national level. The company has established itself as a leading consultancy in UAE and globally.",
+      "keywords": ["awards", "recognition", "achievements"],
+      "related_links": ["https://www.wingsnine.com/"]
+    },
+    {
+      "id": "Q096",
+      "category": "contact_information",
+      "question": "How can I schedule a consultation with Wings9?",
+      "answer": "You can schedule a consultation by: 1) Calling +971 54 305 9298 or +971 4 284 4257, 2) Emailing info@wings9.ae, 3) WhatsApp at +971 54 305 9298, 4) Filling the contact form on their website, or 5) Booking through their free consultation page.",
+      "keywords": ["schedule consultation", "book appointment", "meeting"],
+      "related_links": ["https://wings9.ae/contact-us/"]
+    },
+    {
+      "id": "Q097",
+      "category": "business_setup",
+      "question": "What documents are typically required for company setup in Dubai?",
+      "answer": "Typical documents include: passport copies of shareholders/directors, visa copies, Emirates ID, proof of address, business plan, NOC (if applicable), and specific documents based on activity. Wings9 provides complete guidance on documentation requirements.",
+      "keywords": ["documents required", "documentation", "paperwork"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q098",
+      "category": "business_setup",
+      "question": "How many shareholders are required for Dubai company formation?",
+      "answer": "Requirements vary by structure. Free Zone companies can have a single shareholder. Mainland companies previously required local sponsors but now allow 100% foreign ownership in most sectors. Specific requirements depend on legal structure (LLC, branch, etc.).",
+      "keywords": ["shareholders", "ownership structure", "requirements"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q099",
+      "category": "business_setup",
+      "question": "Can I run multiple businesses under one license?",
+      "answer": "Generally, each business activity requires appropriate licensing. However, one license can include multiple related activities. Wings9's Activity Mapping service ensures your license includes all necessary activities for your business operations.",
+      "keywords": ["multiple businesses", "multiple activities", "license scope"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q100",
+      "category": "services",
+      "question": "What is the difference between attestation and notary services?",
+      "answer": "Attestation is the process of certifying documents for use in foreign countries through various governmental departments. Notary services involve legal certification of documents by authorized officials. Wings9 provides both services to ensure documents are legally recognized domestically and internationally.",
+      "keywords": ["attestation", "notary", "document certification"],
+      "related_links": ["https://wings9.ae/services/attestation-notary"]
+    },
+    {
+      "id": "Q101",
+      "category": "tax_compliance",
+      "question": "What is the VAT rate in UAE?",
+      "answer": "The standard VAT rate in UAE is 5%. Certain goods and services may be zero-rated or exempt. Wings9 provides comprehensive VAT advisory to ensure correct application of rates and compliance with FTA regulations.",
+      "keywords": ["vat rate", "5%", "tax rate"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q102",
+      "category": "business_setup",
+      "question": "What is a free zone and how does it benefit businesses?",
+      "answer": "A Free Zone is a designated economic area with special regulations offering benefits like: 100% foreign ownership, 0% income tax, full profit repatriation, customs duty exemptions, simplified business setup, and fast-track visa processing. Over 20 free zones in Dubai cater to different industries.",
+      "keywords": ["free zone definition", "benefits", "advantages"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q103",
+      "category": "golden_visa",
+      "question": "What is the validity of UAE Golden Visa?",
+      "answer": "The UAE Golden Visa is valid for 10 years and is renewable. It offers self-sponsored residency, meaning holders don't need employer or family sponsorship to maintain their residency status in the UAE.",
+      "keywords": ["golden visa validity", "10 years", "duration"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q104",
+      "category": "business_setup",
+      "question": "Can I own property in Dubai as a business owner?",
+      "answer": "Yes, business owners can purchase property in Dubai's freehold areas regardless of their business structure. Mainland and Free Zone company owners have equal rights to property ownership in designated freehold areas.",
+      "keywords": ["property ownership", "real estate", "freehold"],
+      "related_links": ["https://wings9.ae/", "https://www.prakash.ae/companies/properties/"]
+    },
+    {
+      "id": "Q105",
+      "category": "services",
+      "question": "What is UAE Pass and how is it used?",
+      "answer": "UAE Pass is a digital identity platform enabling remote notarization and document signing with biometric security. This Digital Identity Integration allows entrepreneurs to sign MOA and notarization documents from anywhere in the world, streamlining the setup process.",
+      "keywords": ["uae pass", "digital identity", "remote signing"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q106",
+      "category": "business_setup",
+      "question": "How many visas can I get with my business license?",
+      "answer": "Visa allocation depends on business structure and office space. Free Zones have specific visa packages (e.g., Flexi-Desk may include 1-3 visas, office spaces more). Mainland visa quota depends on Operational Footprint (office size). Wings9 helps optimize visa allocation.",
+      "keywords": ["visa quota", "employee visas", "visa allocation"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q107",
+      "category": "services",
+      "question": "Does Wings9 help with trademark registration?",
+      "answer": "While the primary focus is business setup and corporate services, Wings9 can provide guidance on intellectual property matters and refer to specialized trademark attorneys when needed for comprehensive IP protection.",
+      "keywords": ["trademark", "intellectual property", "brand protection"],
+      "related_links": ["https://wings9.ae/services/"]
+    },
+    {
+      "id": "Q108",
+      "category": "business_setup",
+      "question": "What is the difference between LLC and Free Zone Establishment?",
+      "answer": "LLC (Limited Liability Company) is a Mainland structure allowing local market access and government contracts with 100% foreign ownership now possible. FZE (Free Zone Establishment) offers tax benefits and 100% ownership but has restrictions on local market trading. Wings9 helps choose the optimal structure.",
+      "keywords": ["llc", "fze", "company structure"],
+      "related_links": ["https://wings9.ae/services/mainland", "https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q109",
+      "category": "immigration",
+      "question": "How long does the visa application process take?",
+      "answer": "Timeline varies by visa type and country. Wings9 offers fast and reliable service with short application approval times. Their experienced consultants streamline the process to minimize delays and ensure efficient processing.",
+      "keywords": ["visa processing time", "application timeline", "duration"],
+      "related_links": ["https://www.wingsnine.com/immigration-services/"]
+    },
+    {
+      "id": "Q110",
+      "category": "services",
+      "question": "Can Wings9 help with visa renewals?",
+      "answer": "Yes, Wings9's PRO services include visa renewals, extensions, and all related government procedures to ensure continuous legal residency for business owners and employees.",
+      "keywords": ["visa renewal", "extension", "residence renewal"],
+      "related_links": ["https://wings9.ae/services/pro-service"]
+    },
+    {
+      "id": "Q111",
+      "category": "business_setup",
+      "question": "What is the shelf life of a business license in Dubai?",
+      "answer": "Business licenses in Dubai are typically issued for one year and must be renewed annually. Wings9 provides renewal reminders and handles the complete renewal process to ensure uninterrupted business operations.",
+      "keywords": ["license validity", "renewal", "annual license"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q112",
+      "category": "tax_compliance",
+      "question": "When is Corporate Tax filing due in UAE?",
+      "answer": "Corporate Tax returns must be filed within 9 months from the end of the tax period. Wings9 ensures timely filing, accurate calculations, and compliance with all FTA requirements to avoid penalties.",
+      "keywords": ["tax filing deadline", "corporate tax return", "fta"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q113",
+      "category": "business_setup",
+      "question": "Can I convert my Free Zone company to Mainland?",
+      "answer": "Yes, it's possible to convert or establish a Mainland branch of your Free Zone company through the Dual-Licensing Protocol. Wings9 assists with this transition, ensuring compliance with all regulatory requirements.",
+      "keywords": ["conversion", "free zone to mainland", "dual licensing"],
+      "related_links": ["https://wings9.ae/services/free-zone", "https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q114",
+      "category": "services",
+      "question": "What is the role of a PRO in business setup?",
+      "answer": "A PRO (Public Relations Officer) acts as a liaison between your business and government departments, handling visa processing, license renewals, document clearances, permits, and ensuring regulatory compliance throughout business operations.",
+      "keywords": ["pro role", "public relations officer", "government liaison"],
+      "related_links": ["https://wings9.ae/services/pro-service"]
+    },
+    {
+      "id": "Q115",
+      "category": "business_setup",
+      "question": "Do I need local sponsors for business setup in Dubai?",
+      "answer": "No, most business activities now allow 100% foreign ownership in both Mainland and Free Zones. The requirement for local sponsors has been eliminated for most sectors. Only certain strategic sectors may require local partnership.",
+      "keywords": ["local sponsor", "100% ownership", "foreign ownership"],
+      "related_links": ["https://wings9.ae/services/mainland"]
+    },
+    {
+      "id": "Q116",
+      "category": "services",
+      "question": "What is Make in India initiative and how does Wings9 help?",
+      "answer": "Make in India is a government initiative to transform India into a global manufacturing hub. Wings9's SEZ Vision Advisory helps businesses leverage Special Economic Zones for manufacturing setups, providing guidance on compliance, incentives, and operational efficiency.",
+      "keywords": ["make in india", "manufacturing", "sez india"],
+      "related_links": ["https://wings9.ae/services/sez", "https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q117",
+      "category": "business_setup",
+      "question": "What are the popular free zones in Dubai?",
+      "answer": "Popular free zones include: DMCC (Dubai Multi Commodities Centre) for trading, Dubai Internet City for technology, Dubai Media City for media, JAFZA (Jebel Ali Free Zone) for logistics, Dubai Healthcare City for medical, and DAFZA (Dubai Airport Free Zone) for aviation-related businesses.",
+      "keywords": ["popular free zones", "dmcc", "dubai internet city"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q118",
+      "category": "immigration",
+      "question": "What is Express Entry for Canada?",
+      "answer": "Express Entry is Canada's application system for skilled workers seeking permanent residence. Wings9 provides free assessment for Express Entry programs and comprehensive support throughout the application process.",
+      "keywords": ["express entry", "canada immigration", "skilled worker"],
+      "related_links": ["https://www.wingsnine.com/country/canada/"]
+    },
+    {
+      "id": "Q119",
+      "category": "services",
+      "question": "Does Wings9 provide post-setup support?",
+      "answer": "Yes, Wings9 provides comprehensive post-setup support including: ongoing PRO services, annual license renewals, VAT and tax compliance, additional visa processing, banking assistance, legal guidance, and business advisory services.",
+      "keywords": ["post-setup support", "ongoing services", "maintenance"],
+      "related_links": ["https://wings9.ae/services/"]
+    },
+    {
+      "id": "Q120",
+      "category": "business_setup",
+      "question": "What is a commercial license in Dubai?",
+      "answer": "A commercial license allows businesses to engage in trading activities - buying, selling, importing, exporting, and distributing goods. It's one of the main license types along with professional and industrial licenses.",
+      "keywords": ["commercial license", "trading license", "license types"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q121",
+      "category": "contact_information",
+      "question": "Does Wings9 have social media presence?",
+      "answer": "Yes, you can connect with Prakash Bhambhani and Wings9 on LinkedIn. Prakash's LinkedIn profile is: https://www.linkedin.com/in/prakash-bhambhani/. They are also available on WhatsApp for quick communication.",
+      "keywords": ["social media", "linkedin", "online presence"],
+      "related_links": ["https://www.prakash.ae/", "https://www.linkedin.com/in/prakash-bhambhani/"]
+    },
+    {
+      "id": "Q122",
+      "category": "services",
+      "question": "What banking solutions are available for new businesses?",
+      "answer": "Wings9 assists with opening corporate accounts in major UAE banks including Emirates NBD, Mashreq, ADCB, FAB, and others. They provide KYC preparation, documentation support, and bank liaison to ensure successful account opening.",
+      "keywords": ["banking solutions", "corporate account", "uae banks"],
+      "related_links": ["https://wings9.ae/services/banking-solutions"]
+    },
+    {
+      "id": "Q123",
+      "category": "business_setup",
+      "question": "Can I do business in Dubai without residency?",
+      "answer": "While you can own a company without residency, having UAE residency through your business license offers significant advantages including banking access, visa-free travel to many countries, and ability to manage operations locally. Wings9 facilitates complete setup with residency.",
+      "keywords": ["non-resident", "residency requirement", "business ownership"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q124",
+      "category": "tax_compliance",
+      "question": "Are there any tax exemptions in UAE?",
+      "answer": "Free Zone companies can qualify for 0% corporate tax on qualifying income. The first AED 375,000 of profit is taxed at 0% for all businesses. There's no personal income tax in UAE. Certain activities and small businesses may qualify for additional exemptions.",
+      "keywords": ["tax exemptions", "0% tax", "tax benefits"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q125",
+      "category": "business_setup",
+      "question": "What is RAKEZ and is it a good option?",
+      "answer": "RAKEZ (Ras Al Khaimah Economic Zone) is a cost-effective free zone option offering competitive pricing, fast setup, and flexible packages. It's popular for small businesses and startups. Wings9 can advise if RAKEZ aligns with your business objectives.",
+      "keywords": ["rakez", "ras al khaimah", "affordable free zone"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q126",
+      "category": "immigration",
+      "question": "What is the minimum investment for investor visa?",
+      "answer": "Investment requirements vary by country and visa type. For UAE Golden Visa, entrepreneurs need projects valued at AED 500,000+ or demonstrate high-growth potential. Wings9 provides detailed guidance on investment requirements for various programs.",
+      "keywords": ["investor visa", "investment amount", "minimum investment"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q127",
+      "category": "services",
+      "question": "Does Wings9 help with business plan preparation?",
+      "answer": "Yes, through their Venture Launch Hub service, Wings9 supports entrepreneurs with tailored business planning, including comprehensive business plan preparation for visa applications, bank requirements, and investor presentations.",
+      "keywords": ["business plan", "planning services", "documentation"],
+      "related_links": ["https://www.prakash.ae/services/"]
+    },
+    {
+      "id": "Q128",
+      "category": "business_setup",
+      "question": "What is DAFZA and what businesses does it serve?",
+      "answer": "DAFZA (Dubai Airport Free Zone Authority) is strategically located near Dubai International Airport, ideal for aviation, logistics, e-commerce, and businesses requiring quick cargo movement. It offers excellent connectivity and competitive packages.",
+      "keywords": ["dafza", "airport free zone", "logistics"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q129",
+      "category": "business_setup",
+      "question": "Can I hold multiple business licenses in UAE?",
+      "answer": "Yes, individuals can hold multiple business licenses across different free zones or mainland. This allows diversification of business activities. However, each license requires separate setup and compliance. Wings9 can manage multiple license portfolios.",
+      "keywords": ["multiple licenses", "multiple businesses", "diversification"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q130",
+      "category": "services",
+      "question": "What is the difference between attestation and apostille?",
+      "answer": "Attestation is the multi-step authentication process for documents to be used in UAE (through home country, UAE embassy, MOFA). Apostille is a simplified single-step certification for countries party to the Hague Convention. Wings9 handles both processes.",
+      "keywords": ["attestation vs apostille", "document legalization"],
+      "related_links": ["https://wings9.ae/services/attestation-notary", "https://wings9.ae/services/embassy-services"]
+    },
+    {
+      "id": "Q131",
+      "category": "tax_compliance",
+      "question": "Do I need an auditor for my Dubai company?",
+      "answer": "Audit requirements depend on company size, structure, and revenue. Most companies require annual audits for license renewal and compliance. Wings9 can refer qualified audit firms and ensure your financial statements meet regulatory requirements.",
+      "keywords": ["audit requirement", "auditor", "financial statements"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q132",
+      "category": "business_setup",
+      "question": "What is DMCC and why is it popular?",
+      "answer": "DMCC (Dubai Multi Commodities Centre) is one of the largest and most popular free zones, specializing in commodities trading but accommodating various business activities. It offers excellent infrastructure, strong regulatory framework, and prestigious business address.",
+      "keywords": ["dmcc", "commodities", "popular free zone"],
+      "related_links": ["https://wings9.ae/services/free-zone"]
+    },
+    {
+      "id": "Q133",
+      "category": "immigration",
+      "question": "Can students work while studying abroad?",
+      "answer": "Work permission for students varies by country. Canada and Australia typically allow part-time work during studies and full-time during breaks. UK and USA have specific restrictions. Wings9 provides guidance on work rights for international students.",
+      "keywords": ["student work permit", "part-time work", "study visa"],
+      "related_links": ["https://www.wingsnine.com/study-visa/"]
+    },
+    {
+      "id": "Q134",
+      "category": "business_setup",
+      "question": "What is the role of MOFA in document attestation?",
+      "answer": "MOFA (Ministry of Foreign Affairs) provides the final level of attestation in UAE, authenticating documents that have been previously attested by home country and UAE embassy. This makes documents legally valid for use in UAE.",
+      "keywords": ["mofa", "attestation process", "document authentication"],
+      "related_links": ["https://wings9.ae/services/embassy-services"]
+    },
+    {
+      "id": "Q135",
+      "category": "services",
+      "question": "Does Wings9 provide website development services?",
+      "answer": "Through Wings9 Technologies, they offer technology solutions and digital transformation services which may include website development, digital marketing, and IT infrastructure. They focus on innovative marketing strategies and online presence.",
+      "keywords": ["website development", "digital services", "technology"],
+      "related_links": ["https://www.prakash.ae/companies/technologies/"]
+    },
+    {
+      "id": "Q136",
+      "category": "business_setup",
+      "question": "What is a warehouse license in Dubai?",
+      "answer": "A warehouse license allows businesses to store and distribute goods. It's common in free zones like JAFZA and logistics hubs. Wings9 assists with warehouse licensing for trading, e-commerce, and distribution businesses.",
+      "keywords": ["warehouse license", "storage", "distribution"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q137",
+      "category": "immigration",
+      "question": "What is the points-based immigration system?",
+      "answer": "Countries like Canada and Australia use points-based systems evaluating factors like age, education, work experience, language proficiency. Higher points increase chances of approval. Wings9 provides free assessment to evaluate eligibility and maximize points.",
+      "keywords": ["points system", "immigration points", "eligibility"],
+      "related_links": ["https://www.wingsnine.com/immigration-services/"]
+    },
+    {
+      "id": "Q138",
+      "category": "business_setup",
+      "question": "Can I get a residence visa without setting up a company?",
+      "answer": "Yes, options include: employment visa (through employer), Golden Visa (for investors/talents), property investor visa, retirement visa, or family sponsorship. Wings9 advises on the best visa route based on individual circumstances.",
+      "keywords": ["residence visa options", "visa without company"],
+      "related_links": ["https://wings9.ae/services/golden-visa"]
+    },
+    {
+      "id": "Q139",
+      "category": "tax_compliance",
+      "question": "What is Transfer Pricing in UAE?",
+      "answer": "Transfer Pricing rules require transactions between related parties to be at arm's length (market value). Companies must maintain documentation proving fair pricing. Wings9's tax advisory helps ensure Transfer Pricing compliance.",
+      "keywords": ["transfer pricing", "related party transactions", "compliance"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q140",
+      "category": "business_setup",
+      "question": "What is Industrial License in Dubai?",
+      "answer": "Industrial License allows manufacturing and production activities. It's available in designated industrial areas and specific free zones. Requirements include appropriate facilities and environmental clearances. Wings9 facilitates industrial license applications.",
+      "keywords": ["industrial license", "manufacturing", "production"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q141",
+      "category": "services",
+      "question": "Does Wings9 help with franchise setup in Dubai?",
+      "answer": "Yes, Wings9 can assist with franchise business setup including licensing, franchise agreements, trademark registration, and ensuring compliance with UAE franchise regulations for both franchisors and franchisees.",
+      "keywords": ["franchise", "franchise setup", "brand expansion"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q142",
+      "category": "business_setup",
+      "question": "What is the difference between branch and subsidiary?",
+      "answer": "A branch is an extension of the parent company with same legal entity. A subsidiary is a separate legal entity owned by parent company. Tax implications, liability, and compliance differ. Wings9 advises on optimal structure.",
+      "keywords": ["branch vs subsidiary", "company structure", "legal entity"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q143",
+      "category": "immigration",
+      "question": "How can dependents accompany the main visa holder?",
+      "answer": "Main visa holders can sponsor dependents (spouse, children, sometimes parents) for family visas. Requirements include minimum salary, appropriate accommodation, and documentation. Wings9 handles complete family visa processing.",
+      "keywords": ["dependent visa", "family sponsorship", "spouse visa"],
+      "related_links": ["https://www.wingsnine.com/family-visa/"]
+    },
+    {
+      "id": "Q144",
+      "category": "services",
+      "question": "What ongoing compliance is required for UAE companies?",
+      "answer": "Ongoing compliance includes: annual license renewal, visa renewals, VAT returns (quarterly/monthly), corporate tax returns (annual), ESR notifications, UBO declarations, audit reports, and maintaining registered office. Wings9 manages all compliance requirements.",
+      "keywords": ["ongoing compliance", "annual requirements", "regulatory"],
+      "related_links": ["https://wings9.ae/services/"]
+    },
+    {
+      "id": "Q145",
+      "category": "business_setup",
+      "question": "Can I operate e-commerce from Dubai?",
+      "answer": "Yes, e-commerce businesses can be set up in Mainland or Free Zones with appropriate e-commerce licenses. Dubai CommerCity is a dedicated e-commerce free zone. Wings9 assists with e-commerce licensing and compliance.",
+      "keywords": ["e-commerce", "online business", "digital commerce"],
+      "related_links": ["https://wings9.ae/services/business-setup"]
+    },
+    {
+      "id": "Q146",
+      "category": "immigration",
+      "question": "What is the difference between residence visa and work permit?",
+      "answer": "Residence visa provides legal right to reside in UAE. Work permit provides legal authorization to work. Typically both are obtained together through employer or business sponsorship. Wings9 handles both processes seamlessly.",
+      "keywords": ["residence visa", "work permit", "employment visa"],
+      "related_links": ["https://wings9.ae/services/pro-service"]
+    },
+    {
+      "id": "Q147",
+      "category": "business_setup",
+      "question": "What is the cost of business setup in Dubai?",
+      "answer": "Costs vary significantly based on: business activity, jurisdiction (Mainland/Free Zone), office requirements, visa numbers, and additional services. Wings9 provides a cost calculator and detailed quotations tailored to specific business needs.",
+      "keywords": ["setup cost", "pricing", "fees"],
+      "related_links": ["https://wings9.ae/"]
+    },
+    {
+      "id": "Q148",
+      "category": "tax_compliance",
+      "question": "What is Small Business Relief for Corporate Tax?",
+      "answer": "Small businesses with revenue below AED 3 million may qualify for Small Business Relief, exempting them from corporate tax. Wings9 helps assess eligibility and ensure proper election for this relief.",
+      "keywords": ["small business relief", "tax exemption", "aed 3 million"],
+      "related_links": ["https://wings9.ae/services/vat-corporates-tax"]
+    },
+    {
+      "id": "Q149",
+      "category": "services",
+      "question": "Can Wings9 help with company restructuring?",
+      "answer": "Yes, Wings9 provides guidance on company restructuring including changing shareholders, converting business structures, merging entities, or splitting operations. They ensure all changes comply with regulatory requirements.",
+      "keywords": ["restructuring", "company changes", "business transformation"],
+      "related_links": ["https://wings9.ae/services/"]
+    },
+    {
+      "id": "Q150",
+      "category": "company_overview",
+      "question": "What makes Wings9 different from other consultancies?",
+      "answer": "Wings9 differentiates through: 25+ years of combined experience, end-to-end service integration, focus on 'Corporate Bankability', strong government relationships, transparent pricing, personalized attention, comprehensive post-setup support, and expertise across multiple jurisdictions (UAE and India). Led by experienced entrepreneurs who understand business needs.",
+      "keywords": ["competitive advantage", "differentiation", "unique value"],
+      "related_links": ["https://wings9.ae/about/", "https://www.prakash.ae/"]
+    }
+  ],
+  "usage_instructions": {
+    "description": "This corpus is designed for training RAG (Retrieval-Augmented Generation) bots to serve as portfolio assistants for Wings9 and Prakash Bhambhani.",
+    "implementation_notes": [
+      "Use semantic search on questions and answers for best retrieval",
+      "Keywords can be used for additional filtering and ranking",
+      "Related links provide source attribution and allow users to explore further",
+      "Categories enable filtered queries and specialized bot behaviors",
+      "Consider using hybrid search combining keywords and semantic embeddings",
+      "Answers are comprehensive and self-contained for direct use in responses"
+    ],
+    "recommended_enhancements": [
+      "Add user feedback loop to improve answer quality",
+      "Create conversational variants of questions",
+      "Add multilingual translations for broader accessibility",
+      "Include entity recognition tags for better retrieval",
+      "Periodically update with new services and offerings"
+    ]
+  }
+}
