@@ -11,12 +11,24 @@ import Typewriter from './Typewriter';
 export default function HeroSection() {
   const [active, setActive] = useState<string | null>(null);
   const [isIntroDone, setIsIntroDone] = useState(false);
+  const [shouldSkipIntro, setShouldSkipIntro] = useState(false);
   const { colorScheme } = useTheme();
   const { scrollY } = useScroll();
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsIntroDone(true), 3500);
-    return () => clearTimeout(timer);
+    // Check if user has already seen the intro in this session
+    const hasSeenIntro = sessionStorage.getItem('hasSeenIntro');
+    
+    if (hasSeenIntro) {
+      setIsIntroDone(true);
+      setShouldSkipIntro(true);
+    } else {
+      const timer = setTimeout(() => {
+        setIsIntroDone(true);
+        sessionStorage.setItem('hasSeenIntro', 'true');
+      }, 3500);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // Handle hash scrolling after intro is done
@@ -43,7 +55,7 @@ export default function HeroSection() {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 3.8, // Wait for intro to finish
+        delayChildren: shouldSkipIntro ? 0.1 : 3.8, // Wait for intro to finish if not skipped
       },
     },
   };
@@ -57,7 +69,7 @@ export default function HeroSection() {
       transition: {
         duration: 1.2,
         ease: [0.16, 1, 0.3, 1],
-        delay: 3.6, // Start slightly before container stagger
+        delay: shouldSkipIntro ? 0 : 3.6, // Start slightly before container stagger if not skipped
       },
     },
   };
