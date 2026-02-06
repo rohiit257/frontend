@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X, MessageSquare, Video, Bot, User, Building2, Phone, Mic } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import LiveAvatar from './LiveAvatar';
 import DIDAgentManager from './DIDAgentManager';
 import VoiceInput from './VoiceInput';
@@ -365,7 +368,11 @@ export default function AlwaysVisibleAvatar() {
                         : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
                         }`}
                     >
-                      {msg.content}
+                      <div className="react-markdown">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </motion.div>
                 ))}

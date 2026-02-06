@@ -1,16 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import Link from 'next/link';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Menu, MenuItem, HoveredLink } from '@/components/ui/navbar-menu';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
 export default function HeroSection() {
   const [active, setActive] = useState<string | null>(null);
+  const [isIntroDone, setIsIntroDone] = useState(false);
   const { colorScheme } = useTheme();
   const { scrollY } = useScroll();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsIntroDone(true), 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Handle hash scrolling after intro is done
+  useEffect(() => {
+    if (isIntroDone && typeof window !== 'undefined' && window.location.hash) {
+      const id = window.location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 500); // Give it a bit more time for the main content to fade in
+      }
+    }
+  }, [isIntroDone]);
+
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   
@@ -22,7 +43,21 @@ export default function HeroSection() {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-        delayChildren: 0.2,
+        delayChildren: 3.8, // Wait for intro to finish
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 0.9, x: 60 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      transition: {
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1],
+        delay: 3.6, // Start slightly before container stagger
       },
     },
   };
@@ -39,23 +74,84 @@ export default function HeroSection() {
     },
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9, x: 60 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      x: 0,
-      transition: {
-        duration: 1,
-        ease: "easeOut" as const,
-      },
-    },
-  };
-
   return (
     <section className="relative h-screen hero-bg flex flex-col overflow-hidden">
+      <AnimatePresence>
+        {!isIntroDone && (
+          <motion.div 
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }}
+            className="fixed inset-0 z-[100] bg-black flex items-center justify-center p-6"
+          >
+            <div className="max-w-4xl w-full text-center space-y-12">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="text-white/30 font-mono text-[10px] sm:text-xs uppercase tracking-[0.5em]"
+              >
+                Prakash Bhambhani — Strategic Visionary
+              </motion.div>
+              
+              <div className="relative">
+                <motion.h2
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
+                  className="text-2xl sm:text-4xl lg:text-6xl font-light text-white leading-tight italic tracking-tight"
+                >
+                  "Strategic Excellence is not a destination, it's a <span className="text-[var(--accent)] font-medium underline underline-offset-8 decoration-1 decoration-[var(--accent)]/30">Vision in Motion</span>."
+                </motion.h2>
+              </div>
+
+              <div className="flex flex-col items-center gap-6">
+                <motion.div 
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 2, ease: "circOut", delay: 1.2 }}
+                  className="h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent w-48 origin-center"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 2.8 }}
+                  className="flex items-center gap-3 text-white/40 text-[9px] uppercase tracking-[0.2em]"
+                >
+                  <motion.span 
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-1.5 h-1.5 bg-[var(--accent)] rounded-full" 
+                  />
+                  Initializing Experience
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Animated geometric shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {colorScheme === 'creative' && (
+          <>
+            <div className="absolute inset-0 flex items-center justify-center select-none overflow-hidden p-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: isIntroDone ? 0.12 : 0, scale: isIntroDone ? 1 : 0.9 }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="flex flex-col items-center text-center leading-[0.8]"
+              >
+                <span className="text-[12vw] font-black uppercase tracking-tighter text-white">Vision</span>
+                <span className="text-[25vw] font-black uppercase text-white -mt-[2vw]">In Motion</span>
+              </motion.div>
+            </div>
+            <div className="absolute top-10 right-10 text-right h-20 items-end flex flex-col justify-end text-white/40 font-mono text-sm uppercase tracking-tighter">
+              <div>FEBRUARY / 2026</div>
+              <div>PRAKASH BHAMBHANI</div>
+            </div>
+          </>
+        )}
         <motion.div
           className={`absolute top-20 right-20 w-64 h-64 border rounded-full ${
             isLightBackground 
@@ -95,18 +191,23 @@ export default function HeroSection() {
       </div>
 
       {/* Fixed Header - Logo + Menu */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-none border-b border-transparent">
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: isIntroDone ? 1 : 0, y: isIntroDone ? 0 : -20 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-none border-b border-transparent"
+      >
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-1 sm:py-1.5 lg:py-2">
           <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* PB Logo - Always visible */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+              animate={{ opacity: isIntroDone ? 1 : 0, x: isIntroDone ? 0 : -20 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
               whileHover={{ scale: 1.02 }}
               className="flex-shrink-0"
             >
-              <a href="/" className="flex items-center">
+              <Link href="/" className="flex items-center">
                 <div className="relative w-10 h-10 sm:w-14 sm:h-14 lg:w-20 lg:h-20">
                   <Image
                     src="/logo-light.e2baf542.png"
@@ -121,7 +222,7 @@ export default function HeroSection() {
                     priority
                   />
                 </div>
-              </a>
+              </Link>
             </motion.div>
 
             {/* Desktop Menu - Centered */}
@@ -132,41 +233,41 @@ export default function HeroSection() {
               className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2"
             >
               <Menu setActive={setActive}>
-                <MenuItem setActive={setActive} active={active} item="Services">
+                <MenuItem setActive={setActive} active={active} item="Services" href="/#services">
                   <div className="flex flex-col space-y-3 sm:space-y-4 text-sm">
-                    <HoveredLink href="#services">All Services</HoveredLink>
-                    <HoveredLink href="#services">Business Consulting</HoveredLink>
-                    <HoveredLink href="#services">Real Estate</HoveredLink>
-                    <HoveredLink href="#services">Marketing</HoveredLink>
+                    <HoveredLink href="/#services" onClick={() => setActive(null)}>All Services</HoveredLink>
+                    <HoveredLink href="/#services" onClick={() => setActive(null)}>Business Consulting</HoveredLink>
+                    <HoveredLink href="/#services" onClick={() => setActive(null)}>Real Estate</HoveredLink>
+                    <HoveredLink href="/#services" onClick={() => setActive(null)}>Marketing</HoveredLink>
                   </div>
                 </MenuItem>
-                <MenuItem setActive={setActive} active={active} item="Companies">
+                <MenuItem setActive={setActive} active={active} item="Companies" href="/#companies">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full sm:w-[500px]">
                     {[
-                      { name: 'Wings9 Consultancy', icon: '/Consultancies.9aeac236.svg' },
-                      { name: 'Wings9 Properties', icon: '/Properties.2d31dc8a.svg' },
-                      { name: 'Wings9 Technology', icon: '/Technologies.4c178217.svg' },
-                      { name: 'Wings9 Vacation Homes', icon: '/VacationHomes.afaed650.svg' },
-                      { name: 'Wings9 Fashion', icon: '/Fashions.124cf041.svg' },
+                      { name: 'Wings9 Consultancy', icon: '/Consultancies.9aeac236.svg', href: '/business/consultancy' },
+                      { name: 'Wings9 Properties', icon: '/Properties.2d31dc8a.svg', href: '/business/properties' },
+                      { name: 'Wings9 Technology', icon: '/Technologies.4c178217.svg', href: '/business/technology' },
+                      { name: 'Wings9 Vacation Homes', icon: '/VacationHomes.afaed650.svg', href: '/business/vacation-homes' },
+                      { name: 'Wings9 Fashion', icon: '/Fashions.124cf041.svg', href: '/business/fashion' },
                     ].map((company, i) => (
-                      <a 
-                        key={i}
-                        href="#companies" 
-                        className="flex items-center gap-3 p-2 sm:p-3 rounded-lg hover:bg-[var(--surface)] transition-all group touch-manipulation"
-                        onClick={() => setActive(null)}
-                      >
-                        <Image src={company.icon} alt={company.name} width={32} height={32} className="flex-shrink-0" />
-                        <span className="text-xs sm:text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--accent)]">
-                          {company.name}
-                        </span>
-                      </a>
+                        <Link 
+                          key={i}
+                          href={company.href} 
+                          className="flex items-center gap-3 p-2 sm:p-3 rounded-lg hover:bg-[var(--surface)] transition-all group touch-manipulation"
+                          onClick={() => setActive(null)}
+                        >
+                          <Image src={company.icon} alt={company.name} width={32} height={32} className="flex-shrink-0" />
+                          <span className="text-xs sm:text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--accent)]">
+                            {company.name}
+                          </span>
+                        </Link>
                     ))}
                   </div>
                 </MenuItem>
-                <MenuItem setActive={setActive} active={active} item="Contact">
+                <MenuItem setActive={setActive} active={active} item="Contact" href="/#contact">
                   <div className="flex flex-col space-y-3 sm:space-y-4 text-sm">
-                    <HoveredLink href="#contact">Get in Touch</HoveredLink>
-                    <HoveredLink href="#contact">Book Consultation</HoveredLink>
+                    <HoveredLink href="/#contact" onClick={() => setActive(null)}>Get in Touch</HoveredLink>
+                    <HoveredLink href="/#contact" onClick={() => setActive(null)}>Book Consultation</HoveredLink>
                   </div>
                 </MenuItem>
               </Menu>
@@ -177,26 +278,26 @@ export default function HeroSection() {
             <div className="md:hidden flex items-center gap-2 sm:gap-3 w-full justify-end">
               <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto scrollbar-hide flex-1 justify-end">
                 <Menu setActive={setActive}>
-                  <MenuItem setActive={setActive} active={active} item="Services">
+                  <MenuItem setActive={setActive} active={active} item="Services" href="/#services">
                     <div className="flex flex-col space-y-3 text-sm">
-                      <HoveredLink href="#services" onClick={() => setActive(null)}>All Services</HoveredLink>
-                      <HoveredLink href="#services" onClick={() => setActive(null)}>Business Consulting</HoveredLink>
-                      <HoveredLink href="#services" onClick={() => setActive(null)}>Real Estate</HoveredLink>
-                      <HoveredLink href="#services" onClick={() => setActive(null)}>Marketing</HoveredLink>
+                      <HoveredLink href="/#services" onClick={() => setActive(null)}>All Services</HoveredLink>
+                      <HoveredLink href="/#services" onClick={() => setActive(null)}>Business Consulting</HoveredLink>
+                      <HoveredLink href="/#services" onClick={() => setActive(null)}>Real Estate</HoveredLink>
+                      <HoveredLink href="/#services" onClick={() => setActive(null)}>Marketing</HoveredLink>
                     </div>
                   </MenuItem>
-                  <MenuItem setActive={setActive} active={active} item="Companies">
+                  <MenuItem setActive={setActive} active={active} item="Companies" href="/#companies">
                     <div className="flex flex-col gap-3 w-full">
                       {[
-                        { name: 'Wings9 Consultancy', icon: '/Consultancies.9aeac236.svg' },
-                        { name: 'Wings9 Properties', icon: '/Properties.2d31dc8a.svg' },
-                        { name: 'Wings9 Technology', icon: '/Technologies.4c178217.svg' },
-                        { name: 'Wings9 Vacation Homes', icon: '/VacationHomes.afaed650.svg' },
-                        { name: 'Wings9 Fashion', icon: '/Fashions.124cf041.svg' },
+                        { name: 'Wings9 Consultancy', icon: '/Consultancies.9aeac236.svg', href: '/business/consultancy' },
+                        { name: 'Wings9 Properties', icon: '/Properties.2d31dc8a.svg', href: '/business/properties' },
+                        { name: 'Wings9 Technology', icon: '/Technologies.4c178217.svg', href: '/business/technology' },
+                        { name: 'Wings9 Vacation Homes', icon: '/VacationHomes.afaed650.svg', href: '/business/vacation-homes' },
+                        { name: 'Wings9 Fashion', icon: '/Fashions.124cf041.svg', href: '/business/fashion' },
                       ].map((company, i) => (
-                        <a 
+                        <Link 
                           key={i}
-                          href="#companies" 
+                          href={company.href} 
                           className="flex items-center gap-3 p-3 rounded-lg hover:bg-[var(--surface)] transition-all group touch-manipulation"
                           onClick={() => setActive(null)}
                         >
@@ -204,14 +305,14 @@ export default function HeroSection() {
                           <span className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--accent)]">
                             {company.name}
                           </span>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </MenuItem>
-                  <MenuItem setActive={setActive} active={active} item="Contact">
+                  <MenuItem setActive={setActive} active={active} item="Contact" href="/#contact">
                     <div className="flex flex-col space-y-3 text-sm">
-                      <HoveredLink href="#contact" onClick={() => setActive(null)}>Get in Touch</HoveredLink>
-                      <HoveredLink href="#contact" onClick={() => setActive(null)}>Book Consultation</HoveredLink>
+                      <HoveredLink href="/#contact" onClick={() => setActive(null)}>Get in Touch</HoveredLink>
+                      <HoveredLink href="/#contact" onClick={() => setActive(null)}>Book Consultation</HoveredLink>
                     </div>
                   </MenuItem>
                 </Menu>
@@ -219,7 +320,7 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Hero Content - Centered */}
       <div className="flex-1 flex items-center justify-center pt-12 sm:pt-16">
@@ -319,7 +420,11 @@ export default function HeroSection() {
                   href="#contact"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm sm:text-base rounded-lg hover:bg-[var(--accent-hover)] transition-all shadow-lg shadow-[var(--accent)]/20 w-full sm:w-auto"
+                  className={`inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 font-semibold text-sm sm:text-base transition-all shadow-lg w-full sm:w-auto ${
+                    colorScheme === 'creative' 
+                      ? 'bg-white text-black rounded-none border-2 border-white mix-blend-difference' 
+                      : 'bg-[var(--accent)] text-[var(--background)] rounded-lg shadow-[var(--accent)]/20 hover:bg-[var(--accent-hover)]'
+                  }`}
                 >
                   Book a Free Consultation
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -330,7 +435,11 @@ export default function HeroSection() {
                   href="#services"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  className="inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border-2 border-[var(--border)] text-[var(--foreground)] font-semibold text-sm sm:text-base rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all w-full sm:w-auto"
+                  className={`inline-flex items-center justify-center px-5 sm:px-6 py-2.5 sm:py-3 border-2 font-semibold text-sm sm:text-base transition-all w-full sm:w-auto ${
+                    colorScheme === 'creative'
+                      ? 'border-white text-white rounded-none hover:bg-white hover:text-black'
+                      : 'border-[var(--border)] text-[var(--foreground)] rounded-lg hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                  }`}
                 >
                   View Services
                 </motion.a>
@@ -348,7 +457,9 @@ export default function HeroSection() {
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
                     <motion.div 
-                      className="text-lg sm:text-xl lg:text-2xl font-bold text-[var(--accent)]"
+                      className={`text-lg sm:text-xl lg:text-2xl font-bold ${
+                        colorScheme === 'creative' ? 'text-white' : 'text-[var(--accent)]'
+                      }`}
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 1 + i * 0.1 }}

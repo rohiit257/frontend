@@ -1,6 +1,9 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { useConversation } from '@elevenlabs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, MicOff, Phone, PhoneOff, Volume2, VolumeX, Loader2 } from 'lucide-react';
@@ -260,7 +263,11 @@ export default function ElevenLabsVoiceAgent({ onClose, className }: ElevenLabsV
                                     : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
                                     } ${!msg.isFinal ? 'opacity-70' : ''}`}
                             >
-                                {msg.content}
+                                <div className="react-markdown">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                                        {msg.content}
+                                    </ReactMarkdown>
+                                </div>
                             </div>
                         </motion.div>
                     ))}

@@ -17,7 +17,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer id="contact" className="bg-[var(--surface)] border-t border-[var(--border)] py-16 lg:py-24 relative overflow-hidden">
+    <footer id="contact" className="bg-[var(--surface)] border-t border-[var(--border)] py-16 lg:py-24 relative overflow-hidden scroll-mt-20">
       {/* Background pattern */}
       <div className="absolute inset-0 grid-pattern opacity-30" />
 

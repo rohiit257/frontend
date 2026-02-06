@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette } from 'lucide-react';
 
-type ColorScheme = 'blue' | 'green' | 'dark-green' | 'rose';
+type ColorScheme = 'blue' | 'green' | 'dark-green' | 'rose' | 'creative';
 
 interface ThemeContextType {
   colorScheme: ColorScheme;
@@ -23,18 +23,18 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorScheme, setColorSchemeState] = useState<ColorScheme>('green');
+  const [colorScheme, setColorSchemeState] = useState<ColorScheme>('creative');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const savedScheme = localStorage.getItem('colorScheme') as ColorScheme;
-    if (savedScheme && ['blue', 'green', 'dark-green', 'rose'].includes(savedScheme)) {
+    if (savedScheme && ['blue', 'green', 'dark-green', 'rose', 'creative'].includes(savedScheme)) {
       setColorSchemeState(savedScheme);
       document.documentElement.className = savedScheme;
     } else {
-      // Set default color scheme to green
-      document.documentElement.className = 'green';
+      // Set default color scheme to creative
+      document.documentElement.className = 'creative';
     }
   }, []);
 
@@ -45,7 +45,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const cycleColorScheme = () => {
-    const schemes: ColorScheme[] = ['blue', 'green', 'dark-green', 'rose'];
+    const schemes: ColorScheme[] = ['blue', 'green', 'dark-green', 'rose', 'creative'];
     const currentIndex = schemes.indexOf(colorScheme);
     const nextIndex = (currentIndex + 1) % schemes.length;
     const nextScheme = schemes[nextIndex];
@@ -73,6 +73,8 @@ export function ThemeToggle() {
         return 'bg-[#1B211A]';
       case 'rose':
         return 'bg-[#987070]';
+      case 'creative':
+        return 'bg-[#ffffff] border border-gray-200';
       default:
         return 'bg-[#134074]';
     }
