@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence, Variants } from 'framer-motion';
 import { Menu, MenuItem, HoveredLink } from '@/components/ui/navbar-menu';
 import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
@@ -49,7 +49,7 @@ export default function HeroSection() {
   
   const isLightBackground = colorScheme === 'blue' || colorScheme === 'green' || colorScheme === 'rose';
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -60,7 +60,7 @@ export default function HeroSection() {
     },
   };
 
-  const imageVariants = {
+  const imageVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, x: 60 },
     visible: {
       opacity: 1,
@@ -74,14 +74,14 @@ export default function HeroSection() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut" as const,
+        ease: "easeOut",
       },
     },
   };
@@ -92,7 +92,12 @@ export default function HeroSection() {
         {!isIntroDone && (
           <motion.div 
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }}
+            exit={{ 
+              opacity: 0, 
+              scale: 1.1, 
+              filter: "blur(20px)", 
+              transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } 
+            }}
             className="fixed inset-0 z-[100] bg-black flex items-center justify-center p-6"
           >
             <div className="max-w-4xl w-full text-center space-y-12">
