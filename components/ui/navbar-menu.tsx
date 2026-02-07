@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const transition = {
   type: "spring" as const,
@@ -16,11 +17,13 @@ export const MenuItem = ({
   active,
   item,
   children,
+  href,
 }: {
   setActive: (item: string | null) => void;
   active: string | null;
   item: string;
   children?: React.ReactNode;
+  href?: string;
 }) => {
   const isActive = active === item;
   
@@ -30,12 +33,22 @@ export const MenuItem = ({
       onTouchStart={() => setActive(isActive ? null : item)}
       className="relative"
     >
-      <motion.p
-        transition={{ duration: 0.3 }}
-        className="cursor-pointer text-[var(--foreground)] hover:text-[var(--accent)] font-medium transition-colors text-sm sm:text-base whitespace-nowrap"
-      >
-        {item}
-      </motion.p>
+      {href ? (
+        <Link
+          href={href}
+          onClick={() => setActive(null)}
+          className="cursor-pointer text-[var(--foreground)] hover:text-[var(--accent)] font-medium transition-colors text-sm sm:text-base whitespace-nowrap block"
+        >
+          {item}
+        </Link>
+      ) : (
+        <motion.p
+          transition={{ duration: 0.3 }}
+          className="cursor-pointer text-[var(--foreground)] hover:text-[var(--accent)] font-medium transition-colors text-sm sm:text-base whitespace-nowrap"
+        >
+          {item}
+        </motion.p>
+      )}
       <AnimatePresence>
         {active !== null && isActive && (
           <motion.div
@@ -144,11 +157,11 @@ export const ProductItem = ({
 
 export const HoveredLink = ({ children, ...rest }: any) => {
   return (
-    <a
+    <Link
       {...rest}
       className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium py-2 px-2 rounded-lg hover:bg-[var(--surface)]/50 touch-manipulation block"
     >
       {children}
-    </a>
+    </Link>
   );
 };

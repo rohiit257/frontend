@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import LiveAvatar from './LiveAvatar';
 import VoiceInput from './VoiceInput';
 
@@ -317,9 +320,11 @@ export default function AIChatButton() {
                   className="mt-4"
                 >
                   <div className="bg-[var(--surface)] rounded-2xl p-4 border border-[var(--border)]">
-                    <p className="text-[var(--foreground)] text-sm leading-relaxed">
-                      {currentResponse}
-                    </p>
+                    <div className="text-[var(--foreground)] text-sm leading-relaxed react-markdown">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                        {currentResponse}
+                      </ReactMarkdown>
+                    </div>
                   </div>
                 </motion.div>
               )}
@@ -342,7 +347,11 @@ export default function AIChatButton() {
                           : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
                       }`}
                     >
-                      {msg.content.length > 150 ? msg.content.slice(0, 150) + '...' : msg.content}
+                      <div className="react-markdown">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </motion.div>
                 ))}

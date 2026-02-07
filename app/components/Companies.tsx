@@ -83,7 +83,7 @@ export default function Companies() {
   };
 
   return (
-    <section id="companies" ref={ref} className="relative py-20 lg:py-28 bg-[var(--background)] overflow-hidden">
+    <section id="companies" ref={ref} className="relative py-20 lg:py-28 bg-[var(--background)] overflow-hidden scroll-mt-20">
       {/* Triangle design elements */}
       <motion.div
         className="absolute top-20 left-10 w-32 h-32 opacity-20"

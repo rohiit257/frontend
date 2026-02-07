@@ -81,7 +81,7 @@ export default function Services() {
   };
 
   return (
-    <section id="services" ref={ref} className="py-20 lg:py-28 bg-[var(--surface)] relative overflow-hidden">
+    <section id="services" ref={ref} className="py-20 lg:py-28 bg-[var(--surface)] relative overflow-hidden scroll-mt-20">
       {/* Animated background pattern */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
         <motion.div

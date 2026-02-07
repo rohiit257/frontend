@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, X, MessageSquare, Video, Bot, User, Building2, Phone, Mic } from 'lucide-react';
-import LiveAvatar from './LiveAvatar';
-import DIDAgentManager from './DIDAgentManager';
+import { Send, X, MessageSquare, Bot, User, Building2, Phone, Mic } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import VoiceInput from './VoiceInput';
 import ElevenLabsVoiceAgent from './ElevenLabsVoiceAgent';
 
@@ -25,21 +26,15 @@ const QUICK_ACTIONS = [
 export default function AlwaysVisibleAvatar() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<Mode>('chat');
-  const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [currentResponse, setCurrentResponse] = useState<string>('');
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session-${Date.now()}`);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [hasGreeted, setHasGreeted] = useState(false);
-  const [agentId, setAgentId] = useState<string | null>(null);
-  const [clientKey, setClientKey] = useState<string | null>(null);
   const [useRealtimeAgent, setUseRealtimeAgent] = useState(true);
   const agentSpeakRef = useRef<((text: string) => void) | null>(null);
-  const agentChatRef = useRef<((message: string) => void) | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -88,63 +83,24 @@ export default function AlwaysVisibleAvatar() {
 
   // Initialize D-ID agent - get agentId and clientKey from environment
   useEffect(() => {
-    // To set up D-ID Agent:
-    // 1. Go to D-ID Studio (https://studio.d-id.com)
-    // 2. Create an Agent with image, voice, and instructions
-    // 3. In Agents gallery, hover over your Agent and click [...]
-    // 4. Click </> Embed button
-    // 5. Set allowed domains (e.g., http://localhost:3000)
-    // 6. Copy data-agent-id and data-client-key
-    // 7. Add to .env.local:
-    //    NEXT_PUBLIC_DID_AGENT_ID=agt_xxxxx
-    //    NEXT_PUBLIC_DID_CLIENT_KEY=xxxxx
-
     // NEXT_PUBLIC_ variables are available at build time in client components
     const envAgentId = process.env.NEXT_PUBLIC_DID_AGENT_ID;
     const envClientKey = process.env.NEXT_PUBLIC_DID_CLIENT_KEY;
 
     if (envAgentId && envClientKey) {
-      setAgentId(envAgentId);
-      setClientKey(envClientKey);
       setUseRealtimeAgent(true);
     } else {
-      console.warn('D-ID Agent credentials not found. Real-time agent will be disabled. Set NEXT_PUBLIC_DID_AGENT_ID and NEXT_PUBLIC_DID_CLIENT_KEY in environment variables.');
+      console.warn('D-ID Agent credentials not found. Real-time agent will be disabled.');
       setUseRealtimeAgent(false);
     }
   }, []);
 
-  // Send text to real-time agent using SDK
-  const sendToAgent = useCallback(async (text: string) => {
-    if (!useRealtimeAgent || !agentSpeakRef.current) {
-      return false;
-    }
-
-    try {
-      setIsSpeaking(true);
-      // Use the SDK's speak method
-      agentSpeakRef.current(text);
-      return true;
-    } catch (error) {
-      console.error('Send to agent error:', error);
-      setIsSpeaking(false);
-      return false;
-    }
-  }, [useRealtimeAgent]);
-
   // Generate D-ID video avatar with lip sync - No longer used since avatar mode removed
-  const generateVideoAvatar = useCallback(async (text: string) => {
+  const generateVideoAvatar = useCallback((text: string) => {
     // Just use web speech as fallback
     speakWithWebSpeech(text);
   }, [speakWithWebSpeech]);
 
-
-
-
-  // Handle video end
-  const handleVideoEnd = useCallback(() => {
-    setCurrentVideoUrl(null);
-    setIsSpeaking(false);
-  }, []);
 
   // Send message
   const handleSend = useCallback(async (overrideMessage?: string) => {
@@ -158,11 +114,8 @@ export default function AlwaysVisibleAvatar() {
       timestamp: new Date()
     }]);
     setIsLoading(true);
-    setCurrentResponse('');
 
-
-
-    // Otherwise, use our chat API
+    // Use our chat API
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -187,7 +140,6 @@ export default function AlwaysVisibleAvatar() {
         content: assistantResponse,
         timestamp: new Date()
       }]);
-      setCurrentResponse(assistantResponse);
 
       // Use text-to-speech only in voice mode, not in chat mode
       if (mode === 'voice') {
@@ -201,11 +153,10 @@ export default function AlwaysVisibleAvatar() {
         content: errorMsg,
         timestamp: new Date()
       }]);
-      setCurrentResponse(errorMsg);
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, isGeneratingVideo, inputValue, isOpen, mode, sessionId, generateVideoAvatar, speakWithWebSpeech, useRealtimeAgent]);
+  }, [isLoading, inputValue, mode, sessionId, speakWithWebSpeech]);
 
   // Handle voice input transcript
   const handleVoiceTranscript = useCallback((transcript: string) => {
@@ -282,7 +233,6 @@ export default function AlwaysVisibleAvatar() {
                     // Cancel any ongoing video generation when switching to chat mode
                     if (isGeneratingVideo) {
                       setIsGeneratingVideo(false);
-                      setCurrentVideoUrl(null);
                     }
                   }}
                   className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'chat'
@@ -365,7 +315,11 @@ export default function AlwaysVisibleAvatar() {
                         : 'bg-[var(--surface)] text-[var(--foreground)] border border-[var(--border)] rounded-bl-md'
                         }`}
                     >
-                      {msg.content}
+                      <div className="react-markdown">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+                          {msg.content}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
