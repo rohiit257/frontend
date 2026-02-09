@@ -2,9 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, X, MessageSquare, Video, Bot, User, Building2, Phone, Mic } from 'lucide-react';
-import LiveAvatar from './LiveAvatar';
-import DIDAgentManager from './DIDAgentManager';
+import { Send, X, MessageSquare, Bot, User, Building2, Phone, Mic } from 'lucide-react';
 import VoiceInput from './VoiceInput';
 import ElevenLabsVoiceAgent from './ElevenLabsVoiceAgent';
 
@@ -25,21 +23,12 @@ const QUICK_ACTIONS = [
 export default function AlwaysVisibleAvatar() {
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<Mode>('chat');
-  const [currentVideoUrl, setCurrentVideoUrl] = useState<string | null>(null);
-  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [currentResponse, setCurrentResponse] = useState<string>('');
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session-${Date.now()}`);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [hasGreeted, setHasGreeted] = useState(false);
-  const [agentId, setAgentId] = useState<string | null>(null);
-  const [clientKey, setClientKey] = useState<string | null>(null);
-  const [useRealtimeAgent, setUseRealtimeAgent] = useState(true);
-  const agentSpeakRef = useRef<((text: string) => void) | null>(null);
-  const agentChatRef = useRef<((message: string) => void) | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -56,12 +45,11 @@ export default function AlwaysVisibleAvatar() {
       window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = 1.0; // Natural rate
-      utterance.pitch = 1.1; // Slightly higher pitch for Indian accent
+      utterance.rate = 1.0;
+      utterance.pitch = 1.1;
       utterance.volume = 1;
 
       const voices = window.speechSynthesis.getVoices();
-      // Prefer Indian English voices, then any Indian voice, then fallback
       const preferredVoice = voices.find(v =>
         v.lang.includes('en-IN') ||
         v.lang.includes('hi-IN') ||
@@ -86,66 +74,6 @@ export default function AlwaysVisibleAvatar() {
     }
   }, []);
 
-  // Initialize D-ID agent - get agentId and clientKey from environment
-  useEffect(() => {
-    // To set up D-ID Agent:
-    // 1. Go to D-ID Studio (https://studio.d-id.com)
-    // 2. Create an Agent with image, voice, and instructions
-    // 3. In Agents gallery, hover over your Agent and click [...]
-    // 4. Click </> Embed button
-    // 5. Set allowed domains (e.g., http://localhost:3000)
-    // 6. Copy data-agent-id and data-client-key
-    // 7. Add to .env.local:
-    //    NEXT_PUBLIC_DID_AGENT_ID=agt_xxxxx
-    //    NEXT_PUBLIC_DID_CLIENT_KEY=xxxxx
-
-    // NEXT_PUBLIC_ variables are available at build time in client components
-    const envAgentId = process.env.NEXT_PUBLIC_DID_AGENT_ID;
-    const envClientKey = process.env.NEXT_PUBLIC_DID_CLIENT_KEY;
-
-    if (envAgentId && envClientKey) {
-      setAgentId(envAgentId);
-      setClientKey(envClientKey);
-      setUseRealtimeAgent(true);
-    } else {
-      console.warn('D-ID Agent credentials not found. Real-time agent will be disabled. Set NEXT_PUBLIC_DID_AGENT_ID and NEXT_PUBLIC_DID_CLIENT_KEY in environment variables.');
-      setUseRealtimeAgent(false);
-    }
-  }, []);
-
-  // Send text to real-time agent using SDK
-  const sendToAgent = useCallback(async (text: string) => {
-    if (!useRealtimeAgent || !agentSpeakRef.current) {
-      return false;
-    }
-
-    try {
-      setIsSpeaking(true);
-      // Use the SDK's speak method
-      agentSpeakRef.current(text);
-      return true;
-    } catch (error) {
-      console.error('Send to agent error:', error);
-      setIsSpeaking(false);
-      return false;
-    }
-  }, [useRealtimeAgent]);
-
-  // Generate D-ID video avatar with lip sync - No longer used since avatar mode removed
-  const generateVideoAvatar = useCallback(async (text: string) => {
-    // Just use web speech as fallback
-    speakWithWebSpeech(text);
-  }, [speakWithWebSpeech]);
-
-
-
-
-  // Handle video end
-  const handleVideoEnd = useCallback(() => {
-    setCurrentVideoUrl(null);
-    setIsSpeaking(false);
-  }, []);
-
   // Send message
   const handleSend = useCallback(async (overrideMessage?: string) => {
     const messageToSend = overrideMessage || inputValue.trim();
@@ -158,11 +86,7 @@ export default function AlwaysVisibleAvatar() {
       timestamp: new Date()
     }]);
     setIsLoading(true);
-    setCurrentResponse('');
 
-
-
-    // Otherwise, use our chat API
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -187,9 +111,8 @@ export default function AlwaysVisibleAvatar() {
         content: assistantResponse,
         timestamp: new Date()
       }]);
-      setCurrentResponse(assistantResponse);
 
-      // Use text-to-speech only in voice mode, not in chat mode
+      // Use text-to-speech in voice mode
       if (mode === 'voice') {
         speakWithWebSpeech(assistantResponse);
       }
@@ -201,11 +124,10 @@ export default function AlwaysVisibleAvatar() {
         content: errorMsg,
         timestamp: new Date()
       }]);
-      setCurrentResponse(errorMsg);
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, isGeneratingVideo, inputValue, isOpen, mode, sessionId, generateVideoAvatar, speakWithWebSpeech, useRealtimeAgent]);
+  }, [isLoading, inputValue, mode, sessionId, speakWithWebSpeech]);
 
   // Handle voice input transcript
   const handleVoiceTranscript = useCallback((transcript: string) => {
@@ -277,14 +199,7 @@ export default function AlwaysVisibleAvatar() {
               {/* Mode Toggle Buttons */}
               <div className="flex gap-1.5 md:gap-2">
                 <motion.button
-                  onClick={() => {
-                    setMode('chat');
-                    // Cancel any ongoing video generation when switching to chat mode
-                    if (isGeneratingVideo) {
-                      setIsGeneratingVideo(false);
-                      setCurrentVideoUrl(null);
-                    }
-                  }}
+                  onClick={() => setMode('chat')}
                   className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'chat'
                     ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
                     : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
@@ -319,8 +234,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-
-
             {/* Quick Actions - Show when no messages or in chat mode (not in voice mode) */}
             {messages.length === 0 && mode === 'chat' && (
               <div className="flex-1 overflow-y-auto px-3 md:px-4 py-3 md:py-4 bg-[var(--background)]/30">
@@ -332,7 +245,7 @@ export default function AlwaysVisibleAvatar() {
                       <motion.button
                         key={index}
                         onClick={() => handleSend(action.text)}
-                        disabled={isLoading || isGeneratingVideo}
+                        disabled={isLoading}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -384,7 +297,7 @@ export default function AlwaysVisibleAvatar() {
                       <motion.button
                         key={index}
                         onClick={() => handleSend(action.text)}
-                        disabled={isLoading || isGeneratingVideo}
+                        disabled={isLoading}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         className="px-2 md:px-3 py-1.5 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-xs text-[var(--foreground)] hover:bg-[var(--surface)]/80 hover:border-[var(--accent)] transition-all flex items-center gap-1 md:gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -424,7 +337,7 @@ export default function AlwaysVisibleAvatar() {
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder="Ask me anything..."
-                      disabled={isLoading || isGeneratingVideo || isListening}
+                      disabled={isLoading || isListening}
                       className="w-full px-3 md:px-4 py-2.5 bg-[var(--surface)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 focus:border-[var(--accent)] text-[var(--foreground)] placeholder:text-[var(--muted)] disabled:opacity-50 transition-all text-sm"
                       autoFocus
                     />
@@ -434,14 +347,14 @@ export default function AlwaysVisibleAvatar() {
                   <VoiceInput
                     onTranscript={handleVoiceTranscript}
                     onListeningChange={setIsListening}
-                    disabled={isLoading || isGeneratingVideo || isSpeaking}
+                    disabled={isLoading || isSpeaking}
                     className="flex-shrink-0"
                   />
 
                   {/* Send Button */}
                   <motion.button
                     onClick={() => handleSend()}
-                    disabled={!inputValue.trim() || isLoading || isGeneratingVideo}
+                    disabled={!inputValue.trim() || isLoading}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-11 h-11 md:w-10 md:h-10 rounded-xl bg-[var(--accent)] text-[var(--background)] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
@@ -457,4 +370,3 @@ export default function AlwaysVisibleAvatar() {
     </div>
   );
 }
-

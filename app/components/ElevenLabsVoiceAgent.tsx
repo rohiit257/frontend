@@ -76,7 +76,48 @@ export default function ElevenLabsVoiceAgent({ onClose, className }: ElevenLabsV
             console.log('Mode changed:', mode);
         },
         clientTools: {
-            // Client tool to confirm booking in UI
+            // Client tool to schedule a meeting - called by AI when booking is complete
+            scheduleMeeting: async (params: { 
+                name: string; 
+                email: string; 
+                phone: string;
+                date: string;
+                time: string;
+                timezone: string;
+                purpose?: string;
+            }) => {
+                console.log('Scheduling meeting:', params);
+                try {
+                    const response = await fetch('/api/schedule-meeting', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: params.name,
+                            email: params.email,
+                            phone: params.phone,
+                            date: params.date,
+                            time: params.time,
+                            timezone: params.timezone || 'IST',
+                            purpose: params.purpose || 'Consultation',
+                        }),
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Meeting scheduled successfully:', result);
+                        return `Meeting scheduled successfully for ${params.name} on ${params.date} at ${params.time} ${params.timezone || 'IST'}. A confirmation email will be sent to ${params.email}.`;
+                    } else {
+                        console.error('Failed to schedule meeting');
+                        return `I've noted your booking request. Our team will contact you at ${params.phone} to confirm the meeting.`;
+                    }
+                } catch (error) {
+                    console.error('Error scheduling meeting:', error);
+                    return `I've noted your booking request. Our team will contact you shortly to confirm.`;
+                }
+            },
+            // Legacy confirmBooking for backward compatibility
             confirmBooking: (params: { name: string; datetime: string; email: string }) => {
                 console.log('Booking confirmed:', params);
                 return `Booking confirmed for ${params.name} at ${params.datetime}`;

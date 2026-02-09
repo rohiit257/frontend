@@ -16,6 +16,10 @@ const N8N_MEETING_WEBHOOK_URL = process.env.N8N_MEETING_WEBHOOK_URL ||
   process.env.NEXT_PUBLIC_N8N_MEETING_WEBHOOK_URL ||
   N8N_WEBHOOK_URL; // Fallback to main webhook if meeting webhook not configured
 
+const N8N_CONTACT_WEBHOOK_URL = process.env.N8N_CONTACT_WEBHOOK_URL ||
+  process.env.NEXT_PUBLIC_N8N_CONTACT_WEBHOOK_URL ||
+  N8N_WEBHOOK_URL; // Fallback to main webhook if contact webhook not configured
+
 export interface CallBookingData {
   type: 'call_booking';
   mobile: string;
@@ -94,17 +98,36 @@ export async function sendCallBooking(data: Omit<CallBookingData, 'type' | 'time
  * Send contact form data to n8n
  */
 export async function sendContactForm(data: Omit<ContactFormData, 'type' | 'timestamp' | 'source'>): Promise<boolean> {
-  const webhookData: ContactFormData = {
-    type: 'contact_form',
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    message: data.message,
-    timestamp: new Date().toISOString(),
-    source: 'contact_form',
-  };
+  try {
+    const webhookData = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      message: data.message,
+    };
 
-  return sendToN8N(webhookData);
+    console.log('Sending contact form to n8n:', webhookData);
+
+    const response = await fetch(N8N_CONTACT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(webhookData),
+    });
+
+    if (!response.ok) {
+      console.error('n8n contact webhook error:', response.status, response.statusText);
+      return false;
+    }
+
+    const result = await response.json().catch(() => ({}));
+    console.log('n8n contact webhook success:', result);
+    return true;
+  } catch (error) {
+    console.error('Failed to send to n8n contact webhook:', error);
+    return false;
+  }
 }
 
 /**
