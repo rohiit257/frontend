@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ArrowLeft, Check, ArrowRight, Phone, Mail, MapPin, Menu, X } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ThemeToggle, useTheme } from './ThemeProvider';
+import { ThemeToggle } from './ThemeProvider';
 
 interface BusinessPageProps {
   title: string;
@@ -37,8 +37,6 @@ export default function BusinessPage({
   const featsRef  = useRef(null);
   const isStatsInView = useInView(statsRef, { once: true, margin: '-60px' });
   const isFeatsInView = useInView(featsRef, { once: true, margin: '-60px' });
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === 'dark-green';
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

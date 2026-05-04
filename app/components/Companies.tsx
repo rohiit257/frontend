@@ -4,7 +4,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRef } from 'react';
-import { useTheme } from './ThemeProvider';
+
 
 const companies = [
   {
@@ -40,7 +40,7 @@ const companies = [
 ];
 
 export default function Companies() {
-  const { colorScheme } = useTheme();
+
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
@@ -53,7 +53,7 @@ export default function Companies() {
   const yOrb1 = useTransform(scrollYProgress, [0, 1], [80, -80]);
   const yOrb2 = useTransform(scrollYProgress, [0, 1], [-40, 40]);
 
-  const isDark = colorScheme === 'dark-green';
+
 
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -5,13 +5,12 @@ import { useRef } from 'react';
 import { Phone, Mail, Linkedin, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import ContactForm from './ContactForm';
-import { useTheme } from './ThemeProvider';
+
 
 export default function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const { colorScheme } = useTheme();
-  const isDark = colorScheme === 'dark-green';
+
 
   const contactInfo = [
     { icon: Phone, label: 'Phone', value: '+971 56 760 9898', href: 'tel:+971567609898' },
@@ -42,7 +41,7 @@ export default function Footer() {
                   alt="Wings9 Logo"
                   fill
                   className="object-contain"
-                  style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                  style={{ filter: 'var(--logo-filter)' }}
                   sizes="(max-width: 640px) 80px, 96px"
                 />
               </div>

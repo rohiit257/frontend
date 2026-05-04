@@ -2,13 +2,10 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useTheme } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
 export default function HeroSection() {
-  const { colorScheme } = useTheme();
 
-  const isDark = colorScheme === 'dark-green';
 
   const containerVariants = {
     hidden: { opacity: 0 },

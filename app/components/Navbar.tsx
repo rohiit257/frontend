@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ThemeToggle, useTheme } from './ThemeProvider';
+import { ThemeToggle } from './ThemeProvider';
 
 const navLinks = [
   { label: 'Home',         href: '#home',         icon: '⌂' },
@@ -30,8 +30,6 @@ export default function Navbar() {
   const [scrolled, setScrolled]    = useState(false);
   const [menuOpen, setMenuOpen]    = useState(false);
   const [activeSection, setActive] = useState('home');
-  const { colorScheme }            = useTheme();
-  const isDark                     = colorScheme === 'dark-green';
   const menuRef                    = useRef<HTMLDivElement>(null);
   const closeMenu                  = useCallback(() => setMenuOpen(false), []);
 
