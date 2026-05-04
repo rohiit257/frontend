@@ -1,3 +1,4 @@
+import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import Companies from './components/Companies';
 import Services from './components/Services';
@@ -7,13 +8,16 @@ import AlwaysVisibleAvatar from './components/AlwaysVisibleAvatar';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-      <HeroSection />
-      <Companies />
-      <Services />
-      <Testimonials />
-      <Footer />
-      <AlwaysVisibleAvatar />
-    </main>
+    <>
+      <Navbar />
+      <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+        <HeroSection />
+        <Companies />
+        <Services />
+        <Testimonials />
+        <Footer />
+        <AlwaysVisibleAvatar />
+      </main>
+    </>
   );
 }

@@ -71,7 +71,7 @@ export default function Testimonials() {
   const reviews = reviewsData?.reviews?.slice(0, 3) || [];
 
   return (
-    <section ref={ref} className="py-20 lg:py-28 bg-[var(--background)] relative overflow-hidden">
+    <section id="testimonials" ref={ref} className="py-20 lg:py-28 bg-[var(--background)] relative overflow-hidden">
       {/* Static decorative ring */}
       <div
         className="absolute top-1/2 -translate-y-1/2 right-0 w-64 h-64 border border-[var(--border)] rounded-full opacity-20 pointer-events-none"

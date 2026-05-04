@@ -1,25 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Menu, MenuItem, HoveredLink } from '@/components/ui/navbar-menu';
+import { motion } from 'framer-motion';
 import { useTheme } from './ThemeProvider';
-import { ThemeToggle } from './ThemeProvider';
 import Typewriter from './Typewriter';
 
 export default function HeroSection() {
-  const [active, setActive] = useState<string | null>(null);
-  const [scrolled, setScrolled] = useState(false);
   const { colorScheme } = useTheme();
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const isDark = colorScheme === 'dark-green';
 
@@ -59,7 +46,7 @@ export default function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-screen hero-bg flex flex-col overflow-hidden">
+    <section id="home" className="relative min-h-screen hero-bg flex flex-col overflow-hidden">
       {/* Minimal static geometric accents — no heavy animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute top-16 right-16 w-72 h-72 border border-[var(--border)] rounded-full opacity-30" />
@@ -68,120 +55,6 @@ export default function HeroSection() {
         <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-[var(--accent)] opacity-[0.04] rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-[30vw] h-[30vh] bg-[var(--accent)] opacity-[0.04] rounded-full blur-3xl" />
       </div>
-
-      {/* ─── Navbar ─── */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border)] shadow-sm'
-            : 'bg-transparent backdrop-blur-none border-b border-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
-          <div className="flex items-center justify-between gap-4">
-            {/* Logo — bigger */}
-            <motion.a
-              href="/"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ scale: 1.03 }}
-              className="flex-shrink-0 flex items-center"
-              aria-label="Wings9 Home"
-            >
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24">
-                <Image
-                  src="/logo-light.e2baf542.png"
-                  alt="Wings9 Logo"
-                  fill
-                  className="object-contain"
-                  style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
-                  priority
-                  sizes="(max-width: 640px) 64px, (max-width: 1024px) 80px, 96px"
-                />
-              </div>
-            </motion.a>
-
-            {/* Desktop Navigation — centered */}
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="hidden md:flex items-center absolute left-1/2 -translate-x-1/2"
-            >
-              <Menu setActive={setActive}>
-                <MenuItem setActive={setActive} active={active} item="Services">
-                  <div className="flex flex-col space-y-3 text-sm">
-                    <HoveredLink href="#services">All Services</HoveredLink>
-                    <HoveredLink href="#services">Business Consulting</HoveredLink>
-                    <HoveredLink href="#services">Real Estate</HoveredLink>
-                    <HoveredLink href="#services">Marketing</HoveredLink>
-                  </div>
-                </MenuItem>
-                <MenuItem setActive={setActive} active={active} item="Companies">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full sm:w-[480px]">
-                    {companies.map((c, i) => (
-                      <a
-                        key={i}
-                        href="#companies"
-                        onClick={() => setActive(null)}
-                        className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-[var(--surface)] transition-colors group"
-                      >
-                        <Image src={c.icon} alt={c.name} width={28} height={28} className="flex-shrink-0" />
-                        <span className="text-sm font-medium text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
-                          {c.name}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </MenuItem>
-                <MenuItem setActive={setActive} active={active} item="Contact">
-                  <div className="flex flex-col space-y-3 text-sm">
-                    <HoveredLink href="#contact">Get in Touch</HoveredLink>
-                    <HoveredLink href="#contact">Book Consultation</HoveredLink>
-                  </div>
-                </MenuItem>
-              </Menu>
-            </motion.div>
-
-            {/* Right side: ThemeToggle + mobile menu */}
-            <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              <ThemeToggle />
-
-              {/* Mobile Navigation */}
-              <div className="md:hidden">
-                <Menu setActive={setActive}>
-                  <MenuItem setActive={setActive} active={active} item="Menu">
-                    <div className="flex flex-col gap-1 w-56">
-                      <a
-                        href="#services"
-                        onClick={() => setActive(null)}
-                        className="px-3 py-2.5 text-sm font-medium text-[var(--foreground)] hover:text-[var(--accent)] hover:bg-[var(--surface)] rounded-lg transition-colors"
-                      >
-                        Services
-                      </a>
-                      <a
-                        href="#companies"
-                        onClick={() => setActive(null)}
-                        className="px-3 py-2.5 text-sm font-medium text-[var(--foreground)] hover:text-[var(--accent)] hover:bg-[var(--surface)] rounded-lg transition-colors"
-                      >
-                        Companies
-                      </a>
-                      <a
-                        href="#contact"
-                        onClick={() => setActive(null)}
-                        className="px-3 py-2.5 text-sm font-medium text-[var(--foreground)] hover:text-[var(--accent)] hover:bg-[var(--surface)] rounded-lg transition-colors"
-                      >
-                        Contact
-                      </a>
-                    </div>
-                  </MenuItem>
-                </Menu>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* ─── Hero Content ─── */}
       <div className="flex-1 flex items-center justify-center pt-28 sm:pt-32 pb-16">
@@ -243,7 +116,6 @@ export default function HeroSection() {
               initial="hidden"
               animate="visible"
               className="text-center lg:text-left space-y-5 sm:space-y-7 z-10 order-2 lg:order-1 w-full"
-              style={{ opacity }}
             >
               {/* Label pill */}
               <motion.div variants={itemVariants}>
@@ -335,7 +207,6 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8 }}
-        style={{ opacity }}
         aria-hidden="true"
       >
         <motion.div
