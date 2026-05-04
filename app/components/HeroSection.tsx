@@ -133,10 +133,15 @@ export default function HeroSection() {
                 variants={itemVariants}
                 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--foreground)] leading-[1.1] tracking-tight"
               >
-                <Typewriter
-                  text="Helping Businesses Scale with Strategic Leadership"
-                  speed={22}
-                />
+                <span className="hidden md:block">
+                  <Typewriter
+                    text="Helping Businesses Scale with Strategic Leadership"
+                    speed={22}
+                  />
+                </span>
+                <span className="md:hidden">
+                  Helping Businesses Scale with Strategic Leadership
+                </span>
               </motion.h1>
 
               {/* Body text */}
