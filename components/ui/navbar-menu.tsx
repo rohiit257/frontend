@@ -92,23 +92,15 @@ export const Menu = ({
   return (
     <nav
       onMouseLeave={() => setActive(null)}
-      className="relative rounded-full border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl shadow-lg overflow-x-auto scroll-smooth"
-      style={{
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE/Edge
-      }}
+      className="relative rounded-full border border-[var(--border)] bg-[var(--surface)]/80 backdrop-blur-xl shadow-lg scrollbar-hide overflow-x-auto"
     >
-      <style jsx>{`
-        nav::-webkit-scrollbar {
-          display: none; /* Chrome, Safari, Opera */
-        }
-      `}</style>
-      <div className="flex items-center justify-center space-x-3 sm:space-x-4 lg:space-x-6 px-3 sm:px-6 lg:px-8 py-1.5 sm:py-2 lg:py-3 min-w-max">
+      <div className="flex items-center justify-center space-x-3 sm:space-x-5 lg:space-x-7 px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 min-w-max">
         {children}
       </div>
     </nav>
   );
 };
+
 
 export const ProductItem = ({
   title,
@@ -142,11 +134,23 @@ export const ProductItem = ({
   );
 };
 
-export const HoveredLink = ({ children, ...rest }: any) => {
+export const HoveredLink = ({
+  children,
+  href,
+  onClick,
+  ...rest
+}: {
+  children: React.ReactNode;
+  href: string;
+  onClick?: () => void;
+  [key: string]: unknown;
+}) => {
   return (
     <a
+      href={href}
+      onClick={onClick}
       {...rest}
-      className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium py-2 px-2 rounded-lg hover:bg-[var(--surface)]/50 touch-manipulation block"
+      className="text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium py-2 px-2 rounded-lg hover:bg-[var(--accent)]/5 touch-manipulation block"
     >
       {children}
     </a>

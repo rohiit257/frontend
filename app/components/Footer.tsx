@@ -3,32 +3,51 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Phone, Mail, Linkedin, MapPin } from 'lucide-react';
+import Image from 'next/image';
 import ContactForm from './ContactForm';
+import { useTheme } from './ThemeProvider';
 
 export default function Footer() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const { colorScheme } = useTheme();
+  const isDark = colorScheme === 'dark-green';
 
   const contactInfo = [
     { icon: Phone, label: 'Phone', value: '+971 56 760 9898', href: 'tel:+971567609898' },
     { icon: Mail, label: 'Email', value: 'me.prakash.ae', href: 'mailto:me.prakash.ae' },
-    { icon: Linkedin, label: 'LinkedIn', value: 'Connect with me', href: 'https://linkedin.com' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'Connect on LinkedIn', href: 'https://linkedin.com' },
     { icon: MapPin, label: 'Location', value: 'Dubai, UAE', href: null },
   ];
 
   return (
     <footer id="contact" className="bg-[var(--surface)] border-t border-[var(--border)] py-16 lg:py-24 relative overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+      {/* Background grid */}
+      <div className="absolute inset-0 grid-pattern opacity-25 pointer-events-none" aria-hidden="true" />
 
       <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 mb-16">
-          {/* Contact Info */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 mb-14">
+
+          {/* ── Contact Info Column ── */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
+            {/* Logo */}
+            <div className="mb-8">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24">
+                <Image
+                  src="/logo-light.e2baf542.png"
+                  alt="Wings9 Logo"
+                  fill
+                  className="object-contain"
+                  style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                  sizes="(max-width: 640px) 80px, 96px"
+                />
+              </div>
+            </div>
+
             <motion.span
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -38,48 +57,47 @@ export default function Footer() {
               <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse" />
               Get in Touch
             </motion.span>
-            
-            <h2 className="text-3xl lg:text-4xl font-bold text-[var(--foreground)] mb-5">
-              Let's Work Together
+
+            <h2 className="text-3xl lg:text-4xl font-bold text-[var(--foreground)] mb-4 tracking-tight leading-tight">
+              Let&apos;s Work Together
             </h2>
             <p className="text-[var(--muted)] mb-8 text-base leading-relaxed max-w-lg">
-              Ready to scale your business? Let's discuss how we can help you achieve your goals.
+              Ready to scale your business? Let&apos;s discuss how we can help you achieve your goals and unlock new opportunities.
             </p>
-            
-            <div className="space-y-6">
+
+            <div className="space-y-4">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="group"
+                  transition={{ delay: 0.25 + index * 0.08 }}
                 >
                   {item.href ? (
-                    <a 
+                    <a
                       href={item.href}
                       target={item.href.startsWith('http') ? '_blank' : undefined}
                       rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="flex items-center gap-4 p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl hover:border-[var(--accent)] transition-all group"
+                      className="flex items-center gap-4 p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl hover:border-[var(--accent)] transition-colors group"
                     >
-                      <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)]/20 transition-colors">
+                      <div className="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)]/20 transition-colors flex-shrink-0">
                         <item.icon className="w-5 h-5 text-[var(--accent)]" />
                       </div>
                       <div>
-                        <p className="text-sm text-[var(--muted)]">{item.label}</p>
-                        <p className="text-[var(--foreground)] font-medium group-hover:text-[var(--accent)] transition-colors">
+                        <p className="text-xs text-[var(--muted)] font-medium uppercase tracking-wide">{item.label}</p>
+                        <p className="text-[var(--foreground)] font-semibold text-sm group-hover:text-[var(--accent)] transition-colors mt-0.5">
                           {item.value}
                         </p>
                       </div>
                     </a>
                   ) : (
                     <div className="flex items-center gap-4 p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl">
-                      <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center">
+                      <div className="w-11 h-11 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center flex-shrink-0">
                         <item.icon className="w-5 h-5 text-[var(--accent)]" />
                       </div>
                       <div>
-                        <p className="text-sm text-[var(--muted)]">{item.label}</p>
-                        <p className="text-[var(--foreground)] font-medium">{item.value}</p>
+                        <p className="text-xs text-[var(--muted)] font-medium uppercase tracking-wide">{item.label}</p>
+                        <p className="text-[var(--foreground)] font-semibold text-sm mt-0.5">{item.value}</p>
                       </div>
                     </div>
                   )}
@@ -88,27 +106,28 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* ── Contact Form Column ── */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-8"
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="bg-[var(--background)] border border-[var(--border)] rounded-2xl p-6 sm:p-8"
           >
-            <h3 className="text-2xl font-bold text-[var(--foreground)] mb-6">Send us a message</h3>
+            <h3 className="text-2xl font-bold text-[var(--foreground)] mb-2">Send us a Message</h3>
+            <p className="text-[var(--muted)] text-sm mb-6">We typically respond within 24 hours.</p>
             <ContactForm />
           </motion.div>
         </div>
 
-        {/* Footer bottom */}
+        {/* ── Footer Bottom ── */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--border)]"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--border)]"
         >
           <p className="text-[var(--muted)] text-sm">
-            © 2026 Wings9 Technologies. All rights reserved.
+            © {new Date().getFullYear()} Wings9 Enterprises. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a href="#" className="text-[var(--muted)] hover:text-[var(--accent)] text-sm transition-colors">

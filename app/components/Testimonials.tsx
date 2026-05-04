@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import { Star, Loader2 } from 'lucide-react';
 import Image from 'next/image';
@@ -26,16 +26,9 @@ interface ReviewsData {
 
 export default function Testimonials() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [reviewsData, setReviewsData] = useState<ReviewsData | null>(null);
   const [loading, setLoading] = useState(true);
-  
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], [-20, 20]);
 
   useEffect(() => {
     async function fetchReviews() {
@@ -51,6 +44,7 @@ export default function Testimonials() {
     }
     fetchReviews();
   }, []);
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -78,10 +72,10 @@ export default function Testimonials() {
 
   return (
     <section ref={ref} className="py-20 lg:py-28 bg-[var(--background)] relative overflow-hidden">
-      {/* Parallax element */}
-      <motion.div 
-        className="absolute top-1/2 -translate-y-1/2 right-0 w-64 h-64 border border-[var(--border)] rounded-full opacity-20"
-        style={{ x }}
+      {/* Static decorative ring */}
+      <div
+        className="absolute top-1/2 -translate-y-1/2 right-0 w-64 h-64 border border-[var(--border)] rounded-full opacity-20 pointer-events-none"
+        aria-hidden="true"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
