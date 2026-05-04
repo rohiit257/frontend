@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Palette } from 'lucide-react';
 
-type ColorScheme = 'blue' | 'green' | 'dark-green' | 'rose';
+type ColorScheme = 'blue' | 'green' | 'dark-green' | 'rose' | 'black-gold';
 
 interface ThemeContextType {
   colorScheme: ColorScheme;
@@ -23,18 +23,19 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorScheme, setColorSchemeState] = useState<ColorScheme>('green');
+  const [colorScheme, setColorSchemeState] = useState<ColorScheme>('black-gold');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     const savedScheme = localStorage.getItem('colorScheme') as ColorScheme;
-    if (savedScheme && ['blue', 'green', 'dark-green', 'rose'].includes(savedScheme)) {
+    if (savedScheme && ['blue', 'green', 'dark-green', 'rose', 'black-gold'].includes(savedScheme)) {
       setColorSchemeState(savedScheme);
       document.documentElement.className = savedScheme;
     } else {
-      // Set default color scheme to green
-      document.documentElement.className = 'green';
+      // Set default color scheme to black-gold
+      setColorSchemeState('black-gold');
+      document.documentElement.className = 'black-gold';
     }
   }, []);
 
@@ -45,7 +46,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const cycleColorScheme = () => {
-    const schemes: ColorScheme[] = ['blue', 'green', 'dark-green', 'rose'];
+    const schemes: ColorScheme[] = ['blue', 'green', 'dark-green', 'rose', 'black-gold'];
     const currentIndex = schemes.indexOf(colorScheme);
     const nextIndex = (currentIndex + 1) % schemes.length;
     const nextScheme = schemes[nextIndex];
@@ -73,6 +74,8 @@ export function ThemeToggle() {
         return 'bg-[#1B211A]';
       case 'rose':
         return 'bg-[#987070]';
+      case 'black-gold':
+        return 'bg-gradient-to-br from-[#141414] to-[#0C0C0C] border border-[#E0B853] shadow-[0_0_8px_rgba(224,184,83,0.4)]';
       default:
         return 'bg-[#134074]';
     }
@@ -85,7 +88,7 @@ export function ThemeToggle() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label="Change color scheme"
-      title={`Current: ${colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : 'Dark Green'}. Click to cycle.`}
+      title={`Current: ${colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : colorScheme === 'dark-green' ? 'Dark Green' : colorScheme === 'rose' ? 'Rose' : 'Black & Gold'}. Click to cycle.`}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -105,7 +108,7 @@ export function ThemeToggle() {
       
       {/* Tooltip showing current scheme */}
       <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-[var(--surface)] border border-[var(--border)] rounded-lg text-xs text-[var(--foreground)] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-        {colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : colorScheme === 'dark-green' ? 'Dark Green' : 'Rose'}
+        {colorScheme === 'blue' ? 'Blue' : colorScheme === 'green' ? 'Green' : colorScheme === 'dark-green' ? 'Dark Green' : colorScheme === 'rose' ? 'Rose' : 'Black & Gold'}
       </div>
     </motion.button>
   );

@@ -156,7 +156,7 @@ export default function AlwaysVisibleAvatar() {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 200 }}
             onClick={() => setIsOpen(true)}
-            className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] shadow-2xl flex items-center justify-center border-2 border-[var(--background)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95"
+            className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center border-2 border-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_30px_-5px_var(--accent)]"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Open AI Assistant"

@@ -174,6 +174,39 @@
   --input: rgba(74, 58, 58, 0.1);
 }
 
+/* Black and Gold Color Scheme - Premium minimal */
+:root.black-gold {
+  --navy: #0C0C0C;
+  --cream: #141414;
+  --steel: #E0B853;
+  --navy-light: #111111;
+  --steel-light: #F0D58C;
+  
+  --background: #0C0C0C; /* Premium soft black */
+  --foreground: #F0D58C; /* Light gold/champagne text */
+  --surface: #141414; /* Deep black-gray */
+  --surface-hover: #1A1A1A;
+  --accent: #E0B853; /* Premium golden accent */
+  --accent-hover: #C8A042; /* Darker gold */
+  --muted: rgba(240, 213, 140, 0.5); /* Muted champagne */
+  --border: rgba(224, 184, 83, 0.3); /* Premium gold border */
+  --border-hover: rgba(224, 184, 83, 0.6);
+  
+  /* Logo filter - richer golden tone with shadow */
+  --logo-filter: brightness(0) saturate(100%) invert(78%) sepia(30%) saturate(600%) hue-rotate(5deg) brightness(98%) contrast(90%) drop-shadow(0 0 12px rgba(224, 184, 83, 0.4));
+  
+  --primary: 224 184 83;
+  --primary-foreground: 12 12 12;
+  --secondary: 20 20 20;
+  --secondary-foreground: 240 213 140;
+  --muted-foreground: 224 184 83;
+  --card: 12 12 12;
+  --card-foreground: 240 213 140;
+  --popover: 12 12 12;
+  --popover-foreground: 240 213 140;
+  --input: rgba(224, 184, 83, 0.2);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -239,6 +272,12 @@
 :root.rose .hero-bg::before {
   background-image: 
     url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a3a3a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Black-gold scheme - dark golden background pattern */
+:root.black-gold .hero-bg::before {
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 /* Section backgrounds */

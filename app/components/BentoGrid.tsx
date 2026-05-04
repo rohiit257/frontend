@@ -135,6 +135,7 @@ export default function BentoGrid() {
                       width={48}
                       height={48}
                       className="w-full h-full object-contain"
+                      style={{ filter: 'var(--logo-filter)' }}
                     />
                   </motion.div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, Variants } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Check, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
@@ -39,7 +39,7 @@ export default function BusinessPage({
   const { colorScheme } = useTheme();
   const isDark = colorScheme === 'dark-green';
 
-  const fade = {
+  const fade: Variants = {
     hidden: { opacity: 0, y: 24 },
     visible: (i: number) => ({
       opacity: 1, y: 0,
@@ -66,7 +66,7 @@ export default function BusinessPage({
                   alt="Wings9"
                   fill
                   className="object-contain"
-                  style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                  style={{ filter: 'var(--logo-filter)' }}
                   priority
                   sizes="56px"
                 />
@@ -92,10 +92,10 @@ export default function BusinessPage({
 
             {/* Right actions */}
             <div className="flex items-center gap-2 sm:gap-3">
-              <ThemeToggle />
+              {/* Theme Toggle Removed */}
               <Link
                 href="/#contact"
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-full hover:bg-[var(--accent-hover)] transition-all duration-200 shadow-md shadow-[var(--accent)]/20"
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-full hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_15px_var(--border-hover)] hover:shadow-[0_8px_20px_-4px_var(--accent)]"
               >
                 Contact Us
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -198,14 +198,14 @@ export default function BusinessPage({
             >
               <Link
                 href="/#contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm sm:text-base rounded-xl hover:bg-[var(--accent-hover)] transition-all shadow-lg shadow-[var(--accent)]/20"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm sm:text-base rounded-xl hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_25px_-5px_var(--accent)]"
               >
                 Get in Touch
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/#companies"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[var(--border)] text-[var(--foreground)] font-semibold text-sm sm:text-base rounded-xl hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[var(--border)] text-[var(--foreground)] font-semibold text-sm sm:text-base rounded-xl hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-300 hover:shadow-[0_0_15px_var(--border-hover)]"
               >
                 All Companies
               </Link>
@@ -333,7 +333,7 @@ export default function BusinessPage({
                         alt={company.name}
                         fill
                         className="object-contain opacity-70 group-hover:opacity-100 transition-opacity"
-                        style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                        style={{ filter: 'var(--logo-filter)' }}
                         sizes="56px"
                       />
                     </div>
@@ -379,14 +379,14 @@ export default function BusinessPage({
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link
                   href="/#contact"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm sm:text-base rounded-xl hover:bg-[var(--accent-hover)] transition-all shadow-lg shadow-[var(--accent)]/20"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[var(--accent)] text-[var(--background)] font-semibold text-sm sm:text-base rounded-xl hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_25px_-5px_var(--accent)]"
                 >
                   Book a Free Consultation
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
                   href="tel:+971567609898"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-[var(--border)] text-[var(--foreground)] font-semibold text-sm sm:text-base rounded-xl hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 border-2 border-[var(--border)] text-[var(--foreground)] font-semibold text-sm sm:text-base rounded-xl hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-300 hover:shadow-[0_0_15px_var(--border-hover)]"
                 >
                   <Phone className="w-4 h-4" />
                   +971 56 760 9898
@@ -420,7 +420,7 @@ export default function BusinessPage({
                 alt="Wings9"
                 fill
                 className="object-contain"
-                style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                style={{ filter: 'var(--logo-filter)' }}
                 sizes="32px"
               />
             </div>

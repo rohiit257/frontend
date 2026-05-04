@@ -165,7 +165,7 @@ export default function Companies() {
                         width={80}
                         height={80}
                         className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-                        style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                        style={{ filter: 'var(--logo-filter)' }}
                       />
                     </motion.div>
 

@@ -118,15 +118,15 @@ export default function Navbar() {
             className="flex-shrink-0 flex items-center gap-3 group"
             aria-label="Wings9 — back to top"
           >
-            <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16">
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20">
               <Image
                 src="/logo-light.e2baf542.png"
                 alt="Wings9 Logo"
                 fill
                 className="object-contain transition-all duration-300"
-                style={{ filter: isDark ? 'brightness(0) invert(1)' : 'brightness(0)' }}
+                style={{ filter: 'var(--logo-filter)' }}
                 priority
-                sizes="(max-width: 640px) 48px, (max-width: 1024px) 56px, 64px"
+                sizes="(max-width: 640px) 56px, (max-width: 1024px) 64px, 80px"
               />
             </div>
           </motion.a>
@@ -168,7 +168,7 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.15 }}
             className="flex items-center gap-2 sm:gap-3"
           >
-            <ThemeToggle />
+            {/* Theme Toggle Removed */}
 
             {/* Desktop CTA */}
             <motion.a
@@ -176,7 +176,7 @@ export default function Navbar() {
               onClick={(e) => smoothScroll(e, '#contact')}
               whileHover={{ scale: 1.04, y: -1 }}
               whileTap={{ scale: 0.97 }}
-              className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-full hover:bg-[var(--accent-hover)] transition-all duration-200 shadow-md shadow-[var(--accent)]/20"
+              className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-full hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_15px_var(--border-hover)] hover:shadow-[0_8px_20px_-4px_var(--accent)]"
             >
               Book Consultation
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -282,7 +282,7 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.28 }}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3.5 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-xl hover:bg-[var(--accent-hover)] transition-all duration-200 shadow-lg shadow-[var(--accent)]/20"
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3.5 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-xl hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_25px_-5px_var(--accent)]"
                 >
                   Book a Free Consultation
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
