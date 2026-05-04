@@ -1,10 +1,11 @@
 'use client';
 
-import { motion, useInView, Variants } from 'framer-motion';
+import { motion, useInView, Variants, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Check, ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
-import { useRef } from 'react';
+import { ArrowLeft, Check, ArrowRight, Phone, Mail, MapPin, Menu, X } from 'lucide-react';
+import { useRef, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { ThemeToggle, useTheme } from './ThemeProvider';
 
 interface BusinessPageProps {
@@ -38,6 +39,23 @@ export default function BusinessPage({
   const isFeatsInView = useInView(featsRef, { once: true, margin: '-60px' });
   const { colorScheme } = useTheme();
   const isDark = colorScheme === 'dark-green';
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
 
   const fade: Variants = {
     hidden: { opacity: 0, y: 24 },
@@ -80,7 +98,7 @@ export default function BusinessPage({
                   key={c.href}
                   href={c.href}
                   className={`px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-200 whitespace-nowrap ${
-                    typeof window !== 'undefined' && window.location.pathname === c.href
+                    pathname === c.href
                       ? 'bg-[var(--accent)] text-[var(--background)]'
                       : 'text-[var(--foreground)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/10'
                   }`}
@@ -100,40 +118,72 @@ export default function BusinessPage({
                 Contact Us
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-              {/* Mobile Menu Dropdown instead of just Home button */}
-              <div className="lg:hidden relative group">
-                <button className="inline-flex items-center justify-center w-10 h-10 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all focus:outline-none">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-                </button>
-                <div className="absolute right-0 top-full mt-2 w-48 bg-[var(--background)] border border-[var(--border)] rounded-xl shadow-xl opacity-0 invisible group-focus-within:opacity-100 group-focus-within:visible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top-right z-50">
-                  <div className="p-2 flex flex-col gap-1">
-                    <Link href="/" className="px-3 py-2 text-sm font-medium rounded-lg text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)] transition-colors flex items-center gap-2">
-                      <ArrowLeft className="w-3.5 h-3.5" /> Home
-                    </Link>
-                    <div className="h-px bg-[var(--border)] my-1" />
-                    {allCompanies.map(c => (
-                      <Link
-                        key={c.href}
-                        href={c.href}
-                        className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                          typeof window !== 'undefined' && window.location.pathname === c.href
-                            ? 'bg-[var(--accent)] text-[var(--background)]'
-                            : 'text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)]'
-                        }`}
-                      >
-                        {c.name}
-                      </Link>
-                    ))}
-                    <div className="h-px bg-[var(--border)] my-1" />
-                    <Link href="/#contact" className="px-3 py-2 text-sm font-medium rounded-lg text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)] transition-colors">
-                      Contact Us
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden inline-flex items-center justify-center w-10 h-10 bg-[var(--surface)] border border-[var(--border)] rounded-xl text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all focus:outline-none z-50"
+                aria-label="Toggle Menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Menu Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 top-[64px] bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+                onClick={() => setMobileMenuOpen(false)}
+              />
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-[64px] left-0 right-0 bg-[var(--background)] border-b border-[var(--border)] shadow-2xl z-50 lg:hidden"
+              >
+                <div className="p-4 flex flex-col gap-2 max-h-[calc(100vh-80px)] overflow-y-auto">
+                  <Link
+                    href="/"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-3 text-sm font-medium rounded-xl text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)] transition-colors flex items-center gap-2"
+                  >
+                    <ArrowLeft className="w-4 h-4" /> Back to Home
+                  </Link>
+                  <div className="h-px bg-[var(--border)] my-1 mx-2" />
+                  <div className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">Our Divisions</div>
+                  {allCompanies.map(c => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
+                        pathname === c.href
+                          ? 'bg-[var(--accent)] text-[var(--background)] shadow-md shadow-[var(--accent)]/20'
+                          : 'text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)]'
+                      }`}
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                  <div className="h-px bg-[var(--border)] my-1 mx-2" />
+                  <Link
+                    href="/#contact"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="mt-2 px-4 py-3.5 text-sm font-medium rounded-xl text-[var(--background)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-colors text-center shadow-[0_4px_15px_var(--border-hover)]"
+                  >
+                    Contact Us
+                  </Link>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* ── Hero Banner ── */}

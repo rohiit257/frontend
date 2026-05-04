@@ -73,7 +73,11 @@ export default function Navbar() {
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      if (
+        menuRef.current && 
+        !menuRef.current.contains(e.target as Node) &&
+        !(e.target as Element).closest('#mobile-menu-toggle')
+      ) {
         closeMenu();
       }
     };
@@ -224,72 +228,53 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 top-[68px] bg-black/50 backdrop-blur-sm z-40 md:hidden"
+              className="absolute inset-0 top-full h-[100vh] bg-black/60 backdrop-blur-sm z-40 md:hidden"
               onClick={closeMenu}
               aria-hidden="true"
             />
 
-            {/* Drawer */}
+            {/* Dropdown Menu */}
             <motion.div
               key="drawer"
               id="mobile-nav"
               ref={menuRef}
-              initial={{ opacity: 0, x: '100%' }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: '100%' }}
-              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
-              className="fixed top-[68px] right-0 bottom-0 w-[min(320px,90vw)] bg-[var(--background)] border-l border-[var(--border)] z-50 md:hidden flex flex-col shadow-2xl"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 bg-[var(--background)] border-b border-[var(--border)] shadow-2xl z-50 md:hidden flex flex-col"
               role="dialog"
               aria-modal="true"
               aria-label="Navigation menu"
             >
               {/* Links */}
-              <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-1">
-                {navLinks.map((link, i) => {
+              <div className="flex flex-col p-4 gap-1 max-h-[calc(100vh-80px)] overflow-y-auto">
+                {navLinks.map((link) => {
                   const isActive = activeSection === link.href.replace('#', '');
                   return (
                     <motion.a
                       key={link.href}
                       href={link.href}
                       onClick={(e) => smoothScroll(e, link.href, closeMenu)}
-                      initial={{ opacity: 0, x: 32 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05, duration: 0.25, ease: 'easeOut' }}
-                      className={`flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
+                      className={`flex items-center gap-4 px-4 py-3.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                         isActive
-                          ? 'bg-[var(--accent)] text-[var(--background)]'
+                          ? 'bg-[var(--accent)] text-[var(--background)] shadow-md shadow-[var(--accent)]/20'
                           : 'text-[var(--foreground)] hover:bg-[var(--accent)]/10 hover:text-[var(--accent)]'
                       }`}
                       aria-current={isActive ? 'page' : undefined}
                     >
                       <span className="flex-1">{link.label}</span>
-                      {isActive && (
-                        <motion.span
-                          layoutId="mobile-active-dot"
-                          className="w-1.5 h-1.5 rounded-full bg-[var(--background)]/70"
-                        />
-                      )}
                     </motion.a>
                   );
                 })}
-              </nav>
-
-              {/* CTA inside drawer */}
-              <div className="px-4 py-5 border-t border-[var(--border)] space-y-3">
+                <div className="h-px bg-[var(--border)] my-2 mx-2" />
                 <motion.a
                   href="#contact"
                   onClick={(e) => smoothScroll(e, '#contact', closeMenu)}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.28 }}
-                  className="flex items-center justify-center gap-2 w-full px-4 py-3.5 text-sm font-semibold bg-[var(--accent)] text-[var(--background)] rounded-xl hover:bg-[var(--accent-hover)] transition-all duration-300 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_25px_-5px_var(--accent)]"
+                  className="mt-2 px-4 py-3.5 text-sm font-medium rounded-xl text-[var(--background)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-300 text-center shadow-[0_4px_15px_var(--border-hover)] hover:shadow-[0_8px_20px_-4px_var(--accent)]"
                 >
                   Book a Free Consultation
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
                 </motion.a>
-                <p className="text-center text-xs text-[var(--muted)]">Dubai, UAE · +971 56 760 9898</p>
               </div>
             </motion.div>
           </>
