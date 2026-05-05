@@ -16,30 +16,31 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Prakash Bhambhani | A Vision in Motion",
+  title: "Prakash Bhambhani | Wings9 Group",
   description:
-    "CEO of Wings9 — leading five trailblazing enterprises shaping the future of business, real estate, technology, fashion, and vacation homes.",
+    "Prakash Bhambhani is a business strategist and corporate solutions specialist with nearly 30 years of experience leading Wings9 Group across consultancy, real estate, technology, trading, fashion, and vacation homes.",
   keywords: [
     "Prakash Bhambhani",
     "Wings9",
+    "Wings9 Group",
     "business consultant Dubai",
-    "CEO Wings9",
+    "corporate solutions specialist",
     "Wings9 Consultancy",
     "Wings9 Properties",
     "Wings9 Technology",
   ],
   authors: [{ name: "Prakash Bhambhani" }],
   openGraph: {
-    title: "Prakash Bhambhani | Wings9 Enterprises",
+    title: "Prakash Bhambhani | Wings9 Group",
     description:
-      "20+ years of strategic leadership across five trailblazing enterprises. Helping businesses scale globally.",
+      "Nearly 30 years of strategic leadership across consultancy, real estate, technology, trading, and emerging business sectors.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Prakash Bhambhani | Wings9 Enterprises",
-    description: "Strategic leadership across five trailblazing enterprises.",
+    title: "Prakash Bhambhani | Wings9 Group",
+    description: "Nearly 30 years of strategic leadership across diversified business sectors.",
   },
   robots: { index: true, follow: true },
 };
@@ -61,7 +62,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* DNS prefetch for Google APIs */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>

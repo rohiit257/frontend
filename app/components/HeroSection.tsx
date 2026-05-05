@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import Typewriter from './Typewriter';
 
 export default function HeroSection() {
-
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -34,31 +32,18 @@ export default function HeroSection() {
     },
   };
 
-  const companies = [
-    { name: 'Wings9 Consultancy', icon: '/Consultancies.9aeac236.svg' },
-    { name: 'Wings9 Properties', icon: '/Properties.2d31dc8a.svg' },
-    { name: 'Wings9 Technology', icon: '/Technologies.4c178217.svg' },
-    { name: 'Wings9 Vacation Homes', icon: '/VacationHomes.afaed650.svg' },
-    { name: 'Wings9 Fashion', icon: '/Fashions.124cf041.svg' },
-  ];
-
   return (
     <section id="home" className="relative min-h-screen hero-bg flex flex-col overflow-hidden">
-      {/* Minimal static geometric accents — no heavy animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute top-16 right-16 w-72 h-72 border border-[var(--border)] rounded-full opacity-30" />
         <div className="absolute bottom-24 left-16 w-52 h-52 border border-[var(--border)] rotate-45 opacity-20" />
-        {/* Subtle gradient glow */}
         <div className="absolute top-0 right-0 w-[40vw] h-[40vh] bg-[var(--accent)] opacity-[0.04] rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-[30vw] h-[30vh] bg-[var(--accent)] opacity-[0.04] rounded-full blur-3xl" />
       </div>
 
-      {/* ─── Hero Content ─── */}
       <div className="flex-1 flex items-center justify-center pt-28 sm:pt-32 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
-            {/* Profile Image — first on mobile */}
             <motion.div
               variants={imageVariants}
               initial="hidden"
@@ -71,11 +56,9 @@ export default function HeroSection() {
                   transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
                   className="relative"
                 >
-                  {/* Decorative frames */}
                   <div className="hidden sm:block absolute -inset-5 border-2 border-[var(--accent)]/20 rounded-2xl rotate-3" />
                   <div className="hidden sm:block absolute -inset-5 border-2 border-[var(--accent)]/10 rounded-2xl -rotate-3" />
 
-                  {/* Image container */}
                   <motion.div
                     className="relative bg-[var(--surface)] rounded-2xl p-1.5 border border-[var(--border)] overflow-hidden shadow-2xl"
                     whileHover={{ scale: 1.015 }}
@@ -84,7 +67,7 @@ export default function HeroSection() {
                     <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
                       <Image
                         src="/profile-image.c30a6137.png"
-                        alt="Prakash Bhambhani — CEO, Wings9 Enterprises"
+                        alt="Prakash Bhambhani - Wings9 Group"
                         fill
                         className="object-cover"
                         priority
@@ -92,7 +75,6 @@ export default function HeroSection() {
                       />
                     </div>
 
-                    {/* Name badge */}
                     <motion.div
                       className="absolute bottom-3 left-3 right-3 bg-[var(--background)]/95 backdrop-blur-sm rounded-xl p-3 border border-[var(--border)]"
                       initial={{ opacity: 0, y: 16 }}
@@ -100,21 +82,19 @@ export default function HeroSection() {
                       transition={{ delay: 1 }}
                     >
                       <h3 className="text-sm sm:text-base font-bold text-[var(--foreground)] leading-tight">Prakash Bhambhani</h3>
-                      <p className="text-xs text-[var(--muted)] mt-0.5">CEO, Wings9 Enterprises</p>
+                      <p className="text-xs text-[var(--muted)] mt-0.5">Wings9 Group</p>
                     </motion.div>
                   </motion.div>
                 </motion.div>
               </div>
             </motion.div>
 
-            {/* Text Content — second on mobile */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               className="text-center lg:text-left space-y-5 sm:space-y-7 z-10 order-2 lg:order-1 w-full"
             >
-              {/* Label pill */}
               <motion.div variants={itemVariants}>
                 <motion.span
                   className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--surface)] border border-[var(--border)] rounded-full text-[var(--accent)] text-sm font-medium tracking-wide"
@@ -125,7 +105,6 @@ export default function HeroSection() {
                 </motion.span>
               </motion.div>
 
-              {/* Heading */}
               <motion.h1
                 variants={itemVariants}
                 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-[var(--foreground)] leading-[1.1] tracking-tight"
@@ -141,15 +120,13 @@ export default function HeroSection() {
                 </span>
               </motion.h1>
 
-              {/* Body text */}
               <motion.p
                 variants={itemVariants}
                 className="text-base sm:text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl mx-auto lg:mx-0"
               >
-                20+ years of experience driving business growth, strategy, and execution across multiple industries.
+                Nearly 30 years of multidimensional experience across company structuring, corporate advisory, real estate, trading, technology, and emerging business sectors.
               </motion.p>
 
-              {/* CTA Buttons */}
               <motion.div
                 variants={itemVariants}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 justify-center lg:justify-start"
@@ -175,15 +152,14 @@ export default function HeroSection() {
                 </motion.a>
               </motion.div>
 
-              {/* Stats */}
               <motion.div
                 variants={itemVariants}
                 className="flex items-center justify-center lg:justify-start gap-8 sm:gap-10 pt-4 border-t border-[var(--border)]"
               >
                 {[
-                  { value: '20+', label: 'Years Experience' },
-                  { value: '7', label: 'Companies' },
-                  { value: '100+', label: 'Clients Served' },
+                  { value: '30+', label: 'Years Experience' },
+                  { value: '7', label: 'Group Companies' },
+                  { value: 'MNCs', label: 'Trusted Clients' },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
                     <motion.div
@@ -203,7 +179,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-6 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}

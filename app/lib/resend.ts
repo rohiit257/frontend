@@ -186,7 +186,7 @@ export async function sendConsultationBookingEmails(
     '',
     'Our team will review the request and contact you shortly to confirm the consultation.',
     '',
-    'Wings9 Management Consultancies',
+    'Wings9 Group',
   ].join('\n');
 
   const confirmationHtml = `
@@ -201,7 +201,7 @@ export async function sendConsultationBookingEmails(
         <p style="margin: 0;"><strong>Purpose:</strong> ${safePurpose}</p>
       </div>
       <p style="margin: 0 0 12px;">Our team will review the request and contact you shortly to confirm the consultation.</p>
-      <p style="margin: 0;">Wings9 Management Consultancies</p>
+      <p style="margin: 0;">Wings9 Group</p>
     </div>
   `;
 

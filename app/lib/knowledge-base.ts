@@ -1,7 +1,7 @@
 /**
  * Expanded Knowledge Base for RAG System
  * 
- * This contains all verified information about Prakash Bhambhani and Wings9 services.
+ * This contains all verified information about Prakash Bhambhani and Wings9 Group.
  * Used as the source of truth for the AI assistant.
  * 
  * Structure includes:
@@ -15,63 +15,86 @@
 export const knowledgeBase = {
   ceo: {
     name: "Prakash Bhambhani",
-    role: "Founder & Strategic Advisor",
-    company: "Wings9",
-    focus: "Business advisory, real estate, compliance, and growth strategy",
-    approach: "Client-centric, compliance-first, long-term value creation",
-    description: "Prakash Bhambhani is the founder and strategic leader behind Wings9, leading seven trailblazing enterprises that shape the future of their domains. With over 20 years of experience in business advisory, real estate, international expansion, and cross-border trade, Prakash has built a reputation for delivering exceptional results. He is known for his client-centric approach, focusing on compliance-first strategies and long-term value creation for businesses seeking growth and expansion. Prakash has successfully guided hundreds of clients through complex business challenges, helping them navigate international markets, regulatory requirements, and strategic growth opportunities.",
-    background: "Prakash Bhambhani brings extensive expertise in international business development, having worked with clients across multiple continents. His deep understanding of UAE business regulations, real estate markets, and cross-border commerce makes him a trusted advisor for entrepreneurs and established businesses alike. He is passionate about helping businesses scale sustainably while maintaining compliance and ethical business practices.",
+    role: "Business Strategist, Entrepreneur & Corporate Solutions Specialist",
+    company: "Wings9 Group",
+    focus: "Company structuring, corporate advisory, real estate, rental disputes, trading, technology, and strategic growth",
+    approach: "Practical, result-oriented, legally structured, and commercially viable",
+    description: "Prakash Bhambhani is a seasoned business strategist, entrepreneur, and corporate solutions specialist with nearly 30 years of multidimensional experience across business consulting, company structuring, real estate, corporate advisory, rental dispute management, trading, technology, and emerging business sectors. He is known for understanding complex business situations and converting them into clear, compliant, and commercially viable structures for entrepreneurs, investors, corporates, and multinational companies.",
+    background: "His expertise spans company formation, corporate structuring and restructuring, licensing, regulatory coordination, investor advisory, operational problem-solving, property investments, leasing, commercial negotiations, and rental dispute matters. He has supported businesses across mainland, free zone, and international corporate environments with a professional approach grounded in market knowledge, authority-level understanding, negotiation skills, and strategic execution.",
     achievements: [
-      "Successfully launched and scaled 7 companies under Wings9 umbrella",
-      "Helped 100+ clients achieve their business expansion goals",
-      "Expert in UAE business regulations and compliance",
-      "Specialized in golden visa and investor programs",
-      "Recognized for excellence in real estate investment consulting"
+      "Nearly 30 years of multidimensional business and real estate experience",
+      "Supported entrepreneurs, investors, corporates, and multinational companies with structured growth solutions",
+      "Deep expertise in mainland, free zone, and international corporate environments",
+      "Built a diversified Wings9 ecosystem spanning consultancy, technology, trading, real estate solutions, and brand development",
+      "Expanded into AI-driven solutions, software and IT ventures, fashion, vacation homes, and modern trading opportunities over the last six years"
     ],
     expertise: [
-      "International business expansion",
-      "Real estate investment",
-      "Regulatory compliance",
-      "Strategic business advisory",
-      "Market entry strategies",
-      "UAE business setup and licensing",
-      "Golden visa and investor programs",
-      "Cross-border commerce",
-      "Business transformation",
-      "Investment consulting"
+      "Company formation and structuring",
+      "Corporate restructuring and advisory",
+      "Licensing and regulatory coordination",
+      "Investor advisory",
+      "Operational problem-solving",
+      "Real estate investment and leasing",
+      "Commercial negotiations",
+      "Rental dispute management",
+      "AI-driven business solutions",
+      "Software and IT-related business models",
+      "Foodstuff import and export",
+      "Brand development and market expansion"
     ],
     values: [
-      "Integrity and transparency in all business dealings",
-      "Client success as the primary measure of achievement",
-      "Compliance-first approach to business operations",
-      "Long-term partnerships over short-term gains",
-      "Innovation and adaptability in service delivery"
+      "Practical solutions grounded in compliance and commercial viability",
+      "Discretion and professionalism in high-level corporate matters",
+      "Long-term strategic thinking with adaptability to market change",
+      "Innovation-led growth across emerging sectors",
+      "Trust, clarity, and execution-focused client support"
+    ],
+    notableClients: [
+      "Sun Pharma",
+      "Haldiram's",
+      "Lufthansa Airways",
+      "Quality Foods",
+      "MMI"
+    ],
+    expansionAreas: [
+      "AI-driven solutions",
+      "Software and IT-related ventures",
+      "Fashion ventures",
+      "Vacation homes",
+      "Modern trading opportunities"
     ]
   },
   firm: {
     name: "Wings9",
-    fullName: "Wings9 Enterprises",
-    nature: "Multi-domain professional services firm",
-    markets: "UAE, Middle East, India, and international markets",
-    clients: "Entrepreneurs, SMEs, investors, corporates, startups, established businesses",
-    valueProposition: "Comprehensive business solutions across multiple domains, from real estate to legal compliance, designed to help businesses scale and succeed in international markets. Wings9 provides end-to-end support ensuring compliance, strategic planning, and sustainable growth.",
-    approach: "We provide end-to-end support, ensuring compliance, strategic planning, and sustainable growth for our clients.",
-    mission: "To empower businesses and entrepreneurs with comprehensive solutions that drive sustainable growth, ensure regulatory compliance, and unlock international market opportunities.",
-    vision: "To be the most trusted partner for businesses seeking to expand, grow, and succeed in international markets, particularly in the UAE and Middle East region.",
-    history: "Wings9 was founded with a vision to provide holistic business solutions that go beyond traditional consulting. Over the years, the firm has evolved into a multi-domain powerhouse, operating seven specialized companies that collectively offer comprehensive support for businesses at every stage of their journey.",
+    fullName: "Wings9 Group",
+    nature: "Diversified business ecosystem spanning consultancy, technology, trading, real estate solutions, and brand development",
+    markets: "UAE, mainland, free zone, India, GCC, and international markets",
+    clients: "Entrepreneurs, investors, corporates, multinational companies, startups, and established businesses",
+    valueProposition: "Structured, compliant, and commercially viable solutions across company setup, corporate structuring, real estate, trading, technology, and strategic expansion. Wings9 helps clients solve complex business challenges with practical execution and long-term thinking.",
+    approach: "We combine strategic advisory, regulatory understanding, commercial negotiation, and hands-on execution to help clients enter markets, structure operations, and grow sustainably.",
+    mission: "To deliver structured business solutions that help clients establish, expand, and grow with clarity, compliance, and commercial confidence.",
+    vision: "To build a trusted, future-ready business ecosystem that bridges consultancy, technology, trading, and real estate with innovation-led execution.",
+    history: "Under the Wings Nine banner, the organization has grown from a consultancy-led foundation into a diversified group serving business setup, restructuring, real estate, technology, trading, and brand-building needs. Its latest expansion includes Wings9 Global Trading, focused on foodstuff import and export and the development of proprietary in-house brands for regional and international markets.",
     specialties: [
-      "UAE business setup and licensing",
-      "International business expansion",
-      "Real estate investment and consulting",
-      "Regulatory compliance and legal guidance",
-      "Marketing and brand development",
+      "Company formation and structuring",
+      "Corporate restructuring and business advisory",
+      "Real estate investment, leasing, and rental dispute solutions",
+      "Licensing and regulatory coordination",
       "Technology solutions and digital transformation",
-      "Tax and accounting services",
-      "Golden visa and investor programs"
+      "AI-driven business models",
+      "Foodstuff import, export, and private-label development",
+      "Brand development and market expansion"
     ],
-    geographicPresence: "Primarily based in UAE with extensive experience serving clients across Middle East, India, Europe, and North America. The firm has deep expertise in UAE regulations and business practices.",
-    team: "Led by Prakash Bhambhani, Wings9 comprises experienced professionals across various domains including business advisory, real estate, legal, accounting, marketing, and technology.",
-    trackRecord: "With 20+ years of combined experience, Wings9 has successfully helped hundreds of clients navigate complex business challenges, achieve regulatory compliance, and scale their operations internationally."
+    geographicPresence: "Primarily based in the UAE with broad experience across mainland, free zone, GCC, India, and international business environments.",
+    team: "Led by Prakash Bhambhani, Wings9 Group brings together experience across business advisory, corporate structuring, real estate, technology, trading, and brand development.",
+    trackRecord: "Backed by Prakash Bhambhani's nearly 30 years of experience, Wings9 Group has supported entrepreneurs, investors, corporates, and multinational companies with market entry, restructuring, compliance, commercial property, and strategic expansion.",
+    notableClients: [
+      "Sun Pharma",
+      "Haldiram's",
+      "Lufthansa Airways",
+      "Quality Foods",
+      "MMI"
+    ]
   },
   services: [
     {
@@ -216,24 +239,24 @@ export const knowledgeBase = {
     whatsapp: "+971 56 760 9898",
     linkedin: "LinkedIn profile available",
     location: "United Arab Emirates (UAE)",
-    consultationNote: "For consultations, please contact via phone, email, or WhatsApp. We offer free initial consultations to discuss your business needs. Prakash and his team are available to help you navigate your business challenges and explore growth opportunities.",
+    consultationNote: "For consultations, please contact via phone, email, or WhatsApp. We offer free initial consultations to discuss your business needs. Prakash and the Wings9 Group team are available to help you navigate business challenges, structuring decisions, and expansion opportunities.",
     availability: "Available for consultations Monday through Friday. Emergency support available for urgent matters. Response time typically within 24 hours.",
     languages: "English, Hindi, and other regional languages supported"
   },
   companies: [
     {
       name: "Wings9 Consultancy",
-      description: "Leading business consultancy providing strategic advisory, international expansion support, golden visa assistance, and comprehensive business solutions. Specializes in helping businesses navigate UAE regulations, market entry strategies, and growth opportunities.",
-      focus: "Business consultancy, international expansion, golden visa, strategic advisory",
-      services: ["Business setup in UAE", "Golden visa applications", "Market entry strategies", "Compliance guidance", "Strategic business advisory"],
-      targetAudience: "Entrepreneurs, investors, businesses seeking UAE expansion, companies needing compliance support"
+      description: "A strategic business advisory division focused on company formation, corporate structuring, restructuring, licensing, regulatory coordination, investor advisory, and growth-led commercial problem-solving.",
+      focus: "Business consultancy, company structuring, licensing, investor advisory, strategic advisory",
+      services: ["Company formation", "Corporate structuring and restructuring", "Licensing and regulatory coordination", "Investor advisory", "Strategic business advisory"],
+      targetAudience: "Entrepreneurs, investors, startups, corporates, and companies seeking structured market entry or expansion"
     },
     {
       name: "Wings9 Properties",
-      description: "Premium real estate services offering property sales, leasing, investment consulting, and property management. Specializes in residential and commercial properties across UAE, helping clients make informed real estate investment decisions.",
-      focus: "Real estate services, property investment, sales and leasing",
-      services: ["Property sales", "Leasing services", "Investment consulting", "Property management", "Real estate advisory"],
-      targetAudience: "Property buyers, sellers, investors, businesses needing commercial space, real estate investors"
+      description: "A real estate solutions division covering property investments, leasing, corporate rentals, commercial negotiations, and rental dispute matters for clients who need business and premises strategy to work together.",
+      focus: "Real estate services, property investment, leasing, commercial negotiations, rental dispute solutions",
+      services: ["Property investments", "Leasing services", "Corporate rentals", "Commercial negotiations", "Rental dispute support"],
+      targetAudience: "Property buyers, sellers, investors, landlords, tenants, and businesses needing commercial space"
     },
     {
       name: "Wings9 Vacation Homes",
@@ -244,8 +267,8 @@ export const knowledgeBase = {
     },
     {
       name: "Wings9 Technology",
-      description: "Cutting-edge technology solutions and digital transformation services. Provides enterprise software development, cloud solutions, AI integration, and technology consulting to help businesses modernize and scale digitally.",
-      focus: "Technology solutions, digital transformation, software development",
+      description: "A technology and digital transformation division focused on software solutions, AI integration, automation, and modern IT-enabled business models that help companies evolve with changing markets.",
+      focus: "Technology solutions, digital transformation, software development, AI integration",
       services: ["Software development", "Cloud solutions", "Digital transformation", "Technology consulting", "AI and automation"],
       targetAudience: "Businesses needing digital transformation, startups requiring tech solutions, enterprises seeking modernization"
     },
@@ -258,9 +281,9 @@ export const knowledgeBase = {
     },
     {
       name: "Wings9 Global Trading",
-      description: "A Dubai-based food export and trade management company specializing in sourcing, quality assurance, logistics, and GCC distribution. Its portfolio includes foxnuts, tea, namkeen, sweets, spices, cookies, protein bars, frozen food, and customized private-label supply.",
-      focus: "Food export, sourcing, trade management, GCC distribution",
-      services: ["Food export", "Customized sourcing services", "Quality assurance", "Price negotiation", "Logistics and shipping support", "Private labeling and packaging"],
+      description: "A Dubai-based foodstuff import and export venture focused on sourcing, quality assurance, logistics, GCC distribution, and the development of proprietary in-house brands for regional and international markets.",
+      focus: "Foodstuff import and export, sourcing, trade management, GCC distribution, in-house brand development",
+      services: ["Food export", "Food import", "Customized sourcing services", "Quality assurance", "Price negotiation", "Logistics and shipping support", "Private labeling and packaging"],
       targetAudience: "Distributors, supermarkets, retail chains, channel partners, and buyers seeking Indian grocery exports into UAE and GCC markets"
     },
     {
@@ -275,14 +298,14 @@ export const knowledgeBase = {
   
   // Additional context for better understanding
   whyChooseWings9: [
-    "20+ years of combined experience in business advisory and real estate",
-    "Comprehensive multi-domain expertise under one roof",
-    "Deep understanding of UAE regulations and business practices",
-    "Proven track record with 100+ successful client engagements",
-    "Client-centric approach with personalized service",
-    "End-to-end support from planning to execution",
-    "Strong network and partnerships in UAE and international markets",
-    "Compliance-first approach ensuring regulatory adherence"
+    "Nearly 30 years of multidimensional business and real estate experience",
+    "Practical, structured, and commercially viable problem-solving",
+    "Deep understanding of mainland, free zone, and international business environments",
+    "Integrated expertise across consultancy, real estate, technology, trading, and brand development",
+    "Strong regulatory awareness, negotiation capability, and execution focus",
+    "Trusted by entrepreneurs, investors, corporates, and multinational companies",
+    "Forward-looking approach across AI, software, fashion, vacation homes, and modern trading",
+    "Long-term strategic guidance grounded in compliance and clarity"
   ],
   
   industriesServed: [
@@ -295,30 +318,32 @@ export const knowledgeBase = {
     "Professional Services",
     "Healthcare",
     "Education",
-    "Financial Services"
+    "Financial Services",
+    "Food Import and Export",
+    "FMCG and Consumer Brands"
   ],
   
   commonUseCases: [
-    "Setting up a business in UAE",
+    "Setting up or restructuring a business in UAE",
     "Expanding business internationally",
-    "Obtaining golden visa for investors",
-    "Buying or selling property in UAE",
+    "Structuring mainland and free zone operations",
+    "Buying, leasing, or negotiating commercial property in UAE",
     "Resolving rental disputes",
-    "VAT registration and tax compliance",
-    "Digital transformation initiatives",
-    "Market entry strategies",
-    "Business licensing and regulatory compliance",
-    "Investment consulting"
+    "Building AI-enabled or software-led business models",
+    "Launching trading or food import-export operations",
+    "Developing proprietary brands for regional markets",
+    "Business licensing and regulatory coordination",
+    "Investor advisory and strategic growth planning"
   ],
   
   successFactors: [
-    "Expert knowledge of UAE business environment",
-    "Strong relationships with regulatory authorities",
+    "Expert knowledge of UAE business and real estate environments",
+    "Authority-level understanding of licensing and regulatory processes",
     "Comprehensive understanding of international markets",
-    "Personalized approach to each client",
-    "Proven methodologies and frameworks",
-    "Continuous learning and adaptation",
-    "Ethical business practices",
-    "Long-term client relationships"
+    "Personalized approach to each client and business structure",
+    "Strong negotiation and execution capability",
+    "Continuous learning and adaptation to market revolutions",
+    "Ethical and compliant business practices",
+    "Long-term strategic relationships built on trust"
   ]
 } as const;

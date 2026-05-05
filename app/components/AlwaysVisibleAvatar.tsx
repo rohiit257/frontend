@@ -15,8 +15,8 @@ interface Message {
 type Mode = 'chat' | 'voice';
 
 const QUICK_ACTIONS = [
-  { text: 'Who is Prakash?', icon: User },
-  { text: 'What is Wings9?', icon: Building2 },
+  { text: 'Who is Prakash Bhambhani?', icon: User },
+  { text: 'What is Wings9 Group?', icon: Building2 },
   { text: 'Book a call', icon: Phone },
 ];
 

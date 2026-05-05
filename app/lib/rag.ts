@@ -165,6 +165,24 @@ export function getKnowledgeChunks(): KnowledgeChunk[] {
     });
   }
 
+  if (knowledgeBase.ceo.notableClients) {
+    chunks.push({
+      id: 'ceo-notable-clients',
+      text: `Prakash Bhambhani has served and supported reputed companies including ${knowledgeBase.ceo.notableClients.join(', ')}.`,
+      type: 'ceo',
+      metadata: { notableClients: knowledgeBase.ceo.notableClients }
+    });
+  }
+
+  if (knowledgeBase.ceo.expansionAreas) {
+    chunks.push({
+      id: 'ceo-expansion-areas',
+      text: `In recent years, Prakash Bhambhani has expanded into ${knowledgeBase.ceo.expansionAreas.join(', ')}.`,
+      type: 'ceo',
+      metadata: { expansionAreas: knowledgeBase.ceo.expansionAreas }
+    });
+  }
+
   // CEO Values
   if (knowledgeBase.ceo.values) {
     chunks.push({
@@ -206,6 +224,15 @@ export function getKnowledgeChunks(): KnowledgeChunk[] {
       text: `Wings9 History: ${knowledgeBase.firm.history}. Track Record: ${knowledgeBase.firm.trackRecord || ''}.`,
       type: 'firm',
       metadata: { history: knowledgeBase.firm.history, trackRecord: knowledgeBase.firm.trackRecord }
+    });
+  }
+
+  if (knowledgeBase.firm.notableClients) {
+    chunks.push({
+      id: 'firm-notable-clients',
+      text: `Wings9 Group has supported reputed companies including ${knowledgeBase.firm.notableClients.join(', ')}.`,
+      type: 'firm',
+      metadata: { notableClients: knowledgeBase.firm.notableClients }
     });
   }
 

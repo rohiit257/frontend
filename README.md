@@ -1,6 +1,6 @@
 # Wings9 Portfolio Frontend
 
-This is a [Next.js](https://nextjs.org) project for Wings9 Management Consultancies, featuring an AI-powered chat assistant with comprehensive Q&A capabilities and meeting scheduling.
+This is a [Next.js](https://nextjs.org) project for Wings9 Group, featuring an AI-powered chat assistant with comprehensive Q&A capabilities and meeting scheduling.
 
 ## Features
 

@@ -474,10 +474,10 @@ export default function BusinessPage({
                 sizes="32px"
               />
             </div>
-            <span className="text-sm text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">Wings9 Enterprises</span>
+            <span className="text-sm text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors">Wings9 Group</span>
           </Link>
           <p className="text-xs text-[var(--muted)]">
-            © {new Date().getFullYear()} Wings9 Enterprises. All rights reserved.
+            © {new Date().getFullYear()} Wings9 Group. All rights reserved.
           </p>
         </div>
       </footer>

@@ -3,7 +3,7 @@
     "title": "Wings9 Portfolio QNA Corpus",
     "version": "1.0",
     "created_date": "2026-02-04",
-    "description": "Comprehensive question-answer pairs for RAG bot training covering Wings9 Management Consultancies services, Prakash Bhambhani's portfolio, and Wings9 global operations",
+    "description": "Comprehensive question-answer pairs for RAG bot training covering Wings9 Group services, Prakash Bhambhani's profile, and Wings9 global operations",
     "total_questions": 150,
     "categories": [
       "company_overview",
@@ -23,25 +23,25 @@
     {
       "id": "Q001",
       "category": "company_overview",
-      "question": "What is Wings9 Management Consultancies?",
-      "answer": "Wings9 Management Consultancies is a leading business consultancy based in Dubai, UAE, specializing in end-to-end corporate solutions including company setup, business formation, PRO services, Golden Visa assistance, VAT and corporate tax services, and more. They help entrepreneurs, SMEs, and multinational corporations establish and grow their businesses in the UAE.",
-      "keywords": ["wings9", "management consultancies", "dubai", "business consultancy"],
+      "question": "What is Wings9 Group?",
+      "answer": "Wings9 Group is a diversified business ecosystem led by Prakash Bhambhani, spanning consultancy, corporate structuring, real estate solutions, technology, trading, fashion, vacation homes, and brand development. It supports entrepreneurs, investors, corporates, and multinational companies with structured, compliant, and commercially viable solutions across UAE, India, GCC, and international markets.",
+      "keywords": ["wings9", "wings9 group", "dubai", "business ecosystem"],
       "related_links": ["https://wings9.ae/", "https://wings9.ae/about/"]
     },
     {
       "id": "Q002",
       "category": "company_overview",
       "question": "Who is Prakash Bhambhani?",
-      "answer": "Prakash Bhambhani is a seasoned entrepreneur and consultant with 25+ years of experience in industries like hospitality, legal, real estate, international business, consultancy, and cross-border trade. He is the CEO and driving force behind Wings9 Enterprises, leading seven trailblazing enterprises that shape the future of their respective domains.",
-      "keywords": ["prakash bhambhani", "ceo", "entrepreneur", "wings9 founder"],
+      "answer": "Prakash Bhambhani is a seasoned business strategist, entrepreneur, and corporate solutions specialist with nearly 30 years of multidimensional experience across business consulting, company structuring, real estate, corporate advisory, rental dispute management, trading, technology, and emerging business sectors. He leads Wings9 Group and is known for converting complex business situations into structured, compliant, and commercially viable solutions.",
+      "keywords": ["prakash bhambhani", "business strategist", "entrepreneur", "wings9 group"],
       "related_links": ["https://www.prakash.ae/", "https://frontend-eta-nine-98.vercel.app/"]
     },
     {
       "id": "Q003",
       "category": "company_overview",
-      "question": "What companies are part of Wings9 Enterprises?",
-      "answer": "Wings9 Enterprises comprises seven companies: 1) Wings9 Consultancies - business setup and consulting, 2) Wings9 Properties - real estate services, 3) Wings9 Vacation Homes - luxury vacation rentals, 4) Wings9 Technologies - technology solutions and digital transformation, 5) Wings9 Fashions - contemporary fashion and lifestyle brand development, 6) Wings9 Global Trading - food export, sourcing, and GCC distribution, and 7) Yalla Makhana - flavored makhana snacks and retail food products for the UAE market.",
-      "keywords": ["wings9 enterprises", "companies", "portfolio", "subsidiaries"],
+      "question": "What companies are part of Wings9 Group?",
+      "answer": "Wings9 Group includes seven business verticals: 1) Wings9 Consultancy - business setup, structuring, licensing, and advisory, 2) Wings9 Properties - real estate, leasing, commercial negotiations, and rental dispute support, 3) Wings9 Vacation Homes - vacation rental and hospitality services, 4) Wings9 Technology - software, AI, and digital transformation solutions, 5) Wings9 Fashion - fashion and retail brand development, 6) Wings9 Global Trading - foodstuff import and export plus in-house brand development, and 7) Yalla Makhana - a UAE-facing snack and FMCG brand.",
+      "keywords": ["wings9 group", "companies", "portfolio", "subsidiaries"],
       "related_links": ["https://www.prakash.ae/companies/"]
     },
     {
@@ -480,7 +480,7 @@
       "id": "Q058",
       "category": "company_overview",
       "question": "How long has Wings9 been in operation?",
-      "answer": "Wings9 has been operating for 20+ years, with leadership from Prakash Bhambhani who brings 25+ years of experience across multiple industries. The company has served 100+ clients and has established itself as a leading consultancy in UAE and India.",
+      "answer": "Wings9 Group is backed by Prakash Bhambhani's nearly 30 years of multidimensional experience across business consulting, company structuring, real estate, trading, technology, and emerging sectors. The group supports entrepreneurs, investors, corporates, and multinational companies across UAE, India, GCC, and international markets.",
       "keywords": ["experience", "20 years", "history"],
       "related_links": ["https://www.prakash.ae/", "https://www.wingsnine.com/about-us/"]
     },
@@ -616,7 +616,7 @@
       "id": "Q075",
       "category": "company_overview",
       "question": "Why choose Wings9 for business setup in Dubai?",
-      "answer": "Wings9 offers: 1) 20+ years of experience, 2) End-to-end corporate solutions, 3) Transparent and compliant processes, 4) Strong government and bank relationships, 5) Expert guidance on Mainland, Free Zone, and Offshore setups, 6) Comprehensive post-setup support including PRO services, VAT, and banking assistance.",
+      "answer": "Wings9 offers: 1) nearly 30 years of multidimensional leadership experience, 2) structured and compliant corporate solutions, 3) strong expertise across mainland, free zone, and international business environments, 4) integrated support across advisory, real estate, technology, and trading, 5) practical execution with commercial clarity, and 6) long-term strategic guidance for growth and expansion.",
       "keywords": ["why choose", "benefits", "advantages"],
       "related_links": ["https://wings9.ae/about/"]
     },
@@ -672,7 +672,7 @@
       "id": "Q082",
       "category": "services",
       "question": "What industries does Wings9 specialize in?",
-      "answer": "Wings9 has expertise across multiple industries including hospitality, legal services, real estate, technology, fashion, retail, consulting, trading, e-commerce, professional services, and more. Their 25+ years of experience spans diverse sectors.",
+      "answer": "Wings9 has expertise across business consulting, company structuring, real estate, technology, fashion, retail, trading, food import-export, e-commerce, professional services, and emerging AI-driven business models. Prakash Bhambhani's nearly 30 years of experience span diverse sectors and operating environments.",
       "keywords": ["industries", "sectors", "specialization"],
       "related_links": ["https://wings9.ae/about/"]
     },
@@ -1216,7 +1216,7 @@
       "id": "Q150",
       "category": "company_overview",
       "question": "What makes Wings9 different from other consultancies?",
-      "answer": "Wings9 differentiates through: 25+ years of combined experience, end-to-end service integration, focus on 'Corporate Bankability', strong government relationships, transparent pricing, personalized attention, comprehensive post-setup support, and expertise across multiple jurisdictions (UAE and India). Led by experienced entrepreneurs who understand business needs.",
+      "answer": "Wings9 differentiates through nearly 30 years of multidimensional leadership, practical and commercially viable structuring, cross-sector expertise spanning advisory, real estate, technology, trading, and brand development, strong execution capability, regulatory awareness, personalized guidance, and a forward-looking approach to evolving market opportunities.",
       "keywords": ["competitive advantage", "differentiation", "unique value"],
       "related_links": ["https://wings9.ae/about/", "https://www.prakash.ae/"]
     }

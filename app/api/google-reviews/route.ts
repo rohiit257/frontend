@@ -35,7 +35,7 @@ export async function GET() {
       success: true,
       source: 'fallback',
       business: {
-        name: 'Wings9 Enterprises',
+        name: 'Wings9 Group',
         rating: 4.9,
         totalReviews: 47,
       },
@@ -62,7 +62,7 @@ export async function GET() {
         success: true,
         source: 'fallback',
         business: {
-          name: 'Wings9 Enterprises',
+          name: 'Wings9 Group',
           rating: 4.9,
           totalReviews: 47,
         },
@@ -83,7 +83,7 @@ export async function GET() {
       success: true,
       source: 'google',
       business: {
-        name: data.result?.name || 'Wings9 Enterprises',
+        name: data.result?.name || 'Wings9 Group',
         rating: data.result?.rating || 4.9,
         totalReviews: data.result?.user_ratings_total || 47,
       },
@@ -95,7 +95,7 @@ export async function GET() {
       success: true,
       source: 'fallback',
       business: {
-        name: 'Wings9 Enterprises',
+        name: 'Wings9 Group',
         rating: 4.9,
         totalReviews: 47,
       },
