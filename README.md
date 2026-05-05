@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org) project for Wings9 Group, featuring an A
 
 ## Features
 
-- **AI Chat Assistant**: Powered by Google Gemini with RAG (Retrieval-Augmented Generation)
+- **AI Chat Assistant**: RAG-bounded chatbot powered by Groq with Mistral fallback
 - **Wings9 Q&A Corpus**: 150+ questions covering business setup, immigration, golden visa, tax compliance, and services
 - **Meeting Scheduler**: Consultation requests are sent via Resend email with visitor confirmation emails
 - **Responsive Design**: Mobile-first design with optimized UI components
@@ -14,8 +14,8 @@ This is a [Next.js](https://nextjs.org) project for Wings9 Group, featuring an A
 ### Prerequisites
 
 - Node.js 18+ and npm
-- OpenAI API key (for embeddings)
-- Google Gemini API key
+- Groq API key
+- Mistral API key for fallback responses
 - Resend account and verified sender email
 
 ### Installation
@@ -30,11 +30,13 @@ npm install
 3. Create a `.env.local` file in the root directory with the following variables:
 
 ```env
-# Required: Google Gemini API Key
-GEMINI_API_KEY=your_gemini_api_key_here
+# Required: Groq API key for primary chatbot responses
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.3-70b-versatile
 
-# Required: OpenAI API Key (for embeddings)
-OPENAI_API_KEY=your_openai_api_key_here
+# Required: Mistral API key for backup chatbot responses
+MISTRAL_API_KEY=your_mistral_api_key_here
+MISTRAL_MODEL=mistral-large-latest
 
 # Required: Resend API configuration for contact form emails
 RESEND_API_KEY=re_your_resend_api_key_here
@@ -104,8 +106,10 @@ public/
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `GEMINI_API_KEY` | Yes | Google Gemini API key for AI responses |
-| `OPENAI_API_KEY` | Yes | OpenAI API key for embeddings |
+| `GROQ_API_KEY` | Yes | Groq API key for primary chatbot responses |
+| `GROQ_MODEL` | No | Groq model name, defaults to `llama-3.3-70b-versatile` |
+| `MISTRAL_API_KEY` | Yes | Mistral API key for fallback chatbot responses |
+| `MISTRAL_MODEL` | No | Mistral model name, defaults to `mistral-large-latest` |
 | `RESEND_API_KEY` | Yes | Resend API key used by contact and booking email routes |
 | `RESEND_FROM_EMAIL` | Yes | Verified sender address/name for outgoing contact emails |
 | `RESEND_CONTACT_TO_EMAIL` | Yes | Inbox that receives contact form and consultation booking submissions |

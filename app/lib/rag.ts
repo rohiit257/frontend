@@ -1,138 +1,35 @@
 import { knowledgeBase } from './knowledge-base';
 import { getWings9CorpusChunks } from './wings9-corpus';
-import OpenAI from 'openai';
 
 /**
  * Enhanced RAG (Retrieval Augmented Generation) Implementation
  * 
  * This module handles:
  * 1. Converting knowledge base to searchable chunks
- * 2. Generating embeddings using OpenAI
- * 3. Performing similarity search with cosine similarity
- * 4. Retrieving relevant context for queries
+ * 2. Performing bounded local keyword retrieval
+ * 3. Retrieving relevant context for queries
  * 
  * For production scaling, consider:
  * - Vector database (Pinecone, Weaviate, Qdrant)
- * - Batch embedding generation and caching
+ * - Provider-hosted embeddings or a local embedding model
  * - More sophisticated chunking strategies
  */
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 export interface KnowledgeChunk {
   id: string;
   text: string;
   type: 'ceo' | 'service' | 'company' | 'contact' | 'firm';
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   embedding?: number[];
 }
 
-// Cache for embeddings (in production, use a proper vector database)
-let chunkEmbeddingsCache: Map<string, number[]> | null = null;
-let queryEmbeddingsCache: Map<string, number[]> = new Map();
-
-// Flag to disable embedding generation if quota is exceeded
-let embeddingQuotaExceeded = false;
-
-/**
- * Generate embeddings for a text using OpenAI (with caching)
- */
-async function generateEmbedding(text: string, useCache: boolean = true): Promise<number[]> {
-  // Skip embedding generation if quota is exceeded
-  if (embeddingQuotaExceeded) {
-    return [];
-  }
-
-  // Check cache first
-  if (useCache && queryEmbeddingsCache.has(text)) {
-    return queryEmbeddingsCache.get(text)!;
-  }
-
-  try {
-    const response = await openai.embeddings.create({
-      model: 'text-embedding-3-small', // Cost-effective and performant
-      input: text,
-    });
-    const embedding = response.data[0].embedding;
-    
-    // Cache the embedding
-    if (useCache) {
-      queryEmbeddingsCache.set(text, embedding);
-      // Limit cache size to prevent memory issues
-      if (queryEmbeddingsCache.size > 100) {
-        const firstKey = queryEmbeddingsCache.keys().next().value;
-        if (firstKey) {
-          queryEmbeddingsCache.delete(firstKey);
-        }
-      }
-    }
-    
-    return embedding;
-  } catch (error: any) {
-    // Check for quota/rate limit errors
-    if (error?.status === 429 || error?.code === 'insufficient_quota' || error?.type === 'insufficient_quota') {
-      console.warn('OpenAI quota exceeded, disabling embedding generation and using keyword search');
-      embeddingQuotaExceeded = true;
-      return [];
-    }
-    console.error('Embedding generation error:', error);
-    // Fallback to keyword-based search if embeddings fail
-    return [];
-  }
-}
-
-/**
- * Generate embeddings in batch (much faster)
- */
-async function generateEmbeddingsBatch(texts: string[]): Promise<number[][]> {
-  // Skip if quota is exceeded
-  if (embeddingQuotaExceeded) {
-    return [];
-  }
-
-  try {
-    const response = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
-      input: texts,
-    });
-    return response.data.map(item => item.embedding);
-  } catch (error: any) {
-    // Check for quota/rate limit errors
-    if (error?.status === 429 || error?.code === 'insufficient_quota' || error?.type === 'insufficient_quota') {
-      console.warn('OpenAI quota exceeded, disabling embedding generation and using keyword search');
-      embeddingQuotaExceeded = true;
-      return [];
-    }
-    console.error('Batch embedding generation error:', error);
-    return [];
-  }
-}
-
-/**
- * Calculate cosine similarity between two vectors (optimized)
- */
-function cosineSimilarity(a: number[], b: number[]): number {
-  if (a.length !== b.length || a.length === 0) return 0;
-  
-  let dotProduct = 0;
-  let normA = 0;
-  let normB = 0;
-  
-  // Optimized loop with early exit potential
-  const len = a.length;
-  for (let i = 0; i < len; i++) {
-    const ai = a[i];
-    const bi = b[i];
-    dotProduct += ai * bi;
-    normA += ai * ai;
-    normB += bi * bi;
-  }
-  
-  const denominator = Math.sqrt(normA * normB);
-  return denominator > 0 ? dotProduct / denominator : 0;
-}
+type CompanyWithOptionalDetails = {
+  name: string;
+  description: string;
+  focus: string;
+  services?: readonly string[];
+  targetAudience?: string;
+};
 
 /**
  * Convert knowledge base into searchable text chunks with rich context
@@ -295,18 +192,19 @@ export function getKnowledgeChunks(): KnowledgeChunk[] {
 
   // Companies (expanded with detailed information)
   knowledgeBase.companies.forEach((company, index) => {
-    const servicesText = (company as any).services ? `Services: ${(company as any).services.join(', ')}.` : '';
-    const audienceText = (company as any).targetAudience ? `Target audience: ${(company as any).targetAudience}.` : '';
+    const companyDetails = company as CompanyWithOptionalDetails;
+    const servicesText = companyDetails.services ? `Services: ${companyDetails.services.join(', ')}.` : '';
+    const audienceText = companyDetails.targetAudience ? `Target audience: ${companyDetails.targetAudience}.` : '';
     
     chunks.push({
       id: `company-${index}`,
-      text: `${company.name}: ${company.description} Focus: ${company.focus}. ${servicesText} ${audienceText}`,
+      text: `${companyDetails.name}: ${companyDetails.description} Focus: ${companyDetails.focus}. ${servicesText} ${audienceText}`,
       type: 'company',
       metadata: { 
-        companyName: company.name,
-        focus: company.focus,
-        services: (company as any).services,
-        targetAudience: (company as any).targetAudience
+        companyName: companyDetails.name,
+        focus: companyDetails.focus,
+        services: companyDetails.services,
+        targetAudience: companyDetails.targetAudience
       }
     });
   });
@@ -340,102 +238,14 @@ export function getKnowledgeChunks(): KnowledgeChunk[] {
 }
 
 /**
- * Generate embeddings for all chunks (with caching and batch processing)
- */
-export async function generateChunkEmbeddings(chunks: KnowledgeChunk[]): Promise<Map<string, number[]>> {
-  if (chunkEmbeddingsCache) {
-    return chunkEmbeddingsCache;
-  }
-
-  const embeddings = new Map<string, number[]>();
-  
-  // Batch process embeddings for faster generation (process in batches of 20)
-  const batchSize = 20;
-  for (let i = 0; i < chunks.length; i += batchSize) {
-    const batch = chunks.slice(i, i + batchSize);
-    const texts = batch.map(chunk => chunk.text);
-    
-    try {
-      const batchEmbeddings = await generateEmbeddingsBatch(texts);
-      batch.forEach((chunk, index) => {
-        if (batchEmbeddings[index] && batchEmbeddings[index].length > 0) {
-          embeddings.set(chunk.id, batchEmbeddings[index]);
-        }
-      });
-    } catch (error) {
-      console.error('Batch embedding error, falling back to individual:', error);
-      // Fallback to individual if batch fails
-      for (const chunk of batch) {
-        const embedding = await generateEmbedding(chunk.text, false);
-        if (embedding.length > 0) {
-          embeddings.set(chunk.id, embedding);
-        }
-      }
-    }
-  }
-
-  chunkEmbeddingsCache = embeddings;
-  return embeddings;
-}
-
-/**
- * Find relevant chunks using OpenAI embeddings and cosine similarity (optimized)
+ * Find relevant chunks with local keyword scoring.
  */
 export async function findRelevantChunks(
   query: string,
   chunks: KnowledgeChunk[],
   topK: number = 3
 ): Promise<KnowledgeChunk[]> {
-  try {
-    // If quota is exceeded, use keyword search directly
-    if (embeddingQuotaExceeded) {
-      return findRelevantChunksKeyword(query, chunks, topK);
-    }
-
-    // Quick keyword pre-filter to reduce embedding computation
-    const keywordFiltered = findRelevantChunksKeyword(query, chunks, topK * 3);
-    const chunksToSearch = keywordFiltered.length > 0 ? keywordFiltered : chunks;
-
-    // Generate query embedding (with cache)
-    const queryEmbedding = await generateEmbedding(query);
-    
-    if (queryEmbedding.length === 0) {
-      // Fallback to keyword-based search if embeddings fail
-      return keywordFiltered.length > 0 ? keywordFiltered.slice(0, topK) : findRelevantChunksKeyword(query, chunks, topK);
-    }
-
-    // Generate or retrieve chunk embeddings (cached after first call)
-    const chunkEmbeddings = await generateChunkEmbeddings(chunksToSearch);
-
-    // If no chunk embeddings available (quota exceeded during generation), use keyword search
-    if (chunkEmbeddings.size === 0) {
-      return keywordFiltered.length > 0 ? keywordFiltered.slice(0, topK) : findRelevantChunksKeyword(query, chunks, topK);
-    }
-
-    // Calculate similarity scores (optimized)
-    const scoredChunks = chunksToSearch
-      .map((chunk) => {
-        const chunkEmbedding = chunkEmbeddings.get(chunk.id);
-        if (!chunkEmbedding) {
-          return { chunk, score: 0 };
-        }
-        const score = cosineSimilarity(queryEmbedding, chunkEmbedding);
-        return { chunk, score };
-      })
-      .filter((item) => item.score > 0.25) // Lower threshold for better recall
-      .sort((a, b) => b.score - a.score)
-      .slice(0, topK);
-
-    // If we got good results, return them; otherwise fallback to keyword
-    if (scoredChunks.length > 0) {
-      return scoredChunks.map((item) => item.chunk);
-    }
-
-    return keywordFiltered.length > 0 ? keywordFiltered.slice(0, topK) : findRelevantChunksKeyword(query, chunks, topK);
-  } catch (error) {
-    console.error('Embedding-based search error, falling back to keyword search:', error);
-    return findRelevantChunksKeyword(query, chunks, topK);
-  }
+  return findRelevantChunksKeyword(query, chunks, topK);
 }
 
 /**
@@ -447,27 +257,43 @@ function findRelevantChunksKeyword(
   topK: number = 3
 ): KnowledgeChunk[] {
   const queryLower = query.toLowerCase();
-  const queryWords = queryLower.split(/\s+/).filter(w => w.length > 2);
+  const stopWords = new Set([
+    'the', 'and', 'for', 'with', 'you', 'your', 'are', 'can', 'could', 'would',
+    'what', 'when', 'where', 'which', 'who', 'why', 'how', 'about', 'tell',
+    'give', 'need', 'want', 'does', 'have', 'from', 'that', 'this', 'there',
+    'like', 'into', 'than', 'then', 'they', 'them', 'their', 'please'
+  ]);
+  const queryWords = queryLower
+    .split(/[^a-z0-9+]+/)
+    .filter((word) => word.length > 2 && !stopWords.has(word));
+
+  if (queryWords.length === 0) {
+    return [];
+  }
 
   const scoredChunks = chunks.map((chunk) => {
     const chunkLower = chunk.text.toLowerCase();
     let score = 0;
 
     // Exact phrase match (higher weight)
-    if (chunkLower.includes(queryLower)) {
+    if (queryLower.length > 4 && chunkLower.includes(queryLower)) {
       score += 10;
     }
 
     // Word matches
     queryWords.forEach((word) => {
-      const count = (chunkLower.match(new RegExp(word, 'g')) || []).length;
+      const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const count = (chunkLower.match(new RegExp(`\\b${escapedWord}\\b`, 'g')) || []).length;
       score += count;
     });
 
     // Service name matches
     if (chunk.type === 'service' && chunk.metadata?.serviceName) {
-      const serviceName = chunk.metadata.serviceName.toLowerCase();
-      if (queryLower.includes(serviceName) || serviceName.includes(queryLower)) {
+      const serviceName =
+        typeof chunk.metadata.serviceName === 'string'
+          ? chunk.metadata.serviceName.toLowerCase()
+          : '';
+      if (serviceName && (queryLower.includes(serviceName) || serviceName.includes(queryLower))) {
         score += 5;
       }
     }
@@ -486,7 +312,7 @@ function findRelevantChunksKeyword(
 
   return scoredChunks
     .sort((a, b) => b.score - a.score)
-    .filter((item) => item.score > 0)
+    .filter((item) => item.score >= 2)
     .slice(0, topK)
     .map((item) => item.chunk);
 }

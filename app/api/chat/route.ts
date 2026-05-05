@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import {
   getKnowledgeChunks,
   findRelevantChunks,
@@ -7,10 +7,18 @@ import {
 } from '@/app/lib/rag';
 import { sendConsultationBookingEmails } from '@/app/lib/resend';
 
-// Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-// Use gemini-2.5-flash for better performance
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+const groq = new OpenAI({
+  apiKey: process.env.GROQ_API_KEY || 'missing-groq-key',
+  baseURL: 'https://api.groq.com/openai/v1',
+});
+
+const mistral = new OpenAI({
+  apiKey: process.env.MISTRAL_API_KEY || 'missing-mistral-key',
+  baseURL: 'https://api.mistral.ai/v1',
+});
+
+const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+const MISTRAL_MODEL = process.env.MISTRAL_MODEL || 'mistral-large-latest';
 
 // In-memory conversation storage (in production, use a database)
 const conversations = new Map<string, {
@@ -101,8 +109,36 @@ REMEMBER:
 const OUT_OF_SCOPE_RESPONSE =
   "I apologize, but I don't have information about that in my knowledge base. I specialize in Prakash Bhambhani's profile, Wings9 Group, and its services across business structuring, real estate, trading, technology, tax/compliance, and related corporate solutions. Is there anything in those areas I can help you with? Or would you like to schedule a consultation with our team?";
 
-// In-memory store for chunks (embeddings are generated on-demand)
+// In-memory store for knowledge chunks used by the bounded RAG flow.
 const knowledgeChunks = getKnowledgeChunks();
+
+type ChatProvider = 'groq' | 'mistral';
+
+async function generateBoundedChatResponse(
+  provider: ChatProvider,
+  prompt: string,
+  history: Array<{ role: string; content: string }>,
+  message: string
+): Promise<string> {
+  const client = provider === 'groq' ? groq : mistral;
+  const model = provider === 'groq' ? GROQ_MODEL : MISTRAL_MODEL;
+
+  const completion = await client.chat.completions.create({
+    model,
+    temperature: 0.2,
+    max_tokens: 1000,
+    messages: [
+      { role: 'system', content: prompt },
+      ...history.map((msg) => ({
+        role: msg.role === 'assistant' ? 'assistant' as const : 'user' as const,
+        content: msg.content,
+      })),
+      { role: 'user', content: message },
+    ],
+  });
+
+  return completion.choices[0]?.message?.content?.trim() || OUT_OF_SCOPE_RESPONSE;
+}
 
 // Helper function to detect if user wants to book a call
 function wantsToBookCall(message: string): boolean {
@@ -400,95 +436,47 @@ export async function POST(request: NextRequest) {
     const relevantChunks = await findRelevantChunks(message, knowledgeChunks, 5);
     const context = relevantChunks.length > 0 ? buildContext(relevantChunks) : '';
 
-    // Build conversation history for Gemini
+    if (!context) {
+      conversation.history.push(
+        { role: 'user', content: message },
+        { role: 'assistant', content: OUT_OF_SCOPE_RESPONSE }
+      );
+
+      return NextResponse.json({
+        response: OUT_OF_SCOPE_RESPONSE,
+        relevantContext: false,
+        bookingState: conversation.bookingState,
+        sessionId: currentSessionId,
+      });
+    }
+
+    // Build conversation history for answer continuity, while the current answer remains bounded to retrieved context.
     const history = conversation.history.slice(-10); // Keep last 10 messages for context
     
-    // Construct the prompt - emphasize using the knowledge base to answer questions
-    const contextSection = context ? `\n\nKNOWLEDGE BASE - USE THIS INFORMATION TO ANSWER THE USER'S QUESTION THOROUGHLY:\n${context}\n` : '';
-    const fullPrompt = `${SYSTEM_PROMPT}${contextSection}\n\nUser Question: ${message}\n\nIMPORTANT: Answer the user's question directly and thoroughly using the knowledge base provided above. Do NOT give generic responses like "I can help you with that" or "Would you like to schedule a consultation?" - actually answer their question with detailed information from the knowledge base. Provide a comprehensive, helpful response.`;
+    const boundedPrompt = `${SYSTEM_PROMPT}
+
+KNOWLEDGE BASE - USE ONLY THIS RETRIEVED INFORMATION TO ANSWER THE CURRENT USER QUESTION:
+${context}
+
+RAG BOUNDARY:
+- Treat the knowledge base above as the only source of truth for the current answer.
+- Use conversation history only to understand references or follow-up wording.
+- If the retrieved knowledge base does not answer the current question, respond with the out-of-scope message.
+- Do not add facts from general knowledge, model memory, or prior conversation unless they are present in the retrieved knowledge base.
+- Answer directly and thoroughly when the retrieved knowledge base supports it.`;
 
     let assistantMessage: string = OUT_OF_SCOPE_RESPONSE;
 
     try {
-      if (history.length > 0) {
-        // Use chat with history
-        const chat = model.startChat({
-          history: history.map(msg => ({
-            role: msg.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: msg.content }],
-          })),
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1000,  // Increased for comprehensive responses
-          },
-        });
+      assistantMessage = await generateBoundedChatResponse('groq', boundedPrompt, history, message);
+    } catch (modelError: unknown) {
+      console.warn('Groq chat completion failed, trying Mistral fallback:', modelError);
 
-        const result = await chat.sendMessage(message);
-        assistantMessage = result.response.text() || OUT_OF_SCOPE_RESPONSE;
-      } else {
-        // First message - use generateContent
-        const result = await model.generateContent(fullPrompt);
-        assistantMessage = result.response.text() || OUT_OF_SCOPE_RESPONSE;
-      }
-    } catch (modelError: any) {
-      // If model not found, try alternative models
-      if (modelError.message?.includes('not found') || modelError.message?.includes('404')) {
-        console.warn('Primary model not available, trying alternatives...');
-        const alternativeModels = ['gemini-2.5-flash-latest', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-1.5-pro-latest'];
-        let modelFound = false;
-        
-        for (const modelName of alternativeModels) {
-          try {
-            const altModel = genAI.getGenerativeModel({ model: modelName });
-            if (history.length > 0) {
-              const chat = altModel.startChat({
-                history: history.map(msg => ({
-                  role: msg.role === 'assistant' ? 'model' : 'user',
-                  parts: [{ text: msg.content }],
-                })),
-                generationConfig: {
-                  temperature: 0.7,
-                  topK: 40,
-                  topP: 0.95,
-                  maxOutputTokens: 1000,  // Increased for comprehensive responses
-                },
-              });
-              const result = await chat.sendMessage(message);
-              assistantMessage = result.response.text() || OUT_OF_SCOPE_RESPONSE;
-            } else {
-              const result = await altModel.generateContent(fullPrompt);
-              assistantMessage = result.response.text() || OUT_OF_SCOPE_RESPONSE;
-            }
-            console.log(`Successfully used model: ${modelName}`);
-            modelFound = true;
-            break;
-          } catch (altError) {
-            console.warn(`Model ${modelName} also failed, trying next...`);
-            continue;
-          }
-        }
-        
-        // If all models fail, use fallback response with context if available
-        if (!modelFound) {
-          if (context) {
-            // Try to provide a helpful answer from context
-            const contextSummary = context.substring(0, 500);
-            assistantMessage = `${contextSummary}... How may I assist you further?`;
-          } else {
-            assistantMessage = OUT_OF_SCOPE_RESPONSE;
-          }
-        }
-      } else {
-        // For other errors, use fallback response with context if available
-        if (context) {
-          const contextSummary = context.substring(0, 500);
-          assistantMessage = `${contextSummary}... How may I assist you further?`;
-        } else {
-          assistantMessage = OUT_OF_SCOPE_RESPONSE;
-        }
-        console.error('Model error (non-404):', modelError);
+      try {
+        assistantMessage = await generateBoundedChatResponse('mistral', boundedPrompt, history, message);
+      } catch (fallbackError) {
+        console.error('Mistral fallback failed:', fallbackError);
+        assistantMessage = OUT_OF_SCOPE_RESPONSE;
       }
     }
 
@@ -509,13 +497,14 @@ export async function POST(request: NextRequest) {
       bookingState: conversation.bookingState,
       sessionId: currentSessionId,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Chat API error:', error);
+    const details = error instanceof Error ? error.message : 'Unknown error';
 
     return NextResponse.json(
       {
         error: 'An error occurred processing your request.',
-        details: error.message,
+        details,
       },
       { status: 500 }
     );
