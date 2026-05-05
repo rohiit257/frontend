@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { sendContactForm } from '@/app/lib/n8n-webhook';
 import { sendContactEmail } from '@/app/lib/resend';
 
 export async function POST(request: NextRequest) {
@@ -49,20 +48,6 @@ export async function POST(request: NextRequest) {
         },
         { status: 500 }
       );
-    }
-
-    // Send to n8n webhook
-    try {
-      const success = await sendContactForm(contactPayload);
-
-      if (!success) {
-        console.warn('n8n webhook returned error, but continuing...');
-      } else {
-        console.log('Contact form sent to n8n successfully');
-      }
-    } catch (error) {
-      console.error('Failed to send contact form to n8n:', error);
-      // Keep the request successful once the email has been sent.
     }
 
     return NextResponse.json({

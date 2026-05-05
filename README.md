@@ -6,7 +6,7 @@ This is a [Next.js](https://nextjs.org) project for Wings9 Management Consultanc
 
 - **AI Chat Assistant**: Powered by Google Gemini with RAG (Retrieval-Augmented Generation)
 - **Wings9 Q&A Corpus**: 150+ questions covering business setup, immigration, golden visa, tax compliance, and services
-- **Meeting Scheduler**: Integrated with n8n workflow for automated Google Calendar events and email confirmations
+- **Meeting Scheduler**: Consultation requests are sent via Resend email with visitor confirmation emails
 - **Responsive Design**: Mobile-first design with optimized UI components
 
 ## Getting Started
@@ -16,7 +16,7 @@ This is a [Next.js](https://nextjs.org) project for Wings9 Management Consultanc
 - Node.js 18+ and npm
 - OpenAI API key (for embeddings)
 - Google Gemini API key
-- n8n instance with meeting scheduler workflow (optional)
+- Resend account and verified sender email
 
 ### Installation
 
@@ -41,9 +41,6 @@ RESEND_API_KEY=re_your_resend_api_key_here
 RESEND_FROM_EMAIL=Portfolio Contact <onboarding@resend.dev>
 RESEND_CONTACT_TO_EMAIL=you@example.com
 
-# Optional: n8n Webhook URLs
-N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook-test/your-webhook-id
-N8N_MEETING_WEBHOOK_URL=https://your-n8n-instance.com/webhook/schedule-meeting
 ```
 
 ### Running the Development Server
@@ -80,10 +77,10 @@ The AI assistant can schedule consultations by collecting:
 6. **Timezone**: User's timezone (e.g., GST, IST, EST)
 7. **Purpose**: Optional meeting purpose
 
-The scheduler integrates with an n8n workflow that:
-- Creates a Google Calendar event
-- Sends confirmation email with meeting details
-- Provides calendar invite link
+The scheduler collects consultation details and:
+- Emails the Wings9 team via Resend
+- Sends a confirmation email to the visitor
+- Supports manual follow-up by the team
 
 ## Project Structure
 
@@ -97,7 +94,7 @@ app/
 ├── lib/
 │   ├── rag.ts                # RAG implementation
 │   ├── wings9-corpus.ts      # Corpus loader
-│   ├── n8n-webhook.ts        # Webhook integration
+│   ├── resend.ts             # Resend email integration
 │   └── knowledge-base.ts     # Base knowledge
 public/
 └── wings9_qna_corpus.json    # Q&A training data
@@ -109,11 +106,9 @@ public/
 |----------|----------|-------------|
 | `GEMINI_API_KEY` | Yes | Google Gemini API key for AI responses |
 | `OPENAI_API_KEY` | Yes | OpenAI API key for embeddings |
-| `RESEND_API_KEY` | Yes | Resend API key used by the contact form API route |
+| `RESEND_API_KEY` | Yes | Resend API key used by contact and booking email routes |
 | `RESEND_FROM_EMAIL` | Yes | Verified sender address/name for outgoing contact emails |
-| `RESEND_CONTACT_TO_EMAIL` | Yes | Inbox that receives contact form submissions |
-| `N8N_WEBHOOK_URL` | No | General n8n webhook URL |
-| `N8N_MEETING_WEBHOOK_URL` | No | Meeting scheduler webhook URL |
+| `RESEND_CONTACT_TO_EMAIL` | Yes | Inbox that receives contact form and consultation booking submissions |
 
 ## Learn More
 

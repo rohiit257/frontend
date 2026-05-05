@@ -3,10 +3,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import {
   getKnowledgeChunks,
   findRelevantChunks,
-  isBusinessRelated,
   buildContext,
 } from '@/app/lib/rag';
-import { sendCallBooking, scheduleMeeting } from '@/app/lib/n8n-webhook';
+import { sendConsultationBookingEmails } from '@/app/lib/resend';
 
 // Initialize Gemini client
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
@@ -329,9 +328,9 @@ export async function POST(request: NextRequest) {
         
         conversation.bookingState.step = 'complete';
         
-        // Send to n8n meeting scheduler webhook
+        // Send consultation request via email
         try {
-          const result = await scheduleMeeting({
+          const result = await sendConsultationBookingEmails({
             name: conversation.bookingState.name!,
             email: conversation.bookingState.email!,
             phone: conversation.bookingState.phone!,
@@ -339,10 +338,11 @@ export async function POST(request: NextRequest) {
             time: conversation.bookingState.time!,
             timezone: conversation.bookingState.timezone!,
             purpose: conversation.bookingState.purpose,
+            source: 'ai_chat',
           });
           
           if (result.success) {
-            const confirmationMessage = `Perfect! Your consultation has been scheduled:\n\n📅 Date: ${conversation.bookingState.date}\n🕐 Time: ${conversation.bookingState.time} ${conversation.bookingState.timezone}\n👤 Name: ${conversation.bookingState.name}\n📧 Email: ${conversation.bookingState.email}\n📱 Phone: ${conversation.bookingState.phone}${conversation.bookingState.purpose ? `\n📝 Purpose: ${conversation.bookingState.purpose}` : ''}\n\nYou'll receive a confirmation email shortly with the meeting details and calendar invite. Is there anything else I can help you with?`;
+            const confirmationMessage = `Perfect! I've sent your consultation request to our team:\n\n📅 Date: ${conversation.bookingState.date}\n🕐 Time: ${conversation.bookingState.time} ${conversation.bookingState.timezone}\n👤 Name: ${conversation.bookingState.name}\n📧 Email: ${conversation.bookingState.email}\n📱 Phone: ${conversation.bookingState.phone}${conversation.bookingState.purpose ? `\n📝 Purpose: ${conversation.bookingState.purpose}` : ''}\n\nYou'll receive a confirmation email shortly, and our team will contact you to confirm the consultation. Is there anything else I can help you with?`;
             
             conversation.history.push(
               { role: 'user', content: message },
@@ -355,7 +355,7 @@ export async function POST(request: NextRequest) {
               sessionId: currentSessionId,
             });
           } else {
-            const errorMessage = `I've collected your details, but there was an issue scheduling the meeting. Our team will contact you shortly at ${conversation.bookingState.phone} to confirm the consultation.`;
+            const errorMessage = `I've collected your details, but there was an issue sending the consultation request email. Our team will contact you shortly at ${conversation.bookingState.phone} to confirm the consultation.`;
             conversation.history.push(
               { role: 'user', content: message },
               { role: 'assistant', content: errorMessage }
@@ -521,4 +521,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

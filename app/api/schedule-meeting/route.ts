@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { scheduleMeeting } from '@/app/lib/n8n-webhook';
+import { sendConsultationBookingEmails } from '@/app/lib/resend';
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,10 +22,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send to n8n webhook
-    console.log('Scheduling meeting via voice agent:', { name, email, phone, date, time, timezone, purpose });
+    console.log('Scheduling meeting via voice agent email:', { name, email, phone, date, time, timezone, purpose });
     
-    const result = await scheduleMeeting({
+    const result = await sendConsultationBookingEmails({
       name: name.trim(),
       email: email.trim(),
       phone: phone.trim(),
@@ -33,18 +32,18 @@ export async function POST(request: NextRequest) {
       time: time.trim(),
       timezone: timezone?.trim() || 'IST',
       purpose: purpose?.trim(),
+      source: 'voice_agent',
     });
 
     if (result.success) {
       return NextResponse.json({
         success: true,
-        message: 'Meeting scheduled successfully',
-        details: result.details,
+        message: 'Consultation request sent successfully',
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: result.message || 'Failed to schedule meeting',
+        message: result.error || 'Failed to send consultation request',
       }, { status: 500 });
     }
   } catch (error: any) {
