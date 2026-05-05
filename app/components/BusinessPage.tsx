@@ -199,7 +199,7 @@ export default function BusinessPage({
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-28">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-[var(--muted)] mb-6 sm:mb-8 flex-wrap">
-            <Link href="/" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1 group">
+            <Link href="#companies" className="hover:text-[var(--accent)] transition-colors flex items-center gap-1 group">
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
               Home
             </Link>
