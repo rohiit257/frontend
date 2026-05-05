@@ -19,10 +19,10 @@ export const knowledgeBase = {
     company: "Wings9",
     focus: "Business advisory, real estate, compliance, and growth strategy",
     approach: "Client-centric, compliance-first, long-term value creation",
-    description: "Prakash Bhambhani is the founder and strategic leader behind Wings9, leading five trailblazing enterprises that shape the future of their domains. With over 20 years of experience in business advisory, real estate, and international expansion, Prakash has built a reputation for delivering exceptional results. He is known for his client-centric approach, focusing on compliance-first strategies and long-term value creation for businesses seeking growth and expansion. Prakash has successfully guided hundreds of clients through complex business challenges, helping them navigate international markets, regulatory requirements, and strategic growth opportunities.",
+    description: "Prakash Bhambhani is the founder and strategic leader behind Wings9, leading seven trailblazing enterprises that shape the future of their domains. With over 20 years of experience in business advisory, real estate, international expansion, and cross-border trade, Prakash has built a reputation for delivering exceptional results. He is known for his client-centric approach, focusing on compliance-first strategies and long-term value creation for businesses seeking growth and expansion. Prakash has successfully guided hundreds of clients through complex business challenges, helping them navigate international markets, regulatory requirements, and strategic growth opportunities.",
     background: "Prakash Bhambhani brings extensive expertise in international business development, having worked with clients across multiple continents. His deep understanding of UAE business regulations, real estate markets, and cross-border commerce makes him a trusted advisor for entrepreneurs and established businesses alike. He is passionate about helping businesses scale sustainably while maintaining compliance and ethical business practices.",
     achievements: [
-      "Successfully launched and scaled 5 companies under Wings9 umbrella",
+      "Successfully launched and scaled 7 companies under Wings9 umbrella",
       "Helped 100+ clients achieve their business expansion goals",
       "Expert in UAE business regulations and compliance",
       "Specialized in golden visa and investor programs",
@@ -58,7 +58,7 @@ export const knowledgeBase = {
     approach: "We provide end-to-end support, ensuring compliance, strategic planning, and sustainable growth for our clients.",
     mission: "To empower businesses and entrepreneurs with comprehensive solutions that drive sustainable growth, ensure regulatory compliance, and unlock international market opportunities.",
     vision: "To be the most trusted partner for businesses seeking to expand, grow, and succeed in international markets, particularly in the UAE and Middle East region.",
-    history: "Wings9 was founded with a vision to provide holistic business solutions that go beyond traditional consulting. Over the years, the firm has evolved into a multi-domain powerhouse, operating five specialized companies that collectively offer comprehensive support for businesses at every stage of their journey.",
+    history: "Wings9 was founded with a vision to provide holistic business solutions that go beyond traditional consulting. Over the years, the firm has evolved into a multi-domain powerhouse, operating seven specialized companies that collectively offer comprehensive support for businesses at every stage of their journey.",
     specialties: [
       "UAE business setup and licensing",
       "International business expansion",
@@ -255,6 +255,20 @@ export const knowledgeBase = {
       focus: "Fashion retail, brand development, retail consulting",
       services: ["Fashion brand consulting", "Retail strategy", "Market entry for fashion brands", "Brand development"],
       targetAudience: "Fashion brands, retailers, fashion entrepreneurs, clothing businesses"
+    },
+    {
+      name: "Wings9 Global Trading",
+      description: "A Dubai-based food export and trade management company specializing in sourcing, quality assurance, logistics, and GCC distribution. Its portfolio includes foxnuts, tea, namkeen, sweets, spices, cookies, protein bars, frozen food, and customized private-label supply.",
+      focus: "Food export, sourcing, trade management, GCC distribution",
+      services: ["Food export", "Customized sourcing services", "Quality assurance", "Price negotiation", "Logistics and shipping support", "Private labeling and packaging"],
+      targetAudience: "Distributors, supermarkets, retail chains, channel partners, and buyers seeking Indian grocery exports into UAE and GCC markets"
+    },
+    {
+      name: "Yalla Makhana",
+      description: "A UAE-facing snack and FMCG brand built around flavored makhana products, offering ready-to-retail foxnut variants such as Za'atar, Peri Peri, Spanish Tomato, Lime & Mint, Labneh & Mint, Cream & Onion, and Cheese & Herbs.",
+      focus: "Makhana snacks, retail FMCG, flavored foxnuts",
+      services: ["Retail snack distribution", "Product merchandising", "Flavor-led packaged makhana range", "Direct-to-consumer sales", "Channel-ready snack supply"],
+      targetAudience: "Snack consumers, grocery retailers, convenience stores, and distribution partners in Dubai and the wider UAE"
     }
   ],
   primaryObjective: "Help clients understand services, identify the right solution, and book consultations when appropriate.",

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Yalla Makhana</title>
+  <desc id="desc">Snack bowl icon for Yalla Makhana.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3f2a14"/>
+      <stop offset="100%" stop-color="#7c4a1d"/>
+    </linearGradient>
+    <linearGradient id="cream" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3d6"/>
+      <stop offset="100%" stop-color="#f0cf8e"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="32" fill="url(#bg)"/>
+  <circle cx="54" cy="66" r="12" fill="url(#cream)"/>
+  <circle cx="78" cy="52" r="11" fill="url(#cream)"/>
+  <circle cx="104" cy="65" r="13" fill="url(#cream)"/>
+  <circle cx="66" cy="82" r="10" fill="url(#cream)"/>
+  <circle cx="92" cy="84" r="12" fill="url(#cream)"/>
+  <path d="M40 96h80c0 17-14 31-31 31H71c-17 0-31-14-31-31Z" fill="none" stroke="url(#cream)" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M52 111h56" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+</svg>

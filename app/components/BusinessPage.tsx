@@ -24,6 +24,8 @@ const allCompanies = [
   { name: 'Technology',  href: '/business/technology',  logo: '/Technologies.4c178217.svg' },
   { name: 'Vacation Homes', href: '/business/vacation-homes', logo: '/VacationHomes.afaed650.svg' },
   { name: 'Fashion',     href: '/business/fashion',     logo: '/Fashions.124cf041.svg' },
+  { name: 'Global Trading', href: '/business/global-trading', logo: '/GlobalTrading.png' },
+  { name: 'Yalla Makhana', href: '/business/yalla-makhana', logo: '/YallaMakhana.png' },
 ];
 
 export default function BusinessPage({

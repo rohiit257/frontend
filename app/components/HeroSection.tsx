@@ -182,7 +182,7 @@ export default function HeroSection() {
               >
                 {[
                   { value: '20+', label: 'Years Experience' },
-                  { value: '5', label: 'Companies' },
+                  { value: '7', label: 'Companies' },
                   { value: '100+', label: 'Clients Served' },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">

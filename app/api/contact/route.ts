@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendContactForm } from '@/app/lib/n8n-webhook';
+import { sendContactEmail } from '@/app/lib/resend';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,14 +32,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const contactPayload = {
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      message: message.trim(),
+    };
+
+    const emailResult = await sendContactEmail(contactPayload);
+
+    if (!emailResult.success) {
+      console.error('Failed to send contact form email via Resend:', emailResult.error);
+      return NextResponse.json(
+        {
+          error: 'Unable to send your message right now. Please try again later.',
+        },
+        { status: 500 }
+      );
+    }
+
     // Send to n8n webhook
     try {
-      const success = await sendContactForm({
-        name: name.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        message: message.trim(),
-      });
+      const success = await sendContactForm(contactPayload);
 
       if (!success) {
         console.warn('n8n webhook returned error, but continuing...');
@@ -47,7 +62,7 @@ export async function POST(request: NextRequest) {
       }
     } catch (error) {
       console.error('Failed to send contact form to n8n:', error);
-      // Don't fail the request if webhook fails - still return success
+      // Keep the request successful once the email has been sent.
     }
 
     return NextResponse.json({

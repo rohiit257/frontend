@@ -41,6 +41,20 @@ const companies = [
     logo: '/Fashions.124cf041.svg',
     size: 'small',
   },
+  {
+    name: 'Wings9 Global Trading',
+    description: 'Food export and GCC supply.',
+    href: '/business/global-trading',
+    logo: '/GlobalTrading.png',
+    size: 'small',
+  },
+  {
+    name: 'Yalla Makhana',
+    description: 'Flavored makhana snacks.',
+    href: '/business/yalla-makhana',
+    logo: '/YallaMakhana.png',
+    size: 'small',
+  },
 ];
 
 export default function BentoGrid() {
@@ -107,7 +121,7 @@ export default function BentoGrid() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-2 lg:grid-cols-5 gap-3"
+          className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-7 gap-3"
         >
           {companies.map((company, index) => (
             <motion.div

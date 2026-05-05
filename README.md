@@ -36,6 +36,11 @@ GEMINI_API_KEY=your_gemini_api_key_here
 # Required: OpenAI API Key (for embeddings)
 OPENAI_API_KEY=your_openai_api_key_here
 
+# Required: Resend API configuration for contact form emails
+RESEND_API_KEY=re_your_resend_api_key_here
+RESEND_FROM_EMAIL=Portfolio Contact <onboarding@resend.dev>
+RESEND_CONTACT_TO_EMAIL=you@example.com
+
 # Optional: n8n Webhook URLs
 N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook-test/your-webhook-id
 N8N_MEETING_WEBHOOK_URL=https://your-n8n-instance.com/webhook/schedule-meeting
@@ -104,6 +109,9 @@ public/
 |----------|----------|-------------|
 | `GEMINI_API_KEY` | Yes | Google Gemini API key for AI responses |
 | `OPENAI_API_KEY` | Yes | OpenAI API key for embeddings |
+| `RESEND_API_KEY` | Yes | Resend API key used by the contact form API route |
+| `RESEND_FROM_EMAIL` | Yes | Verified sender address/name for outgoing contact emails |
+| `RESEND_CONTACT_TO_EMAIL` | Yes | Inbox that receives contact form submissions |
 | `N8N_WEBHOOK_URL` | No | General n8n webhook URL |
 | `N8N_MEETING_WEBHOOK_URL` | No | Meeting scheduler webhook URL |
 

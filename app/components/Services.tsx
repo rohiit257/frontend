@@ -2,48 +2,72 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Globe, Home, BarChart3, Scale, Rocket, Building2, Target, FileText } from 'lucide-react';
+import {
+  Globe,
+  Home,
+  BarChart3,
+  Scale,
+  Rocket,
+  Building2,
+  Target,
+  FileText,
+  Landmark,
+} from 'lucide-react';
 
 const services = [
   {
     title: 'Global Business Advisors',
-    description: 'Strategic support for businesses seeking international expansion with tailored market entry strategies.',
+    description: 'Strategic support for market entry, expansion structure, and cross-border growth planning.',
     Icon: Globe,
+    tag: 'Advisory',
   },
   {
     title: 'Prime Realty',
-    description: 'Comprehensive real estate services including property sales, leasing, and investment consulting.',
+    description: 'Property sales, leasing, and investment consulting for residential and commercial opportunities.',
     Icon: Home,
+    tag: 'Real estate',
   },
   {
     title: 'Innovative Marketing',
-    description: 'Marketing strategies to enhance brand visibility and drive sustainable growth.',
+    description: 'Brand positioning and marketing systems built to improve visibility and drive measurable demand.',
     Icon: BarChart3,
+    tag: 'Growth',
   },
   {
     title: 'Rental Dispute',
-    description: 'Resolving conflicts between landlords and tenants through mediation and legal processes.',
+    description: 'Structured support for landlord-tenant conflicts with practical mediation and procedural guidance.',
     Icon: Scale,
+    tag: 'Resolution',
   },
   {
     title: 'Venture Launch Hub',
-    description: 'Supporting entrepreneurs with business planning, funding solutions, and market strategies.',
+    description: 'Launch planning for founders covering strategy, early operations, and go-to-market direction.',
     Icon: Rocket,
+    tag: 'Startup',
   },
   {
     title: 'Swift Property Solutions',
-    description: 'Efficient property transactions with streamlined sales, rentals, and leasing services.',
+    description: 'Faster property transactions with streamlined sales, rental, and leasing support.',
     Icon: Building2,
+    tag: 'Operations',
   },
   {
     title: 'SEZ Vision Advisory',
-    description: 'Expert guidance on Special Economic Zones including Make in India initiatives.',
+    description: 'Guidance for SEZ opportunities, Make in India initiatives, and investment positioning.',
     Icon: Target,
+    tag: 'Expansion',
   },
   {
     title: 'Accounting & Tax',
-    description: 'Accounting, VAT registration, filing, and corporate tax compliance services.',
+    description: 'Accounting operations, VAT registration, filing, and corporate tax compliance management.',
     Icon: FileText,
+    tag: 'Compliance',
+  },
+  {
+    title: 'Legal and Embassy Guidance',
+    description: 'POA, embassy procedures, and supporting documentation for business and personal requirements.',
+    Icon: Landmark,
+    tag: 'Documentation',
   },
 ];
 
@@ -55,12 +79,12 @@ export default function Services() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.05 },
+      transition: { staggerChildren: 0.06 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
+    hidden: { opacity: 0, y: 28 },
     visible: {
       opacity: 1,
       y: 0,
@@ -69,85 +93,83 @@ export default function Services() {
   };
 
   return (
-    <section id="services" ref={ref} className="py-20 lg:py-28 bg-[var(--surface)] relative overflow-hidden">
-      {/* Subtle static gradient orbs */}
+    <section id="services" ref={ref} className="relative overflow-hidden bg-[var(--surface)] py-20 lg:py-28">
       <div
-        className="absolute top-16 right-8 w-64 h-64 rounded-full blur-3xl opacity-[0.07] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)' }}
+        className="pointer-events-none absolute inset-x-0 top-0 h-32 opacity-80"
+        style={{ background: 'linear-gradient(180deg, rgba(224,184,83,0.06) 0%, transparent 100%)' }}
         aria-hidden="true"
       />
       <div
-        className="absolute bottom-16 left-8 w-48 h-48 rounded-full blur-3xl opacity-[0.06] pointer-events-none"
-        style={{ background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)' }}
+        className="pointer-events-none absolute -right-12 top-24 h-72 w-72 rounded-full blur-3xl opacity-[0.07]"
+        style={{ background: 'radial-gradient(circle, var(--accent) 0%, transparent 72%)' }}
         aria-hidden="true"
       />
-      <div className="absolute top-16 right-8 w-32 h-32 border border-[var(--border)] rounded-full opacity-25 pointer-events-none" aria-hidden="true" />
-      <div className="absolute bottom-16 left-8 w-24 h-24 border border-[var(--border)] rotate-45 opacity-20 pointer-events-none" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute -left-10 bottom-10 h-52 w-52 rounded-full border border-[var(--border)] opacity-20"
+        aria-hidden="true"
+      />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-14"
+          className="mb-12 text-center"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--background)] border border-[var(--border)] rounded-full text-[var(--accent)] text-sm font-medium mb-6"
-          >
-            <span className="w-2 h-2 bg-[var(--accent)] rounded-full" />
-            What We Offer
-          </motion.span>
-          <h2 className="text-4xl lg:text-5xl font-bold text-[var(--foreground)] mb-4 tracking-tight">
-            Our Services
-          </h2>
-          <p className="text-[var(--muted)] text-lg max-w-2xl mx-auto leading-relaxed">
-            Comprehensive solutions tailored to your business needs
-          </p>
+          <div>
+            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background)] px-4 py-2 text-sm font-medium text-[var(--accent)]">
+              <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+              Services
+            </span>
+            <h2 className="mx-auto max-w-2xl text-4xl font-bold tracking-tight text-[var(--foreground)] lg:text-5xl">
+              What we do
+            </h2>
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-[var(--muted)]">
+              Focused support across setup, growth, property, and compliance.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Services grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5"
+          className="grid gap-4 md:grid-cols-2 xl:grid-cols-3"
         >
           {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants}>
+            <motion.article key={service.title} variants={itemVariants} className="h-full">
               <motion.div
-                className="group bg-[var(--background)] border border-[var(--border)] rounded-xl p-6 h-full relative overflow-hidden transition-shadow duration-300 hover:shadow-lg"
-                whileHover={{
-                  y: -4,
-                  borderColor: 'var(--accent)',
-                  transition: { duration: 0.2 },
-                }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className="group flex h-full flex-col rounded-[24px] border border-[var(--border)] bg-[var(--background)]/90 p-6 shadow-[0_14px_45px_rgba(0,0,0,0.18)]"
               >
-                {/* Top accent line */}
-                <motion.div
-                  className="absolute top-0 left-0 right-0 h-0.5 bg-[var(--accent)] origin-center"
-                  initial={{ scaleX: 0 }}
-                  whileHover={{ scaleX: 1 }}
-                  transition={{ duration: 0.25 }}
-                />
-
-                {/* Icon */}
-                <div className="w-10 h-10 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center mb-4 group-hover:bg-[var(--accent)]/20 transition-colors duration-200">
-                  <service.Icon className="w-5 h-5 text-[var(--accent)]" />
+                <div className="mb-6 flex items-start justify-between gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+                    <service.Icon className="h-5 w-5 text-[var(--accent)]" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs uppercase tracking-[0.22em] text-[var(--muted)]">
+                      {(index + 1).toString().padStart(2, '0')}
+                    </div>
+                    <div className="mt-2 inline-flex rounded-full bg-[var(--accent)]/10 px-2.5 py-1 text-[11px] font-medium text-[var(--accent)]">
+                      {service.tag}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Text */}
-                <h3 className="text-base lg:text-lg font-semibold text-[var(--foreground)] mb-2 group-hover:text-[var(--accent)] transition-colors duration-200 leading-snug">
-                  {service.title}
-                </h3>
-                <p className="text-[var(--muted)] text-sm leading-relaxed">
-                  {service.description}
-                </p>
+                <div className="flex flex-1 flex-col">
+                  <h3 className="text-xl font-semibold tracking-tight text-[var(--foreground)] transition-colors duration-200 group-hover:text-[var(--accent)]">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-[var(--muted)]">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="mt-6 border-t border-[var(--border)]/60 pt-4">
+                  <div className="text-sm text-[var(--foreground)]">Structured support with a direct, execution-first approach.</div>
+                </div>
               </motion.div>
-            </motion.div>
+            </motion.article>
           ))}
         </motion.div>
       </div>
