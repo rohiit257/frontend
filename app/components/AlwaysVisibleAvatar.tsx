@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X, MessageSquare, Bot, User, Building2, Phone, Mic } from 'lucide-react';
 import VoiceInput from './VoiceInput';
 import ElevenLabsVoiceAgent from './ElevenLabsVoiceAgent';
+import LiveAvatarEmbed from './LiveAvatarEmbed';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -12,7 +13,7 @@ interface Message {
   timestamp: Date;
 }
 
-type Mode = 'chat' | 'voice';
+type Mode = 'chat' | 'voice' | 'avatar';
 
 const QUICK_ACTIONS = [
   { text: 'Who is Prakash Bhambhani?', icon: User },
@@ -31,6 +32,16 @@ export default function AlwaysVisibleAvatar() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Open the live avatar on page load so visitors can start talking quickly.
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setMode('avatar');
+      setIsOpen(true);
+    }, 900);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
@@ -150,19 +161,27 @@ export default function AlwaysVisibleAvatar() {
       {/* Small Button to Open Assistant */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
+          <motion.div
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 200 }}
-            onClick={() => setIsOpen(true)}
-            className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center border-2 border-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_30px_-5px_var(--accent)]"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Open AI Assistant"
+            className="relative flex flex-col items-start gap-2"
           >
-            <Bot className="w-7 h-7 md:w-6 md:h-6" />
-          </motion.button>
+            <div className="relative max-w-[190px] rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-medium text-[var(--foreground)] shadow-lg">
+              Talk to our assistant
+              <span className="absolute -bottom-1 left-6 h-2 w-2 rotate-45 border-b border-r border-[var(--border)] bg-[var(--surface)]" />
+            </div>
+            <motion.button
+              onClick={() => setIsOpen(true)}
+              className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center border-2 border-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_30px_-5px_var(--accent)]"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Open AI Assistant"
+            >
+              <Bot className="w-7 h-7 md:w-6 md:h-6" />
+            </motion.button>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -224,6 +243,18 @@ export default function AlwaysVisibleAvatar() {
                   <span className="hidden sm:inline">Voice</span>
                   <span className="sm:hidden">Voice</span>
                 </motion.button>
+                <motion.button
+                  onClick={() => setMode('avatar')}
+                  className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'avatar'
+                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
+                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
+                    }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Bot className="w-3.5 h-3.5" />
+                  <span>Avatar</span>
+                </motion.button>
               </div>
             </div>
 
@@ -231,6 +262,13 @@ export default function AlwaysVisibleAvatar() {
             {mode === 'voice' && (
               <div className="flex-1 min-h-[300px] md:min-h-[400px]">
                 <ElevenLabsVoiceAgent />
+              </div>
+            )}
+
+            {/* Avatar Mode - LiveAvatar Embed */}
+            {mode === 'avatar' && (
+              <div className="flex-1">
+                <LiveAvatarEmbed />
               </div>
             )}
 
@@ -262,8 +300,8 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Messages - Not shown in voice mode */}
-            {messages.length > 0 && mode !== 'voice' && (
+            {/* Messages - Chat mode only */}
+            {messages.length > 0 && mode === 'chat' && (
               <div className="flex-1 overflow-y-auto px-3 md:px-4 py-2 md:py-3 space-y-2 md:space-y-3 bg-[var(--background)]/30" style={{ maxHeight: '350px' }}>
                 {messages.map((msg, index) => (
                   <motion.div
@@ -311,8 +349,8 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Loading indicator - Not shown in voice mode */}
-            {isLoading && mode !== 'voice' && (
+            {/* Loading indicator - Chat mode only */}
+            {isLoading && mode === 'chat' && (
               <div className="px-4 py-2 bg-[var(--background)]/50">
                 <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
                   <motion.div
@@ -325,8 +363,8 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Input Area - Not shown in voice mode */}
-            {mode !== 'voice' && (
+            {/* Input Area - Chat mode only */}
+            {mode === 'chat' && (
               <div className="p-3 md:p-4 border-t border-[var(--border)] bg-[var(--background)]">
                 <div className="flex items-center gap-2">
                   <div className="flex-1 relative">
