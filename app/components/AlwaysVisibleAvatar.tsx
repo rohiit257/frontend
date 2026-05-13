@@ -33,16 +33,6 @@ export default function AlwaysVisibleAvatar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Open the live avatar on page load so visitors can start talking quickly.
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setMode('avatar');
-      setIsOpen(true);
-    }, 900);
-
-    return () => window.clearTimeout(timer);
-  }, []);
-
   // Auto-scroll to bottom on new messages
   useEffect(() => {
     if (isOpen) {
