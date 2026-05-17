@@ -23,7 +23,7 @@ const QUICK_ACTIONS = [
 
 export default function AlwaysVisibleAvatar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<Mode>('chat');
+  const [mode, setMode] = useState<Mode>('avatar');
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session-${Date.now()}`);
@@ -146,45 +146,146 @@ export default function AlwaysVisibleAvatar() {
     }
   };
 
+  const isAvatarMode = mode === 'avatar';
+
   return (
     <div className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50">
-      {/* Small Button to Open Assistant */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 200 }}
-            className="relative flex flex-col items-start gap-2"
-          >
-            <div className="relative max-w-[190px] rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-medium text-[var(--foreground)] shadow-lg">
+      {/* FAB Button — always visible, toggles open/close */}
+      <div className="relative flex flex-col items-start gap-2">
+        {/* Tooltip — only show when closed */}
+        <AnimatePresence>
+          {!isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ duration: 0.2 }}
+              className="relative max-w-[190px] rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-xs font-medium text-[var(--foreground)] shadow-lg"
+            >
               Talk to our assistant
               <span className="absolute -bottom-1 left-6 h-2 w-2 rotate-45 border-b border-r border-[var(--border)] bg-[var(--surface)]" />
-            </div>
-            <motion.button
-              onClick={() => setIsOpen(true)}
-              className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center border-2 border-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all hover:scale-110 active:scale-95 shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_30px_-5px_var(--accent)]"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Open AI Assistant"
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <motion.button
+          onClick={() => {
+            if (isOpen) {
+              setIsOpen(false);
+            } else {
+              setMode('avatar');
+              setIsOpen(true);
+            }
+          }}
+          className="w-16 h-16 md:w-14 md:h-14 rounded-full bg-[var(--accent)] text-[var(--background)] flex items-center justify-center border-2 border-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all shadow-[0_4px_20px_var(--border-hover)] hover:shadow-[0_8px_30px_-5px_var(--accent)]"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label={isOpen ? 'Close AI Assistant' : 'Open AI Assistant'}
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                <X className="w-6 h-6" />
+              </motion.span>
+            ) : (
+              <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                <Bot className="w-7 h-7 md:w-6 md:h-6" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </div>
+
+
+      {/* Avatar Mode — centered fullscreen modal */}
+      <AnimatePresence>
+        {isOpen && isAvatarMode && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="avatar-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            />
+            {/* Centered Panel */}
+            <motion.div
+              key="avatar-panel"
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 20 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 26 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
             >
-              <Bot className="w-7 h-7 md:w-6 md:h-6" />
-            </motion.button>
-          </motion.div>
+              <div
+                className="relative w-full bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col pointer-events-auto"
+                style={{
+                  width: 'min(900px, calc(100vw - 2rem))',
+                  height: 'min(540px, calc(100vh - 4rem))',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="bg-[var(--background)] px-4 py-3 border-b border-[var(--border)] flex items-center justify-between flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
+                    <h3 className="font-semibold text-sm text-[var(--foreground)]">AI Assistant</h3>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {/* Mode toggles */}
+                    <div className="flex gap-1">
+                      {(['chat', 'voice', 'avatar'] as Mode[]).map((m) => (
+                        <motion.button
+                          key={m}
+                          onClick={() => setMode(m)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all flex items-center gap-1.5 ${
+                            mode === m
+                              ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
+                              : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
+                          }`}
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                        >
+                          {m === 'chat' && <MessageSquare className="w-3 h-3" />}
+                          {m === 'voice' && <Mic className="w-3 h-3" />}
+                          {m === 'avatar' && <Bot className="w-3 h-3" />}
+                          {m.charAt(0).toUpperCase() + m.slice(1)}
+                        </motion.button>
+                      ))}
+                    </div>
+                    <motion.button
+                      onClick={() => setIsOpen(false)}
+                      whileHover={{ scale: 1.1, rotate: 90 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--muted)]/20 flex items-center justify-center transition-colors ml-1"
+                      aria-label="Close"
+                    >
+                      <X className="w-4 h-4 text-[var(--foreground)]" />
+                    </motion.button>
+                  </div>
+                </div>
+                {/* Avatar iframe — fills remaining height */}
+                <div className="flex-1" style={{ minHeight: 0, height: '100%' }}>
+                  <LiveAvatarEmbed />
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
-      {/* Assistant Window */}
+      {/* Chat / Voice popup — stays bottom-left */}
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && !isAvatarMode && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="w-[calc(100vw-2rem)] md:w-[420px] max-w-[calc(100vw-2rem)] md:max-w-[420px] bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col"
-            style={{ maxHeight: 'calc(100vh - 100px)' }}
+            className="w-[calc(100vw-2rem)] md:w-[400px] max-w-[calc(100vw-2rem)] md:max-w-[400px] bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col"
+            style={{ maxHeight: 'min(680px, calc(100vh - 80px))' }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header with Mode Toggle */}
@@ -233,18 +334,6 @@ export default function AlwaysVisibleAvatar() {
                   <span className="hidden sm:inline">Voice</span>
                   <span className="sm:hidden">Voice</span>
                 </motion.button>
-                <motion.button
-                  onClick={() => setMode('avatar')}
-                  className={`flex-1 px-2 md:px-3 py-2.5 md:py-2 rounded-lg text-xs font-medium transition-all flex items-center justify-center gap-1.5 md:gap-2 ${mode === 'avatar'
-                    ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
-                    : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
-                    }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Bot className="w-3.5 h-3.5" />
-                  <span>Avatar</span>
-                </motion.button>
               </div>
             </div>
 
@@ -255,12 +344,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Avatar Mode - LiveAvatar Embed */}
-            {mode === 'avatar' && (
-              <div className="flex-1">
-                <LiveAvatarEmbed />
-              </div>
-            )}
 
             {/* Quick Actions - Show when no messages or in chat mode (not in voice mode) */}
             {messages.length === 0 && mode === 'chat' && (
