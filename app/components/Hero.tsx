@@ -16,7 +16,7 @@ export default function Hero() {
             </h1>
             
             <p className="text-lg sm:text-xl lg:text-2xl text-white/70 leading-relaxed max-w-2xl">
-              Nearly 30 years of multidimensional experience in business growth, structuring, and strategic execution.
+              Nearly 20 years of multidimensional experience in business growth, structuring, and strategic execution.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">

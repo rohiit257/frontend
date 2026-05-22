@@ -25,9 +25,9 @@ export const metadata: Metadata = {
     "Wings9 Group",
     "business consultant Dubai",
     "corporate solutions specialist",
-    "Wings9 Consultancy",
-    "Wings9 Properties",
-    "Wings9 Technology",
+    "Wings9 Consultancies LLC",
+    "Wings9 Properties LLC",
+    "Wings9 Technologies LLC",
   ],
   authors: [{ name: "Prakash Bhambhani" }],
   openGraph: {

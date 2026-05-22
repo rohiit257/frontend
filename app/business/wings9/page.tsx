@@ -2,16 +2,16 @@ import { Metadata } from 'next';
 import BusinessPage from '@/app/components/BusinessPage';
 
 export const metadata: Metadata = {
-  title: 'Wings9 Technologies | Enterprise Solutions',
+  title: 'Wings9 Technologies LLC | Enterprise Solutions',
   description: 'Leading technology solutions and digital transformation services.',
 };
 
 export default function Wings9Page() {
   return (
     <BusinessPage
-      title="Wings9 Technologies"
+      title="Wings9 Technologies LLC"
       subtitle="Leading Enterprise Solutions"
-      description="Wings9 Technologies is at the forefront of digital transformation, providing cutting-edge technology solutions that drive business growth and innovation."
+      description="Wings9 Technologies LLC is at the forefront of digital transformation, providing cutting-edge technology solutions that drive business growth and innovation."
       features={[
         'Enterprise Software Development',
         'Cloud Infrastructure & Migration',

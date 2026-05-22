@@ -25,7 +25,7 @@ export const knowledgeBase = {
       "Nearly 30 years of multidimensional business and real estate experience",
       "Supported entrepreneurs, investors, corporates, and multinational companies with structured growth solutions",
       "Deep expertise in mainland, free zone, and international corporate environments",
-      "Built a diversified Wings9 ecosystem spanning consultancy, technology, trading, real estate solutions, and brand development",
+      "Built a diversified Wings9 ecosystem spanning Wings9 Consultancies LLC, Wings9 Technologies LLC, trading, real estate solutions, and brand development",
       "Expanded into AI-driven solutions, software and IT ventures, fashion, vacation homes, and modern trading opportunities over the last six years"
     ],
     expertise: [
@@ -67,14 +67,14 @@ export const knowledgeBase = {
   firm: {
     name: "Wings9",
     fullName: "Wings9 Group",
-    nature: "Diversified business ecosystem spanning consultancy, technology, trading, real estate solutions, and brand development",
+    nature: "Diversified business ecosystem spanning Wings9 Consultancies LLC, Wings9 Technologies LLC, trading, real estate solutions, and brand development",
     markets: "UAE, mainland, free zone, India, GCC, and international markets",
     clients: "Entrepreneurs, investors, corporates, multinational companies, startups, and established businesses",
     valueProposition: "Structured, compliant, and commercially viable solutions across company setup, corporate structuring, real estate, trading, technology, and strategic expansion. Wings9 helps clients solve complex business challenges with practical execution and long-term thinking.",
     approach: "We combine strategic advisory, regulatory understanding, commercial negotiation, and hands-on execution to help clients enter markets, structure operations, and grow sustainably.",
     mission: "To deliver structured business solutions that help clients establish, expand, and grow with clarity, compliance, and commercial confidence.",
     vision: "To build a trusted, future-ready business ecosystem that bridges consultancy, technology, trading, and real estate with innovation-led execution.",
-    history: "Under the Wings Nine banner, the organization has grown from a consultancy-led foundation into a diversified group serving business setup, restructuring, real estate, technology, trading, and brand-building needs. Its latest expansion includes Wings9 Global Trading, focused on foodstuff import and export and the development of proprietary in-house brands for regional and international markets.",
+    history: "Under the Wings Nine banner, the organization has grown from a consultancy-led foundation into a diversified group serving business setup, restructuring, real estate, technology, trading, and brand-building needs. Its latest expansion includes WINGS NINE GLOBAL TRADING FZCO, focused on foodstuff import and export and the development of proprietary in-house brands for regional and international markets.",
     specialties: [
       "Company formation and structuring",
       "Corporate restructuring and business advisory",
@@ -140,7 +140,7 @@ export const knowledgeBase = {
         "Sustainable business growth strategies",
         "Marketing campaign development"
       ],
-      relatedServices: ["venture-launch-hub"]
+      relatedServices: ["global-business-advisors"]
     },
     {
       id: "rental-dispute",
@@ -156,21 +156,6 @@ export const knowledgeBase = {
         "UAE guidelines compliance"
       ],
       relatedServices: ["legal-embassy-guidance", "prime-realty"]
-    },
-    {
-      id: "venture-launch-hub",
-      name: "Venture Launch Hub",
-      description: "Supporting entrepreneurs with tailored business planning, funding solutions, and market strategies.",
-      whatItDoes: "Provides comprehensive support for entrepreneurs including business planning, funding solutions, and market entry strategies to help launch and scale new ventures.",
-      whoItIsFor: "Entrepreneurs launching new businesses, startups needing planning support, founders seeking funding, new ventures requiring market strategies.",
-      whenToConsult: "When starting a new business, needing business planning, seeking funding, or requiring market entry strategies.",
-      keyFeatures: [
-        "Business planning",
-        "Funding solutions",
-        "Market strategies",
-        "Entrepreneur support"
-      ],
-      relatedServices: ["global-business-advisors", "innovative-marketing"]
     },
     {
       id: "swift-property-solutions",
@@ -245,49 +230,49 @@ export const knowledgeBase = {
   },
   companies: [
     {
-      name: "Wings9 Consultancy",
+      name: "Wings9 Consultancies LLC",
       description: "A strategic business advisory division focused on company formation, corporate structuring, restructuring, licensing, regulatory coordination, investor advisory, and growth-led commercial problem-solving.",
       focus: "Business consultancy, company structuring, licensing, investor advisory, strategic advisory",
       services: ["Company formation", "Corporate structuring and restructuring", "Licensing and regulatory coordination", "Investor advisory", "Strategic business advisory"],
       targetAudience: "Entrepreneurs, investors, startups, corporates, and companies seeking structured market entry or expansion"
     },
     {
-      name: "Wings9 Properties",
+      name: "Wings9 Properties LLC",
       description: "A real estate solutions division covering property investments, leasing, corporate rentals, commercial negotiations, and rental dispute matters for clients who need business and premises strategy to work together.",
       focus: "Real estate services, property investment, leasing, commercial negotiations, rental dispute solutions",
       services: ["Property investments", "Leasing services", "Corporate rentals", "Commercial negotiations", "Rental dispute support"],
       targetAudience: "Property buyers, sellers, investors, landlords, tenants, and businesses needing commercial space"
     },
     {
-      name: "Wings9 Vacation Homes",
+      name: "Wings9 Vacation Homes LLC",
       description: "Specialized vacation rental and hospitality services, helping property owners maximize returns through short-term rentals and vacation home management. Provides end-to-end solutions for vacation property investments.",
       focus: "Vacation rentals, hospitality services, property management",
       services: ["Vacation rental management", "Short-term rental services", "Hospitality consulting", "Property optimization"],
       targetAudience: "Vacation property owners, hospitality investors, property managers"
     },
     {
-      name: "Wings9 Technology",
+      name: "Wings9 Technologies LLC",
       description: "A technology and digital transformation division focused on software solutions, AI integration, automation, and modern IT-enabled business models that help companies evolve with changing markets.",
       focus: "Technology solutions, digital transformation, software development, AI integration",
       services: ["Software development", "Cloud solutions", "Digital transformation", "Technology consulting", "AI and automation"],
       targetAudience: "Businesses needing digital transformation, startups requiring tech solutions, enterprises seeking modernization"
     },
     {
-      name: "Wings9 Fashion",
+      name: "Wings9 Fashion LLC",
       description: "Fashion and retail consulting services, helping fashion brands and retailers with business strategy, market entry, brand development, and retail operations. Specializes in connecting fashion businesses with international markets.",
       focus: "Fashion retail, brand development, retail consulting",
       services: ["Fashion brand consulting", "Retail strategy", "Market entry for fashion brands", "Brand development"],
       targetAudience: "Fashion brands, retailers, fashion entrepreneurs, clothing businesses"
     },
     {
-      name: "Wings9 Global Trading",
+      name: "WINGS NINE GLOBAL TRADING FZCO",
       description: "A Dubai-based foodstuff import and export venture focused on sourcing, quality assurance, logistics, GCC distribution, and the development of proprietary in-house brands for regional and international markets.",
       focus: "Foodstuff import and export, sourcing, trade management, GCC distribution, in-house brand development",
       services: ["Food export", "Food import", "Customized sourcing services", "Quality assurance", "Price negotiation", "Logistics and shipping support", "Private labeling and packaging"],
       targetAudience: "Distributors, supermarkets, retail chains, channel partners, and buyers seeking Indian grocery exports into UAE and GCC markets"
     },
     {
-      name: "Yalla Makhana",
+      name: "Yalla Makhana LLC",
       description: "A UAE-facing snack and FMCG brand built around flavored makhana products, offering ready-to-retail foxnut variants such as Za'atar, Peri Peri, Spanish Tomato, Lime & Mint, Labneh & Mint, Cream & Onion, and Cheese & Herbs.",
       focus: "Makhana snacks, retail FMCG, flavored foxnuts",
       services: ["Retail snack distribution", "Product merchandising", "Flavor-led packaged makhana range", "Direct-to-consumer sales", "Channel-ready snack supply"],

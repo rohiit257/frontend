@@ -7,7 +7,6 @@ import {
   Home,
   BarChart3,
   Scale,
-  Rocket,
   Building2,
   Target,
   FileText,
@@ -38,12 +37,6 @@ const services = [
     description: 'Structured support for landlord-tenant conflicts with practical mediation and procedural guidance.',
     Icon: Scale,
     tag: 'Resolution',
-  },
-  {
-    title: 'Venture Launch Hub',
-    description: 'Launch planning for founders covering strategy, early operations, and go-to-market direction.',
-    Icon: Rocket,
-    tag: 'Startup',
   },
   {
     title: 'Swift Property Solutions',

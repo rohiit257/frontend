@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import BusinessPage from '@/app/components/BusinessPage';
 
 export const metadata: Metadata = {
-  title: 'Fashion Brands | Premium Fashion & Lifestyle',
+  title: 'Wings9 Fashion LLC | Premium Fashion & Lifestyle',
   description: 'Premium fashion brands and lifestyle products.',
 };
 
 export default function FashionPage() {
   return (
     <BusinessPage
-      title="Fashion Brands"
+      title="Wings9 Fashion LLC"
       subtitle="Premium Fashion & Lifestyle"
       description="Our fashion division represents premium brands and lifestyle products, offering curated collections that define elegance and sophistication."
       features={[

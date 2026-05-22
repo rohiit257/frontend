@@ -2,16 +2,16 @@ import { Metadata } from 'next';
 import BusinessPage from '@/app/components/BusinessPage';
 
 export const metadata: Metadata = {
-  title: 'Wings9 Global Trading | Food Export and GCC Distribution',
+  title: 'WINGS NINE GLOBAL TRADING FZCO | Food Export and GCC Distribution',
   description: 'Dubai-based food export, sourcing, logistics, and GCC distribution services.',
 };
 
 export default function GlobalTradingPage() {
   return (
     <BusinessPage
-      title="Wings9 Global Trading"
+      title="WINGS NINE GLOBAL TRADING FZCO"
       subtitle="Food Export and Trade Management"
-      description="Wings9 Global Trading is a Dubai-based food export business focused on sourcing authentic Indian grocery products and moving them efficiently into UAE, GCC, and wider international markets through a quality-led supply chain."
+      description="WINGS NINE GLOBAL TRADING FZCO is a Dubai-based food export business focused on sourcing authentic Indian grocery products and moving them efficiently into UAE, GCC, and wider international markets through a quality-led supply chain."
       features={[
         'Food export across UAE, GCC, and international markets',
         'Customized sourcing for bulk buyers and channel partners',

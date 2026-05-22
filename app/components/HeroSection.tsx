@@ -124,7 +124,7 @@ export default function HeroSection() {
                 variants={itemVariants}
                 className="text-base sm:text-lg lg:text-xl text-[var(--muted)] leading-relaxed max-w-xl mx-auto lg:mx-0"
               >
-                Nearly 30 years of multidimensional experience across company structuring, corporate advisory, real estate, trading, technology, and emerging business sectors.
+                Nearly 20+ years of multidimensional experience across company structuring, corporate advisory, real estate, trading, technology, and emerging business sectors.
               </motion.p>
 
               <motion.div
@@ -157,7 +157,7 @@ export default function HeroSection() {
                 className="flex items-center justify-center lg:justify-start gap-8 sm:gap-10 pt-4 border-t border-[var(--border)]"
               >
                 {[
-                  { value: '30+', label: 'Years Experience' },
+                  { value: '20+', label: 'Years Experience' },
                   { value: '7', label: 'Group Companies' },
                   { value: 'MNCs', label: 'Trusted Clients' },
                 ].map((stat, i) => (

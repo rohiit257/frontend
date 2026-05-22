@@ -40,7 +40,7 @@
       "id": "Q003",
       "category": "company_overview",
       "question": "What companies are part of Wings9 Group?",
-      "answer": "Wings9 Group includes seven business verticals: 1) Wings9 Consultancy - business setup, structuring, licensing, and advisory, 2) Wings9 Properties - real estate, leasing, commercial negotiations, and rental dispute support, 3) Wings9 Vacation Homes - vacation rental and hospitality services, 4) Wings9 Technology - software, AI, and digital transformation solutions, 5) Wings9 Fashion - fashion and retail brand development, 6) Wings9 Global Trading - foodstuff import and export plus in-house brand development, and 7) Yalla Makhana - a UAE-facing snack and FMCG brand.",
+      "answer": "Wings9 Group includes seven business verticals: 1) Wings9 Consultancies LLC - business setup, structuring, licensing, and advisory, 2) Wings9 Properties LLC - real estate, leasing, commercial negotiations, and rental dispute support, 3) Wings9 Vacation Homes LLC - vacation rental and hospitality services, 4) Wings9 Technologies LLC - software, AI, and digital transformation solutions, 5) Wings9 Fashion LLC - fashion and retail brand development, 6) WINGS NINE GLOBAL TRADING FZCO - foodstuff import and export plus in-house brand development, and 7) Yalla Makhana LLC - a UAE-facing snack and FMCG brand.",
       "keywords": ["wings9 group", "companies", "portfolio", "subsidiaries"],
       "related_links": ["https://www.prakash.ae/companies/"]
     },
@@ -167,8 +167,8 @@
     {
       "id": "Q019",
       "category": "services",
-      "question": "What real estate services does Wings9 Properties offer?",
-      "answer": "Wings9 Properties offers comprehensive real estate services including property sales, leasing, investment consulting, rental solutions, and property management designed for individuals and businesses in Dubai and UAE.",
+      "question": "What real estate services does Wings9 Properties LLC offer?",
+      "answer": "Wings9 Properties LLC offers comprehensive real estate services including property sales, leasing, investment consulting, rental solutions, and property management designed for individuals and businesses in Dubai and UAE.",
       "keywords": ["real estate", "property", "wings9 properties"],
       "related_links": ["https://www.prakash.ae/companies/properties/"]
     },
@@ -407,8 +407,8 @@
     {
       "id": "Q049",
       "category": "services",
-      "question": "What is Venture Launch Hub?",
-      "answer": "Venture Launch Hub supports entrepreneurs with tailored business planning, funding solutions, and market strategies to successfully launch and scale their ventures. It provides comprehensive support for startups and new business initiatives.",
+      "question": "Does Wings9 provide launch planning support?",
+      "answer": "Wings9 provides launch planning support through its broader advisory services, including business planning, market-entry strategy, and practical execution guidance for new initiatives.",
       "keywords": ["venture launch", "startup support", "business planning"],
       "related_links": ["https://www.prakash.ae/services/"]
     },
@@ -424,23 +424,23 @@
       "id": "Q051",
       "category": "company_overview",
       "question": "What is Wings9 Technologies?",
-      "answer": "Wings9 Technologies is one of the five enterprises under Wings9 group, focusing on leading technology solutions, digital transformation, innovative marketing strategies, and IT services to enhance business operations.",
+      "answer": "Wings9 Technologies LLC is one of the seven companies under Wings9 Group, focusing on leading technology solutions, digital transformation, innovative marketing strategies, and IT services to enhance business operations.",
       "keywords": ["wings9 technologies", "it services", "digital transformation"],
       "related_links": ["https://www.prakash.ae/companies/technologies/"]
     },
     {
       "id": "Q052",
       "category": "company_overview",
-      "question": "What is Wings9 Vacation Homes?",
-      "answer": "Wings9 Vacation Homes specializes in luxury vacation rentals and property management services in Dubai and UAE, offering premium short-term accommodation solutions and comprehensive property management.",
+      "question": "What is Wings9 Vacation Homes LLC?",
+      "answer": "Wings9 Vacation Homes LLC specializes in luxury vacation rentals and property management services in Dubai and UAE, offering premium short-term accommodation solutions and comprehensive property management.",
       "keywords": ["vacation homes", "luxury rentals", "property management"],
       "related_links": ["https://www.prakash.ae/companies/vacationhomes/"]
     },
     {
       "id": "Q053",
       "category": "company_overview",
-      "question": "What is Wings9 Fashions?",
-      "answer": "Wings9 Fashions focuses on contemporary fashion and lifestyle brand development, representing the fashion and lifestyle vertical of the Wings9 enterprise portfolio.",
+      "question": "What is Wings9 Fashion LLC?",
+      "answer": "Wings9 Fashion LLC focuses on contemporary fashion and lifestyle brand development, representing the fashion and lifestyle vertical of the Wings9 enterprise portfolio.",
       "keywords": ["wings9 fashions", "fashion brand", "lifestyle"],
       "related_links": ["https://www.prakash.ae/companies/fashions/"]
     },
@@ -1032,7 +1032,7 @@
       "id": "Q127",
       "category": "services",
       "question": "Does Wings9 help with business plan preparation?",
-      "answer": "Yes, through their Venture Launch Hub service, Wings9 supports entrepreneurs with tailored business planning, including comprehensive business plan preparation for visa applications, bank requirements, and investor presentations.",
+      "answer": "Yes, Wings9 supports entrepreneurs with tailored business planning through its broader advisory services, including business plan preparation for visa applications, bank requirements, and investor presentations.",
       "keywords": ["business plan", "planning services", "documentation"],
       "related_links": ["https://www.prakash.ae/services/"]
     },
@@ -1096,7 +1096,7 @@
       "id": "Q135",
       "category": "services",
       "question": "Does Wings9 provide website development services?",
-      "answer": "Through Wings9 Technologies, they offer technology solutions and digital transformation services which may include website development, digital marketing, and IT infrastructure. They focus on innovative marketing strategies and online presence.",
+      "answer": "Through Wings9 Technologies LLC, they offer technology solutions and digital transformation services which may include website development, digital marketing, and IT infrastructure. They focus on innovative marketing strategies and online presence.",
       "keywords": ["website development", "digital services", "technology"],
       "related_links": ["https://www.prakash.ae/companies/technologies/"]
     },

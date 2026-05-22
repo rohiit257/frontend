@@ -19,13 +19,13 @@ interface BusinessPageProps {
 }
 
 const allCompanies = [
-  { name: 'Consultancy', href: '/business/consultancy', logo: '/Consultancies.9aeac236.svg' },
-  { name: 'Properties',  href: '/business/properties',  logo: '/Properties.2d31dc8a.svg' },
-  { name: 'Technology',  href: '/business/technology',  logo: '/Technologies.4c178217.svg' },
-  { name: 'Vacation Homes', href: '/business/vacation-homes', logo: '/VacationHomes.afaed650.svg' },
-  { name: 'Fashion',     href: '/business/fashion',     logo: '/Fashions.124cf041.svg' },
-  { name: 'Global Trading', href: '/business/global-trading', logo: '/GlobalTrading.png' },
-  { name: 'Yalla Makhana', href: '/business/yalla-makhana', logo: '/YallaMakhana.png' },
+  { name: 'Consultancies LLC', href: '/business/consultancy', logo: '/Consultancies.9aeac236.svg' },
+  { name: 'Properties LLC',  href: '/business/properties',  logo: '/Properties.2d31dc8a.svg' },
+  { name: 'Technologies LLC',  href: '/business/technology',  logo: '/Technologies.4c178217.svg' },
+  { name: 'Vacation Homes LLC', href: '/business/vacation-homes', logo: '/VacationHomes.afaed650.svg' },
+  { name: 'Fashion LLC',     href: '/business/fashion',     logo: '/Fashions.124cf041.svg' },
+  { name: 'Global Trading FZCO', href: '/business/global-trading', logo: '/GlobalTrading.png' },
+  { name: 'Yalla Makhana LLC', href: '/business/yalla-makhana', logo: '/YallaMakhana.png' },
 ];
 
 export default function BusinessPage({
@@ -359,7 +359,7 @@ export default function BusinessPage({
             className="text-center mb-8 sm:mb-10"
           >
             <h2 className="text-xl sm:text-2xl font-bold text-[var(--foreground)] mb-2">Explore Wings9 Companies</h2>
-            <p className="text-[var(--muted)] text-sm sm:text-base">Five enterprises shaping the future</p>
+            <p className="text-[var(--muted)] text-sm sm:text-base">Seven companies shaping the future</p>
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">

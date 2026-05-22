@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import BusinessPage from '@/app/components/BusinessPage';
 
 export const metadata: Metadata = {
-  title: 'Vacation Homes | Luxury Vacation Rentals',
+  title: 'Wings9 Vacation Homes LLC | Luxury Vacation Rentals',
   description: 'Luxury vacation rentals and holiday property management.',
 };
 
 export default function VacationHomesPage() {
   return (
     <BusinessPage
-      title="Vacation Homes"
+      title="Wings9 Vacation Homes LLC"
       subtitle="Luxury Vacation Rentals"
       description="Experience luxury and comfort with our premium vacation home rentals. We offer exceptional properties in prime locations with world-class amenities."
       features={[

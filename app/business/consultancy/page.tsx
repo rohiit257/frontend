@@ -2,14 +2,14 @@ import { Metadata } from 'next';
 import BusinessPage from '@/app/components/BusinessPage';
 
 export const metadata: Metadata = {
-  title: 'Consultancy Services | Strategic Business Consulting',
+  title: 'Wings9 Consultancies LLC | Strategic Business Consulting',
   description: 'Strategic business consulting for international expansion and growth.',
 };
 
 export default function ConsultancyPage() {
   return (
     <BusinessPage
-      title="Consultancy Services"
+      title="Wings9 Consultancies LLC"
       subtitle="Strategic Business Consulting"
       description="Our consultancy services provide expert guidance for businesses seeking to expand internationally, optimize operations, and achieve sustainable growth."
       features={[

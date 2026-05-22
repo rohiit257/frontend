@@ -8,7 +8,7 @@ import { useRef } from 'react';
 
 const companies = [
   {
-    name: 'Wings9 Consultancy',
+    name: 'Wings9 Consultancies LLC',
     description: 'Strategic consulting for international business expansion and growth.',
     href: '/business/consultancy',
     logo: '/Consultancies.9aeac236.svg',
@@ -16,7 +16,7 @@ const companies = [
     useLogoFilter: true,
   },
   {
-    name: 'Wings9 Properties',
+    name: 'Wings9 Properties LLC',
     description: 'Premium real estate services and investment consulting.',
     href: '/business/properties',
     logo: '/Properties.2d31dc8a.svg',
@@ -24,7 +24,7 @@ const companies = [
     useLogoFilter: true,
   },
   {
-    name: 'Wings9 Technology',
+    name: 'Wings9 Technologies LLC',
     description: 'Leading technology solutions and digital transformation.',
     href: '/business/technology',
     logo: '/Technologies.4c178217.svg',
@@ -32,7 +32,7 @@ const companies = [
     useLogoFilter: true,
   },
   {
-    name: 'Wings9 Vacation Homes',
+    name: 'Wings9 Vacation Homes LLC',
     description: 'Luxury vacation rentals and property management.',
     href: '/business/vacation-homes',
     logo: '/VacationHomes.afaed650.svg',
@@ -40,7 +40,7 @@ const companies = [
     useLogoFilter: true,
   },
   {
-    name: 'Wings9 Fashion',
+    name: 'Wings9 Fashion LLC',
     description: 'Contemporary fashion and lifestyle brand development.',
     href: '/business/fashion',
     logo: '/Fashions.124cf041.svg',
@@ -48,7 +48,7 @@ const companies = [
     useLogoFilter: true,
   },
   {
-    name: 'Wings9 Global Trading',
+    name: 'WINGS NINE GLOBAL TRADING FZCO',
     description: 'Food export, sourcing, logistics, and GCC distribution solutions.',
     href: '/business/global-trading',
     logo: '/GlobalTrading.png',
@@ -56,7 +56,7 @@ const companies = [
     useLogoFilter: false,
   },
   {
-    name: 'Yalla Makhana',
+    name: 'Yalla Makhana LLC',
     description: 'Flavored makhana snacks and FMCG distribution for UAE consumers.',
     href: '/business/yalla-makhana',
     logo: '/YallaMakhana.png',
