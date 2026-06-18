@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, X, MessageSquare, Bot, User, Building2, Phone, Mic } from 'lucide-react';
 import VoiceInput from './VoiceInput';
 import ElevenLabsVoiceAgent from './ElevenLabsVoiceAgent';
-import LiveAvatarEmbed from './LiveAvatarEmbed';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -13,7 +12,7 @@ interface Message {
   timestamp: Date;
 }
 
-type Mode = 'chat' | 'voice' | 'avatar';
+type Mode = 'chat' | 'voice';
 
 const QUICK_ACTIONS = [
   { text: 'Who is Prakash Bhambhani?', icon: User },
@@ -23,7 +22,7 @@ const QUICK_ACTIONS = [
 
 export default function AlwaysVisibleAvatar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<Mode>('avatar');
+  const [mode, setMode] = useState<Mode>('chat');
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId] = useState(() => `session-${Date.now()}`);
@@ -33,14 +32,12 @@ export default function AlwaysVisibleAvatar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom on new messages
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
 
-  // Fallback TTS using Web Speech API - Prefer Indian accent
   const speakWithWebSpeech = useCallback((text: string) => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
@@ -51,15 +48,15 @@ export default function AlwaysVisibleAvatar() {
       utterance.volume = 1;
 
       const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find(v =>
-        v.lang.includes('en-IN') ||
-        v.lang.includes('hi-IN') ||
-        v.name.toLowerCase().includes('india') ||
-        v.name.toLowerCase().includes('indian')
-      ) || voices.find(v =>
-        v.name.includes('Google') ||
-        v.name.includes('Microsoft') ||
-        v.name.includes('Male')
+      const preferredVoice = voices.find((voice) =>
+        voice.lang.includes('en-IN') ||
+        voice.lang.includes('hi-IN') ||
+        voice.name.toLowerCase().includes('india') ||
+        voice.name.toLowerCase().includes('indian')
+      ) || voices.find((voice) =>
+        voice.name.includes('Google') ||
+        voice.name.includes('Microsoft') ||
+        voice.name.includes('Male')
       ) || voices[0];
 
       if (preferredVoice) {
@@ -75,16 +72,15 @@ export default function AlwaysVisibleAvatar() {
     }
   }, []);
 
-  // Send message
   const handleSend = useCallback(async (overrideMessage?: string) => {
     const messageToSend = overrideMessage || inputValue.trim();
     if (!messageToSend || isLoading) return;
 
     setInputValue('');
-    setMessages(prev => [...prev, {
+    setMessages((prev) => [...prev, {
       role: 'user',
       content: messageToSend,
-      timestamp: new Date()
+      timestamp: new Date(),
     }]);
     setIsLoading(true);
 
@@ -107,30 +103,28 @@ export default function AlwaysVisibleAvatar() {
       const data = await response.json();
       const assistantResponse = data.response || 'I apologize, but I encountered an error. Please try again.';
 
-      setMessages(prev => [...prev, {
+      setMessages((prev) => [...prev, {
         role: 'assistant',
         content: assistantResponse,
-        timestamp: new Date()
+        timestamp: new Date(),
       }]);
 
-      // Use text-to-speech in voice mode
       if (mode === 'voice') {
         speakWithWebSpeech(assistantResponse);
       }
     } catch (error) {
       console.error('Chat error:', error);
       const errorMsg = 'I apologize, but I encountered an error. Please try again.';
-      setMessages(prev => [...prev, {
+      setMessages((prev) => [...prev, {
         role: 'assistant',
         content: errorMsg,
-        timestamp: new Date()
+        timestamp: new Date(),
       }]);
     } finally {
       setIsLoading(false);
     }
-  }, [isLoading, inputValue, mode, sessionId, speakWithWebSpeech]);
+  }, [inputValue, isLoading, mode, sessionId, speakWithWebSpeech]);
 
-  // Handle voice input transcript
   const handleVoiceTranscript = useCallback((transcript: string) => {
     setInputValue(transcript);
     setTimeout(() => {
@@ -138,7 +132,6 @@ export default function AlwaysVisibleAvatar() {
     }, 500);
   }, [handleSend]);
 
-  // Handle enter key
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -146,13 +139,9 @@ export default function AlwaysVisibleAvatar() {
     }
   };
 
-  const isAvatarMode = mode === 'avatar';
-
   return (
     <div className="fixed bottom-4 left-4 md:bottom-6 md:left-6 z-50">
-      {/* FAB Button — always visible, toggles open/close */}
       <div className="relative flex flex-col items-start gap-2">
-        {/* Tooltip — only show when closed */}
         <AnimatePresence>
           {!isOpen && (
             <motion.div
@@ -167,12 +156,13 @@ export default function AlwaysVisibleAvatar() {
             </motion.div>
           )}
         </AnimatePresence>
+
         <motion.button
           onClick={() => {
             if (isOpen) {
               setIsOpen(false);
             } else {
-              setMode('avatar');
+              setMode('chat');
               setIsOpen(true);
             }
           }}
@@ -183,11 +173,23 @@ export default function AlwaysVisibleAvatar() {
         >
           <AnimatePresence mode="wait">
             {isOpen ? (
-              <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
                 <X className="w-6 h-6" />
               </motion.span>
             ) : (
-              <motion.span key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+              <motion.span
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
                 <Bot className="w-7 h-7 md:w-6 md:h-6" />
               </motion.span>
             )}
@@ -195,90 +197,8 @@ export default function AlwaysVisibleAvatar() {
         </motion.button>
       </div>
 
-
-      {/* Avatar Mode — centered fullscreen modal */}
       <AnimatePresence>
-        {isOpen && isAvatarMode && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="avatar-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-            />
-            {/* Centered Panel */}
-            <motion.div
-              key="avatar-panel"
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ type: 'spring', stiffness: 280, damping: 26 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
-            >
-              <div
-                className="relative w-full bg-[var(--surface)] rounded-2xl shadow-2xl border border-[var(--border)] overflow-hidden flex flex-col pointer-events-auto"
-                style={{
-                  width: 'min(900px, calc(100vw - 2rem))',
-                  height: 'min(540px, calc(100vh - 4rem))',
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Header */}
-                <div className="bg-[var(--background)] px-4 py-3 border-b border-[var(--border)] flex items-center justify-between flex-shrink-0">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-                    <h3 className="font-semibold text-sm text-[var(--foreground)]">AI Assistant</h3>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {/* Mode toggles */}
-                    <div className="flex gap-1">
-                      {(['chat', 'voice', 'avatar'] as Mode[]).map((m) => (
-                        <motion.button
-                          key={m}
-                          onClick={() => setMode(m)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all flex items-center gap-1.5 ${
-                            mode === m
-                              ? 'bg-[var(--accent)] text-[var(--background)] shadow-md'
-                              : 'bg-[var(--surface)] text-[var(--muted)] hover:bg-[var(--surface)]/80'
-                          }`}
-                          whileHover={{ scale: 1.03 }}
-                          whileTap={{ scale: 0.97 }}
-                        >
-                          {m === 'chat' && <MessageSquare className="w-3 h-3" />}
-                          {m === 'voice' && <Mic className="w-3 h-3" />}
-                          {m === 'avatar' && <Bot className="w-3 h-3" />}
-                          {m.charAt(0).toUpperCase() + m.slice(1)}
-                        </motion.button>
-                      ))}
-                    </div>
-                    <motion.button
-                      onClick={() => setIsOpen(false)}
-                      whileHover={{ scale: 1.1, rotate: 90 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-7 h-7 rounded-lg bg-[var(--surface)] hover:bg-[var(--muted)]/20 flex items-center justify-center transition-colors ml-1"
-                      aria-label="Close"
-                    >
-                      <X className="w-4 h-4 text-[var(--foreground)]" />
-                    </motion.button>
-                  </div>
-                </div>
-                {/* Avatar iframe — fills remaining height */}
-                <div className="flex-1" style={{ minHeight: 0, height: '100%' }}>
-                  <LiveAvatarEmbed />
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Chat / Voice popup — stays bottom-left */}
-      <AnimatePresence>
-        {isOpen && !isAvatarMode && (
+        {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -288,7 +208,6 @@ export default function AlwaysVisibleAvatar() {
             style={{ maxHeight: 'min(680px, calc(100vh - 80px))' }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header with Mode Toggle */}
             <div className="bg-[var(--background)] p-3 md:p-3 border-b border-[var(--border)]">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
@@ -306,7 +225,6 @@ export default function AlwaysVisibleAvatar() {
                 </motion.button>
               </div>
 
-              {/* Mode Toggle Buttons */}
               <div className="flex gap-1.5 md:gap-2">
                 <motion.button
                   onClick={() => setMode('chat')}
@@ -337,15 +255,12 @@ export default function AlwaysVisibleAvatar() {
               </div>
             </div>
 
-            {/* Voice Mode - ElevenLabs Voice Agent */}
             {mode === 'voice' && (
               <div className="flex-1 min-h-[300px] md:min-h-[400px]">
                 <ElevenLabsVoiceAgent />
               </div>
             )}
 
-
-            {/* Quick Actions - Show when no messages or in chat mode (not in voice mode) */}
             {messages.length === 0 && mode === 'chat' && (
               <div className="flex-1 overflow-y-auto px-3 md:px-4 py-3 md:py-4 bg-[var(--background)]/30">
                 <div className="space-y-2">
@@ -373,7 +288,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Messages - Chat mode only */}
             {messages.length > 0 && mode === 'chat' && (
               <div className="flex-1 overflow-y-auto px-3 md:px-4 py-2 md:py-3 space-y-2 md:space-y-3 bg-[var(--background)]/30" style={{ maxHeight: '350px' }}>
                 {messages.map((msg, index) => (
@@ -397,7 +311,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Quick Actions - Show below messages in chat mode when not loading */}
             {messages.length > 0 && mode === 'chat' && !isLoading && (
               <div className="px-4 py-2 bg-[var(--background)]/30 border-t border-[var(--border)]">
                 <p className="text-xs text-[var(--muted)] mb-2">Quick Actions:</p>
@@ -422,7 +335,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Loading indicator - Chat mode only */}
             {isLoading && mode === 'chat' && (
               <div className="px-4 py-2 bg-[var(--background)]/50">
                 <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
@@ -436,7 +348,6 @@ export default function AlwaysVisibleAvatar() {
               </div>
             )}
 
-            {/* Input Area - Chat mode only */}
             {mode === 'chat' && (
               <div className="p-3 md:p-4 border-t border-[var(--border)] bg-[var(--background)]">
                 <div className="flex items-center gap-2">
@@ -454,7 +365,6 @@ export default function AlwaysVisibleAvatar() {
                     />
                   </div>
 
-                  {/* Voice Input */}
                   <VoiceInput
                     onTranscript={handleVoiceTranscript}
                     onListeningChange={setIsListening}
@@ -462,7 +372,6 @@ export default function AlwaysVisibleAvatar() {
                     className="flex-shrink-0"
                   />
 
-                  {/* Send Button */}
                   <motion.button
                     onClick={() => handleSend()}
                     disabled={!inputValue.trim() || isLoading}
