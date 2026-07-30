@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 
@@ -71,6 +72,20 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
         </ThemeProvider>
+        <Script
+          id="did-agent"
+          src="https://agent.d-id.com/v2/index.js"
+          type="module"
+          strategy="afterInteractive"
+          data-mode="fabio"
+          data-client-key="ck_i1iuyZnhUZu5_KNH0cWnM"
+          data-agent-id="v2_agt_jWUPkf4b"
+          data-name="did-agent"
+          data-monitor="true"
+          data-orientation="horizontal"
+          data-position="right"
+          data-open-mode="compact"
+        />
       </body>
     </html>
   );
